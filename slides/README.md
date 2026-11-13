@@ -8,18 +8,20 @@ Take the whole `slides` folder to the class laptop, not only `index.html`.
 ## Files
 | File | What is in it | When you open it |
 |---|---|---|
-| `content.js` | Teams, scoring rules, questions and all 52 slides, in order | To change any text, question, answer or layout |
+| `index.html` | All 52 slides in order, plus teams and scoring rules | To change any text, question, answer or layout |
 | `app.js` | How the deck works: widgets, scores, edit mode, keys | Only to change how something behaves |
 | `style.css` | Colours, fonts, sizes | To change the look |
-| `index.html` | Loads the three files above | Rarely |
 | `fonts/` | Merriweather and Be Vietnam Pro, so it looks right offline | Never |
 | `videos/` | Put the Tòa án AI videos here | Before class |
 
 ## Two ways to edit
-1. **In the browser.** Press `E` on a slide. Click text to type. Drag ✥ to move a box and ⇲ to resize it. Every change saves at once; `Xong` or `Esc` just leaves edit mode. **Bỏ thay đổi** puts the slide back to how it was when you pressed `E`. The edit is saved in this browser on this computer only. In the grid view (`G`), slides edited this way say *đã sửa*.
-2. **In `content.js`.** Open it in any text editor and change the text. The change goes everywhere the folder goes. Use this for anything you want to keep.
+1. **In the browser.** Press `E` on a slide. Click text to type. Drag ✥ to move a box and ⇲ to resize it. Every change is kept in this browser at once; `Xong` or `Esc` just leaves edit mode. **Bỏ thay đổi** puts the slide back to how it was when you pressed `E`. In the grid view (`G`), slides edited this way say *đã sửa*.
+   Then press **Ctrl+S** (or **Lưu vào index.html** in the edit bar, or in `?`). The first time, Chrome asks where to save: pick `index.html` in this `slides` folder and confirm you want to replace it. After that, Ctrl+S writes straight to the same file until you close the tab. Other browsers download a new `index.html`; drag it over the old one.
+2. **In `index.html`.** Open it in any text editor. Each `<section>` is one slide and each `<div>` inside it is one box. The comment above the slides explains the format.
 
-Every slide is a list of boxes. `text("…", x, y, width, height, "body")` is a text box on a 1920 × 1080 page. Quiz answers are letters, for example `answer: "B"`.
+Each box has `data-box="x y width height"` in pixels on a 1920 × 1080 page. Quiz answers are letters, for example `"answer":"B"`.
+
+The folder is a git repo, so after each save `git diff` shows exactly which lines changed.
 
 ## What survives a reload
 Everything. Each change is saved the moment you make it: scores, team answers, card counts, bell order, shields, Vòng 1 numbers, wheel results (saved before the wheel stops), running timers (they keep counting), Văn hóa đọc ticks, revealed answers, slide edits, the slide you were on, and whether the leaderboard was open.
@@ -32,9 +34,9 @@ Data is lost only if:
 
 So make a backup file before class and after each round you care about (below).
 
-A slide edited in the browser replaces that slide from `content.js`. If you later change the same slide in `content.js`, press `E` → **Về bản gốc** on it to see the file version.
+Until you press Ctrl+S, a slide edited in the browser replaces that slide from `index.html`. If you change the same slide in `index.html` by hand, press `E` → **Về bản gốc** on it to see the file version. Once `index.html` contains your edit, the browser copy is dropped on the next reload.
 
-## Moving scores or browser edits to another computer
+## Moving scores to another computer
 Press `?` and click **Sao lưu ra file**. On the other computer, open the deck, press `?` and click **Khôi phục từ file**.
 
 ## Videos for Tòa án AI

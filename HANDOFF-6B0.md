@@ -120,8 +120,8 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 ## 5. How the slides work (`slides/`)
 
 `slides/README.md` explains running and editing. In short:
-- `content.js` holds everything the class sees: `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL`, `SHIELD_MAX`, `HACKS`, `CASES`, `CHECKLIST`, and the `SLIDES` array.
-- Helpers: `text(html,x,y,w,h,style)`, `title(html,opts)`, `widget(kind,x,y,w,h,opts)`, `divider(...)`, `quizSlide({...})`, `caseSlide(n)`. Quiz answers are letters (`answer: "B"`).
+- `index.html` holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 52 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
+- Edit mode (`E`) keeps changes in `localStorage`; Ctrl+S writes the whole deck back to `index.html` in the same format (File System Access API in Chrome, download elsewhere). Unchanged slides come out byte for byte the same, so `git diff` shows only real edits. (`content.js` was removed on 13 Nov; it is in the first git commit.)
 - `app.js` is the engine. Widgets live in the `WIDGETS` object: `html teams timer reveal video thiviet wheel quiz tally roundres checkstep standings`.
 - `style.css` holds the brand tokens and all styles.
 - Storage keys: `hch-6b0-board`, `-thiviet`, `-wheels`, `-edits`.
@@ -190,7 +190,7 @@ Check the PDF afterwards: it should be exactly 22 pages, with no blank ones.
 ## 9. Open items to finalize
 
 1. Reconcile giải lao with the 11:00 school break (section 3).
-2. ~~Make the 4 Tòa án AI videos.~~ Done 12 Nov: `slides/videos/case1–4.mp4`, built in `video-src/` (see its README). Each stops by itself at the vote card (`pauseAt` in `VIDEOS`, content.js).
+2. ~~Make the 4 Tòa án AI videos.~~ Done 12 Nov: `slides/videos/case1–4.mp4`, built in `video-src/` (see its README). Each stops by itself at the vote card (`pauseAt` in each video's `data-opts`, index.html).
 3. Confirm with cô Tươi:
    - the session teams stay together for bài 20/11;
    - she gives groups in-class time later;

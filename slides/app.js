@@ -1,9 +1,9 @@
 /* Học cách học · 6B0 — slide engine: rendering, widgets, scores, edit mode, keys.
  *
- * Content (text, questions, rules) is in content.js. Styles are in style.css.
+ * Slides, teams and scoring rules are in index.html. Styles are in style.css.
  * Everything the deck remembers is saved in this browser's localStorage under "hch-6b0-".
  *
- * Sections: storage · state · scoring · rendering · widgets · leaderboard · edit mode · grid view · navigation · boot
+ * Sections: slide file · storage · state · scoring · rendering · widgets · leaderboard · edit mode · grid view · navigation · save · boot
  */
 (() => {
 "use strict";
@@ -13,6 +13,64 @@ const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const clone = (value) => JSON.parse(JSON.stringify(value));
 const LETTERS = "ABCD";
+
+/* ================= Slide file =================
+ * Every slide is a <section> inside <div id="slides"> in index.html. Each child is one box:
+ *   <div class="lead" data-box="x y w h">text</div>                    a text box; data-size="44" = font size set with A+/A−
+ *   <div data-widget="timer" data-box="x y w h" data-opts='{...}'>…</div>  an interactive block; any inner HTML becomes opts.html
+ * "Lưu vào index.html" (Ctrl+S) writes the deck back in this same format, browser edits included.
+ */
+
+// index.html as it was before this script touched the page, with a marker where the slides go.
+const fileTemplate = (() => {
+  const doc = document.documentElement.cloneNode(true);
+  $("#slides", doc).innerHTML = "\n@@SLIDES@@\n";
+  return "<!doctype html>\n" + doc.outerHTML + "\n";
+})();
+
+const text = (html, x, y, w, h, style = "body") => ({ type: "text", style, html, x, y, w, h });
+
+function readBlock(el) {
+  const [x, y, w, h] = el.dataset.box.split(" ").map(Number);
+  if (el.dataset.widget) {
+    const opts = JSON.parse(el.dataset.opts || "{}");
+    if (el.innerHTML) opts.html = el.innerHTML;
+    return { type: "widget", kind: el.dataset.widget, x, y, w, h, opts };
+  }
+  const block = text(el.innerHTML, x, y, w, h, el.className);
+  if (el.dataset.size) block.fontSize = Number(el.dataset.size);
+  return block;
+}
+
+const SLIDES = $$("#slides > section").map((sec) => ({
+  id: sec.dataset.id,
+  nav: sec.dataset.nav,
+  tag: sec.dataset.tag,
+  bg: sec.dataset.bg,
+  noFooter: sec.hasAttribute("data-no-footer"),
+  judgedBy: sec.dataset.judgedBy && JSON.parse(sec.dataset.judgedBy),
+  blocks: [...sec.children].map(readBlock),
+}));
+$("#slides").remove();
+
+const json = (value) => "'" + JSON.stringify(value).replace(/&/g, "&amp;").replace(/'/g, "&#39;") + "'";
+
+function writeBlock(b) {
+  const box = ` data-box="${b.x} ${b.y} ${b.w} ${b.h}"`;
+  if (b.type === "widget") {
+    const { html = "", ...opts } = b.opts || {};
+    return `  <div data-widget="${b.kind}"${box}${Object.keys(opts).length ? " data-opts=" + json(opts) : ""}>${html}</div>`;
+  }
+  return `  <div class="${esc(b.style || "")}"${box}${b.fontSize ? ` data-size="${b.fontSize}"` : ""}>${b.html}</div>`;
+}
+
+function writeSlide(s) {
+  const attrs = [`data-id="${esc(s.id)}"`];
+  for (const k of ["nav", "tag", "bg"]) if (s[k]) attrs.push(`data-${k}="${esc(s[k])}"`);
+  if (s.noFooter) attrs.push("data-no-footer");
+  if (s.judgedBy) attrs.push("data-judged-by=" + json(s.judgedBy));
+  return `<section ${attrs.join(" ")}>\n${s.blocks.map(writeBlock).join("\n")}\n</section>`;
+}
 
 /* ================= Storage ================= */
 
@@ -676,6 +734,7 @@ function renderEditBar() {
     ${block?.kind === "video" ? `<button data-a="video">Gắn video</button>` : ""}
     ${block?.kind === "timer" ? `<label>Phút <input type="number" min="0.5" step="0.5" data-a="minutes" value="${(block.opts.seconds || 60) / 60}"></label>` : ""}
     ${edits[currentSlide().id] ? `<button data-a="original">Về bản gốc</button>` : ""}
+    <button data-a="savefile">Lưu vào index.html (Ctrl+S)</button>
     <button class="pri" data-a="done">Xong</button><span class="msg" id="msg"></span>`;
 }
 
@@ -696,6 +755,7 @@ $("#bar").addEventListener("click", (e) => {
       break;
     }
     case "video": return pickVideo(block);
+    case "savefile": return saveFile();
     case "original":
       draft = clone(SLIDES[current].blocks);
       selected = null;
@@ -855,6 +915,7 @@ $("#nFull").onclick = toggleFullscreen;
 $("#nGrid").onclick = () => (grid.hidden ? openGrid() : closeGrid());
 $("#nHelp").onclick = () => { help.hidden = false; };
 $("#helpClose").onclick = () => { help.hidden = true; };
+$("#helpSave").onclick = saveFile;
 $("#helpBackup").onclick = backup;
 $("#helpRestore").onclick = restore;
 
@@ -899,6 +960,38 @@ stage.addEventListener("touchend", (e) => {
   const dx = e.changedTouches[0].clientX - touchX;
   if (Math.abs(dx) > 60) go(current + (dx < 0 ? 1 : -1));
   touchX = null;
+});
+
+/* ================= Save slides to index.html ================= */
+
+// Chrome and Edge write straight into the file you pick (asked once per session).
+// Other browsers download index.html; drag it over the old one.
+let fileHandle = null;
+async function saveFile() {
+  if (editing) { syncDraft(); saveDraft(); }
+  const html = fileTemplate.replace("@@SLIDES@@", () => slides().map(writeSlide).join("\n\n"));
+  if (window.showSaveFilePicker) {
+    try {
+      fileHandle ??= await showSaveFilePicker({ suggestedName: "index.html", types: [{ description: "HTML", accept: { "text/html": [".html"] } }] });
+      const out = await fileHandle.createWritable();
+      await out.write(html);
+      await out.close();
+      return flash("Đã lưu vào " + fileHandle.name);
+    } catch (e) {
+      fileHandle = null;
+      if (e.name === "AbortError") return;
+    }
+  }
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(new Blob([html], { type: "text/html" }));
+  link.download = "index.html";
+  link.click();
+  URL.revokeObjectURL(link.href);
+  flash("Đã tải index.html về. Chép đè lên file cũ trong thư mục slides.");
+}
+
+document.addEventListener("keydown", (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "s") { e.preventDefault(); saveFile(); }
 });
 
 /* ================= Backup (move scores and edits to another computer) ================= */
@@ -958,6 +1051,10 @@ addEventListener("hashchange", () => {
   const i = SLIDES.findIndex((s) => s.id === location.hash.slice(1));
   if (i >= 0 && i !== current && !editing) { current = i; render(); }
 });
+
+// A browser edit that index.html already contains (saved with Ctrl+S) is no longer needed.
+for (const s of SLIDES) if (edits[s.id] && sameBlocks(edits[s.id].blocks, s.blocks)) delete edits[s.id];
+saveEdits();
 
 const fromHash = SLIDES.findIndex((s) => s.id === location.hash.slice(1));
 if (fromHash >= 0) current = fromHash;
