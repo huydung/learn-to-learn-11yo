@@ -1,0 +1,11 @@
+.DS_Store
+~$*
+.venv/
+node_modules/
+# Large media: rebuilt from video-src, kept in OneDrive only
+*.mp4
+*.mp3
+*.wav
+# Installed skills, restored from video-src/skills-lock.json
+video-src/.claude/skills/
+.hyperframes/

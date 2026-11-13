@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Học cách học · Trên lớp 6B0</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="stage"></div>
+  <div id="warn" role="alert" hidden></div>
+
+  <div id="bar" hidden></div>
+  <div id="ov" hidden></div>
+
+  <div id="nav">
+    <button id="nPrev" aria-label="Trang trước">◀</button>
+    <span id="nNum">1/1</span>
+    <button id="nNext" aria-label="Trang sau">▶</button>
+    <button id="nBoard">Bảng điểm (L)</button>
+    <button id="nEdit">Sửa (E)</button>
+    <button id="nFull">Toàn màn hình (F)</button>
+    <button id="nGrid">Lưới (G)</button>
+    <button id="nHelp">?</button>
+  </div>
+
+  <div id="help" hidden><div class="bx">
+    <b>Phím tắt</b><br>
+    <kbd>→</kbd> <kbd>Space</kbd> trang sau · <kbd>←</kbd> trang trước<br>
+    <kbd>L</kbd> mở/đóng bảng điểm · <kbd>S</kbd> hiện điểm nhỏ dưới chân trang<br>
+    <kbd>T</kbd> bắt đầu/tạm dừng đồng hồ (nút ±30s để chỉnh nhanh; đổi hẳn số phút: chế độ Sửa, chọn đồng hồ, gõ ô Phút) · <kbd>R</kbd> mở đáp án / điểm checklist tiếp theo<br>
+    <kbd>E</kbd> chế độ sửa: bấm vào chữ để gõ, kéo ô xanh ✥ để di chuyển, kéo góc ⇲ để đổi cỡ. Mọi thay đổi tự lưu ngay; <b>Bỏ thay đổi</b> đưa trang về như lúc bấm E.<br>
+    <kbd>G</kbd> xem tất cả trang dạng lưới, bấm để nhảy tới · gõ <b>số trang</b> rồi <kbd>Enter</kbd> để nhảy thẳng<br>
+    <kbd>F</kbd> toàn màn hình · <kbd>?</kbd> bảng này<br><br>
+    Điểm, đáp án, bốc thăm, đồng hồ và các trang đã sửa được lưu ngay trong trình duyệt này, trên máy này. Tải lại trang không mất gì.
+    Muốn mang sang máy khác: bấm <b>Sao lưu</b> ở đây, rồi <b>Khôi phục</b> trên máy kia.<br>
+    <button class="btn ghost" id="helpBackup">Sao lưu ra file</button>
+    <button class="btn ghost" id="helpRestore">Khôi phục từ file</button>
+    <button class="btn" id="helpClose">Đóng</button>
+  </div></div>
+
+  <!-- Plain scripts (not modules) so the deck opens straight from disk with a double-click. -->
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

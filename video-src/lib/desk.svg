@@ -1,0 +1,18 @@
+<svg id="$ID" viewBox="0 0 1920 400" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+  <defs><radialGradient id="$ID_glow"><stop offset="0" stop-color="#fff3b0" stop-opacity=".75"/><stop offset="1" stop-color="#fff3b0" stop-opacity="0"/></radialGradient></defs>
+  <ellipse cx="470" cy="70" rx="420" ry="190" fill="url(#$ID_glow)"/>
+  <rect x="0" y="40" width="1920" height="360" fill="#b47c48"/>
+  <rect x="0" y="20" width="1920" height="40" fill="#cf995f" stroke="#3a2e2a" stroke-width="6"/>
+  <g transform="translate(330 -250)"><rect x="70" y="260" width="120" height="26" rx="10" fill="#bd0129" stroke="#3a2e2a" stroke-width="5"/>
+    <path d="M130 262 L110 140 L220 70" stroke="#3a2e2a" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <path d="M180 20 L290 60 L250 130 L150 80Z" fill="#bd0129" stroke="#3a2e2a" stroke-width="6"/></g>
+  <g transform="translate(0 -14)"><path d="M690 40 L900 34 L910 214 L700 222Z" fill="#fff" stroke="#3a2e2a" stroke-width="5"/>
+    <path d="M905 34 L1115 40 L1105 222 L910 214Z" fill="#fff" stroke="#3a2e2a" stroke-width="5"/><line x1="700" y1="78" x2="890" y2="78" stroke="#c9d6ea" stroke-width="3"/><line x1="700" y1="100" x2="890" y2="100" stroke="#c9d6ea" stroke-width="3"/><line x1="700" y1="122" x2="890" y2="122" stroke="#c9d6ea" stroke-width="3"/><line x1="700" y1="144" x2="890" y2="144" stroke="#c9d6ea" stroke-width="3"/><line x1="700" y1="166" x2="890" y2="166" stroke="#c9d6ea" stroke-width="3"/><line x1="700" y1="188" x2="890" y2="188" stroke="#c9d6ea" stroke-width="3"/><line x1="915" y1="78" x2="1105" y2="78" stroke="#c9d6ea" stroke-width="3"/><line x1="915" y1="100" x2="1105" y2="100" stroke="#c9d6ea" stroke-width="3"/><line x1="915" y1="122" x2="1105" y2="122" stroke="#c9d6ea" stroke-width="3"/><line x1="915" y1="144" x2="1105" y2="144" stroke="#c9d6ea" stroke-width="3"/><line x1="915" y1="166" x2="1105" y2="166" stroke="#c9d6ea" stroke-width="3"/><line x1="915" y1="188" x2="1105" y2="188" stroke="#c9d6ea" stroke-width="3"/><path id="$ID_w1" d="M935 102 q20 -8 40 0 t40 0 t40 0 t40 0" stroke="#33446b" stroke-width="4" fill="none" opacity="0"/><path id="$ID_w2" d="M935 124 q20 -8 40 0 t40 0 t40 0 t40 0" stroke="#33446b" stroke-width="4" fill="none" opacity="0"/><path id="$ID_w3" d="M935 146 q20 -8 40 0 t40 0 t40 0 t40 0" stroke="#33446b" stroke-width="4" fill="none" opacity="0"/><path id="$ID_w4" d="M935 168 q20 -8 40 0 t40 0 t40 0 t40 0" stroke="#33446b" stroke-width="4" fill="none" opacity="0"/><path id="$ID_w5" d="M935 190 q20 -8 40 0 t40 0 t40 0 t40 0" stroke="#33446b" stroke-width="4" fill="none" opacity="0"/></g>
+  <path id="$ID_sheet" d="M1170 30 L1370 22 L1384 190 L1180 200Z" fill="#fffdf2" stroke="#3a2e2a" stroke-width="5"/>
+  <g id="$ID_tabFlat"><rect x="1450" y="30" width="300" height="170" rx="18" fill="#2a2a33" stroke="#3a2e2a" stroke-width="5"/><rect x="1466" y="44" width="268" height="142" rx="8" fill="#3b3f52"/></g>
+  <g id="$ID_tabUp" opacity="0"><path d="M1500 -230 L1760 -250 L1770 30 L1500 40Z" fill="#2a2a33" stroke="#3a2e2a" stroke-width="6"/>
+    <path d="M1516 -214 L1746 -232 L1754 16 L1516 24Z" fill="#e9f0fb"/>
+    <g fill="#9bb4dd"><rect x="1600" y="-200" width="130" height="22" rx="10"/><rect x="1540" y="-150" width="180" height="12" rx="6"/>
+    <rect x="1540" y="-126" width="160" height="12" rx="6"/><rect x="1540" y="-102" width="190" height="12" rx="6"/><rect x="1540" y="-78" width="120" height="12" rx="6"/></g>
+    <path d="M1620 40 L1600 60 L1700 60 L1680 40Z" fill="#3a2e2a"/></g>
+</svg>

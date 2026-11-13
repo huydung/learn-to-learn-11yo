@@ -1,0 +1,48 @@
+[
+ {
+  "id": "s1",
+  "say": "Tối thứ Năm, chín giờ. Mai kiểm tra từ vựng Tiếng Anh Unit 4, bạn ấy chưa ôn chữ nào.",
+  "hold": 2.0
+ },
+ {
+  "id": "s2",
+  "say": "Bạn ấy nhờ Gemini đố liền ba mươi câu, mỗi lần một câu.",
+  "hold": 1.4
+ },
+ {
+  "id": "s3",
+  "say": "Bạn ấy trả lời từng câu, sai thì làm lại. Đến mười giờ thì xong đủ ba mươi câu.",
+  "hold": 2.2
+ },
+ {
+  "id": "s4",
+  "say": "Hôm sau làm bài kiểm tra, bạn ấy được tám điểm.",
+  "hold": 1.8
+ },
+ {
+  "id": "s5",
+  "say": "Theo đội của em, hai tuần sau chuyện gì sẽ xảy ra với những từ này? Vì sao?",
+  "hold": 3,
+  "pause": true
+ },
+ {
+  "id": "s6",
+  "say": "Hai tuần sau, cả lớp ôn thi học kỳ.",
+  "hold": 2.0
+ },
+ {
+  "id": "s7",
+  "say": "Bạn ấy còn nhớ khoảng một nửa số từ. Nửa còn lại thì đã quên.",
+  "hold": 2.6
+ },
+ {
+  "id": "s8",
+  "say": "Bạn ấy phải học lại những từ đã quên.",
+  "hold": 1.4
+ },
+ {
+  "id": "s9",
+  "say": "Kết quả là bạn ấy chỉ nhớ được một phần.",
+  "hold": 3
+ }
+]

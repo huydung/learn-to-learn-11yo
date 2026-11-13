@@ -1,0 +1,58 @@
+[
+ {
+  "id": "s1",
+  "say": "Cô giao bài Giáo dục địa phương. Mỗi bạn tìm hiểu về Hà Nội, dùng số liệu mới nhất và ghi rõ nguồn.",
+  "hold": 3.2
+ },
+ {
+  "id": "s2",
+  "say": "Tối hôm đó, bạn ấy hỏi Gemini cho nhanh.",
+  "hold": 1.8
+ },
+ {
+  "id": "s3",
+  "say": "Gemini đưa ra ba thông tin, trình bày rất gọn và nghe rất chắc chắn.",
+  "hold": 4.2
+ },
+ {
+  "id": "s4",
+  "say": "Bạn ấy chép cả ba vào bài, ghi nguồn là Gemini, rồi đọc to cho thuộc.",
+  "hold": 1.8
+ },
+ {
+  "id": "s5",
+  "say": "Theo đội của em, một tuần sau bạn ấy lên thuyết trình, chuyện gì sẽ xảy ra? Vì sao?",
+  "hold": 3,
+  "pause": true
+ },
+ {
+  "id": "s6",
+  "say": "Một tuần sau, bạn ấy lên thuyết trình bài về Hà Nội.",
+  "hold": 1.4
+ },
+ {
+  "id": "s7",
+  "say": "Bạn ấy nói rất tự tin. Một bạn giơ tay hỏi lại, Hà Nội bây giờ đâu còn quận, huyện nữa?",
+  "hold": 1.6
+ },
+ {
+  "id": "s8",
+  "say": "Cô giải thích, từ tháng Bảy năm 2025, Hà Nội không còn quận, huyện, mà có một trăm hai mươi sáu xã, phường.",
+  "hold": 1.8
+ },
+ {
+  "id": "s9",
+  "say": "Cả nước bây giờ có bảy thành phố trực thuộc trung ương, không phải năm như Gemini nói.",
+  "hold": 1.8
+ },
+ {
+  "id": "s10",
+  "say": "Hai trong ba thông tin của bạn ấy đã cũ. Bạn ấy chỉ được bốn điểm.",
+  "hold": 1.8
+ },
+ {
+  "id": "s11",
+  "say": "Kết quả là điểm thấp, vì Gemini dùng thông tin cũ và bạn ấy không kiểm tra lại.",
+  "hold": 3
+ }
+]

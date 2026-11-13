@@ -1,0 +1,58 @@
+[
+ {
+  "id": "s1",
+  "say": "Cô giáo giao bài tập Khoa học tự nhiên. Mỗi bạn quan sát năm loài cây quanh nhà rồi xếp chúng vào nhóm.",
+  "hold": 3.6
+ },
+ {
+  "id": "s2",
+  "say": "Chiều thứ Bảy, trời nắng. Bạn ấy ngại ra vườn, chỉ muốn ngồi trong phòng.",
+  "hold": 1.6
+ },
+ {
+  "id": "s3",
+  "say": "Thế là bạn ấy mở Gemini và nhờ viết luôn bài quan sát.",
+  "hold": 1.8
+ },
+ {
+  "id": "s4",
+  "say": "Vài giây sau, Gemini đưa ra một bảng rất đẹp, đủ năm loài cây.",
+  "hold": 3.5
+ },
+ {
+  "id": "s5",
+  "say": "Bạn ấy chép bảng vào vở. Mười phút là xong, chưa nhìn cây nào.",
+  "hold": 1.6
+ },
+ {
+  "id": "s6",
+  "say": "Thứ Hai nộp bài, cô khen bảng phân loại đúng hết.",
+  "hold": 1.8
+ },
+ {
+  "id": "s7",
+  "say": "Theo đội của em, một tuần sau chuyện gì sẽ xảy ra với bài quan sát này? Vì sao?",
+  "hold": 3,
+  "pause": true
+ },
+ {
+  "id": "s8",
+  "say": "Một tuần sau, cả lớp học Khoa học tự nhiên ngoài vườn trường.",
+  "hold": 1.4
+ },
+ {
+  "id": "s9",
+  "say": "Cô chỉ vào một cây trong vườn và hỏi: “Đây là cây gì, có đặc điểm gì, thuộc loại nào?”",
+  "hold": 1.6
+ },
+ {
+  "id": "s10",
+  "say": "Đó là cây dương xỉ. Bài của bạn ấy có ghi, nhưng bạn ấy chưa từng thấy cây dương xỉ ngoài đời, nên không trả lời được.",
+  "hold": 1.8
+ },
+ {
+  "id": "s11",
+  "say": "Kết quả là bạn ấy đã quên.",
+  "hold": 3
+ }
+]

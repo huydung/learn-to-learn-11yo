@@ -1,0 +1,53 @@
+[
+ {
+  "id": "s1",
+  "say": "Cô giao bài văn kể lại một trải nghiệm. Bạn ấy tự viết xong bài về chuyến về quê.",
+  "hold": 3.4
+ },
+ {
+  "id": "s2",
+  "say": "Bạn ấy nhờ Gemini chỉ ra ba chỗ còn yếu, và dặn là đừng sửa hộ.",
+  "hold": 1.8
+ },
+ {
+  "id": "s3",
+  "say": "Gemini chỉ ra ba chỗ. Mở bài dài, chữ “rất” lặp lại nhiều lần, kết bài chưa có cảm xúc.",
+  "hold": 2.8
+ },
+ {
+  "id": "s4",
+  "say": "Bạn ấy tự sửa từng chỗ. Mất thêm hai mươi phút, lâu hơn các bạn khác.",
+  "hold": 1.8
+ },
+ {
+  "id": "s5",
+  "say": "Thứ Hai nộp bài, cô khen phần kết bài có cảm xúc.",
+  "hold": 1.8
+ },
+ {
+  "id": "s6",
+  "say": "Theo đội của em, tuần sau viết bài mới, chuyện gì sẽ xảy ra? Vì sao?",
+  "hold": 3,
+  "pause": true
+ },
+ {
+  "id": "s7",
+  "say": "Một tuần sau, cả lớp viết một bài văn mới ngay trên lớp.",
+  "hold": 1.4
+ },
+ {
+  "id": "s8",
+  "say": "Bạn ấy viết mở bài ngắn, vào thẳng câu chuyện, và để ý không lặp chữ “rất”.",
+  "hold": 1.4
+ },
+ {
+  "id": "s9",
+  "say": "Đến kết bài, bạn ấy nhớ viết thêm cảm xúc của mình.",
+  "hold": 1.4
+ },
+ {
+  "id": "s10",
+  "say": "Kết quả là bạn ấy vẫn nhớ.",
+  "hold": 3
+ }
+]
