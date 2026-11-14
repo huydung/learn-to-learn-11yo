@@ -124,7 +124,6 @@ const emptyBoard = () => ({
   raw: {},                    // { roundId: { R: count } } — counts typed on result slides
   bell: {},                   // { roundId: { R: 1..4 } } — bell order in the card race
 });
-const emptyThiviet = () => byTeam(() => ({ A: "", B: "" }));
 
 // Class state during the session. Cleared by "Xóa điểm, đáp án và bốc thăm…".
 const emptySession = () => ({
@@ -134,10 +133,9 @@ const emptySession = () => ({
   reveal: {},    // { slideId: n } — how many → presses of data-step boxes are shown on that slide
 });
 
-let board, thiviet, wheels, edits, session;
+let board, wheels, edits, session;
 function loadState({ withEdits = true } = {}) {
   board = { ...emptyBoard(), ...store.get("board", {}) };
-  thiviet = { ...emptyThiviet(), ...store.get("thiviet", {}) };
   wheels = store.get("wheels", {});      // { slideId: [itemIndex, ...] } one pick per slot, in order
   session = { ...emptySession(), ...store.get("session", {}) };
   if (withEdits) edits = store.get("edits", {});  // { slideId: { blocks, savedAt } } — replaces that slide's blocks
@@ -145,7 +143,6 @@ function loadState({ withEdits = true } = {}) {
 loadState();
 
 const saveBoard = () => store.set("board", board);
-const saveThiviet = () => store.set("thiviet", thiviet);
 const saveWheels = () => store.set("wheels", wheels);
 const saveEdits = () => store.set("edits", edits);
 const saveSession = () => store.set("session", session);
@@ -205,6 +202,14 @@ function answerOf(slideId) {
   const quiz = slides().find((s) => s.id === slideId)?.blocks.find((b) => b.kind === "quiz");
   return quiz ? LETTERS.indexOf(quiz.opts.answer) : null;
 }
+
+// Team that taught a quiz's hack: opts.teach = { wheel, item } names the wheel that gave each team its hack.
+function teacherOf(opts) {
+  if (!opts?.teach) return null;
+  const k = (wheels[opts.teach.wheel] || []).indexOf(opts.teach.item);
+  return k >= 0 ? TEAMS[k].key : null;
+}
+const quizOpts = (slideId) => slides().find((s) => s.id === slideId)?.blocks.find((b) => b.kind === "quiz")?.opts;
 
 /* ================= Rendering ================= */
 
@@ -411,36 +416,6 @@ const WIDGETS = {
     }
   },
 
-  thiviet(el) {
-    const num = (v) => { const n = parseInt(v, 10); return Number.isFinite(n) ? n : null; };
-    const total = (k) => (num(thiviet[k].A) ?? 0) + (num(thiviet[k].B) ?? 0);
-    const cell = (t, way) => `<td><input inputmode="numeric" aria-label="Cách ${way} đội ${t.name}" data-k="${t.key}" data-way="${way}" value="${esc(thiviet[t.key][way])}"></td>`;
-    el.innerHTML = `<div class="tv-w"><div>
-      <table class="t"><tr><th>Đội</th><th>Cách A</th><th>Cách B</th><th>Tổng</th></tr>
-      ${TEAMS.map((t) => `<tr><td>${teamChip(t)}</td>${cell(t, "A")}${cell(t, "B")}<td class="sum" data-k="${t.key}"></td></tr>`).join("")}</table>
-      <div class="actions"><button class="btn" data-a="score">Ghi điểm thi viết theo tổng</button></div></div>
-      <div class="avg"><div>Trung bình cách A<b data-avg="A">–</b></div><div>Trung bình cách B<b data-avg="B">–</b></div></div></div>`;
-
-    const average = (way) => {
-      const vals = TEAMS.map((t) => num(thiviet[t.key][way])).filter((v) => v !== null);
-      return vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1).replace(".", ",") : "–";
-    };
-    const update = () => {
-      for (const t of TEAMS) $(`.sum[data-k="${t.key}"]`, el).textContent = total(t.key);
-      for (const way of "AB") $(`[data-avg="${way}"]`, el).textContent = average(way);
-    };
-    $$("input", el).forEach((input) => input.addEventListener("input", () => {
-      thiviet[input.dataset.k][input.dataset.way] = input.value.replace(/[^0-9]/g, "");
-      saveThiviet();  // every keystroke, so a reload never drops a number
-      update();
-    }));
-    $('[data-a="score"]', el).onclick = () => {
-      if (editing) return;
-      saveThiviet();
-      recordRound("thiviet", rankPoints(byTeam(total), roundById("thiviet").points), "Thi viết: ghi điểm theo tổng số dòng");
-    };
-    update();
-  },
 
   wheel(el, o, ctx) {
     const picks = wheels[ctx.slideId] || [];
@@ -463,7 +438,7 @@ const WIDGETS = {
     $('[data-a="spin"]', el).onclick = () => {
       if (editing || spinning || done) return;
       const segment = (2 * Math.PI) / left.length;
-      const j = Math.floor(Math.random() * left.length);
+      const j = pickSlot(left, picks.length, o.avoid && wheels[o.avoid]);
       // Save the result before the animation, so a reload mid-spin keeps it.
       wheels[ctx.slideId] = picks.concat(left[j]);
       saveWheels();
@@ -480,11 +455,13 @@ const WIDGETS = {
     const correct = LETTERS.indexOf(o.answer);
     const picks = board.answers[qid] || {};
     const options = o.options || [];
+    const teacher = teacherOf(o);
     el.innerHTML = `<div class="quiz${session.revealed[qid] ? " open" : ""}">
       ${o.question ? `<div class="qq">${o.question}</div>` : ""}
       <div class="qb">
         <div class="qo">${options.map((txt, i) => `<div class="op${i === correct ? " ok" : ""}"><b>${LETTERS[i]}</b><span>${txt}</span></div>`).join("")}</div>
         <div class="qt">${TEAMS.map((t) => {
+          if (t.key === teacher) return `<div class="qtm c-${t.key} picked"><span class="qn">${t.name}</span><span class="qg">Đội giảng</span></div>`;
           const pick = picks[t.key];
           const mark = pick === undefined ? "–" : pick === correct ? "✓" : "✗";
           const buttons = options.map((_, i) => `<button data-k="${t.key}" data-v="${i}" class="${pick === i ? "on " + (i === correct ? "ok" : "bad") : ""}" aria-label="Đội ${t.name} chọn ${LETTERS[i]}">${LETTERS[i]}</button>`).join("");
@@ -517,10 +494,11 @@ const WIDGETS = {
     const points = rankPoints(correctCount, round.points);
     const recorded = board.scores[o.round] || {};
     el.innerHTML = `<table class="t tally">
-      <tr><th>Đội</th>${o.questions.map((_, i) => `<th>Câu ${i + 1}</th>`).join("")}<th>Số câu đúng</th><th>Điểm vòng</th></tr>
+      <tr><th>Đội</th>${o.questions.map((_, i) => `<th>${esc(o.labels?.[i] ?? "Câu " + (i + 1))}</th>`).join("")}<th>Số câu đúng</th><th>Điểm vòng</th></tr>
       ${TEAMS.map((t) => `<tr><td>${teamChip(t)}</td>
         ${o.questions.map((q) => {
           const pick = board.answers[q]?.[t.key];
+          if (teacherOf(quizOpts(q)) === t.key) return `<td><small>Đội giảng</small></td>`;
           return `<td>${pick === undefined ? "–" : (isRight(q, t.key) ? "✓" : "✗") + ` <small>${LETTERS[pick]}</small>`}</td>`;
         }).join("")}
         <td><b>${correctCount[t.key]}</b></td>
@@ -535,23 +513,24 @@ const WIDGETS = {
   roundres(el, o) {
     const round = roundById(o.round);
     const ranked = round.kind === "rank";
+    const useBell = ranked && o.bell !== false;
     const raw = board.raw[o.round] || {};
     const bell = board.bell[o.round] || {};
     const value = (k) => Number(raw[k] || 0);
-    const beats = (a, b) => value(a) > value(b) || (ranked && value(a) === value(b) && bell[a] && bell[b] && bell[a] < bell[b]);
+    const beats = (a, b) => value(a) > value(b) || (useBell && value(a) === value(b) && bell[a] && bell[b] && bell[a] < bell[b]);
     const place = places(beats);
     const points = byTeam((k) => (ranked ? round.points[place[k]] : Math.min(round.max, value(k))));
     const recorded = board.scores[o.round] || {};
     el.innerHTML = `<table class="t tally">
-      <tr><th>Đội</th><th>${esc(o.label)}</th>${ranked ? "<th>Rung chuông</th>" : ""}<th>Hạng</th><th>Điểm vòng</th></tr>
+      <tr><th>Đội</th><th>${esc(o.label)}</th>${useBell ? "<th>Rung chuông</th>" : ""}<th>Hạng</th><th>Điểm vòng</th></tr>
       ${TEAMS.map((t) => `<tr><td>${teamChip(t)}</td>
         <td><span class="stepper"><button data-a="minus" data-k="${t.key}" aria-label="Bớt">−</button><b>${value(t.key)}</b><button data-a="plus" data-k="${t.key}" aria-label="Thêm">+</button></span></td>
-        ${ranked ? `<td><select data-k="${t.key}" aria-label="Thứ tự rung chuông đội ${t.name}"><option value="">–</option>${[1, 2, 3, 4].map((n) => `<option ${bell[t.key] == n ? "selected" : ""}>${n}</option>`).join("")}</select></td>` : ""}
+        ${useBell ? `<td><select data-k="${t.key}" aria-label="Thứ tự rung chuông đội ${t.name}"><option value="">–</option>${[1, 2, 3, 4].map((n) => `<option ${bell[t.key] == n ? "selected" : ""}>${n}</option>`).join("")}</select></td>` : ""}
         <td><b>#${place[t.key] + 1}</b></td>
         <td><b>${points[t.key]}</b>${recorded[t.key] !== undefined ? ` <small>(đã ghi ${recorded[t.key]})</small>` : ""}</td></tr>`).join("")}
       </table>
       <div class="actions"><button class="btn" data-a="record">Ghi điểm vào bảng</button>
-      <span class="small">${ranked ? `Xếp theo số thẻ đúng; bằng nhau thì đội rung chuông trước xếp trên. Điểm ${round.points.join(" · ")}.` : `Mỗi đội được đúng số điểm của mình, tối đa ${round.max}.`}</span></div>`;
+      <span class="small">${ranked ? `${useBell ? "Xếp theo số thẻ đúng; bằng nhau thì đội rung chuông trước xếp trên." : "Bằng nhau thì cùng hạng cao hơn."} Điểm ${round.points.join(" · ")}.` : `Mỗi đội được đúng số điểm của mình, tối đa ${round.max}.`}</span></div>`;
 
     el.onclick = (e) => {
       const button = e.target.closest("button");
@@ -596,6 +575,15 @@ const WIDGETS = {
     el.innerHTML = teamCards([...TEAMS].sort((a, b) => t[b.key] - t[a.key]), false);
   },
 };
+
+// Random index into left for the next slot. With avoid, slot k never gets item avoid[k],
+// and only picks that still leave a valid draw for the later slots are allowed.
+function pickSlot(left, slot, avoid) {
+  if (!avoid) return Math.floor(Math.random() * left.length);
+  const ok = (items, k) => !items.length || items.some((it, i) => it !== avoid[k] && ok(items.filter((_, x) => x !== i), k + 1));
+  const good = left.map((it, i) => i).filter((i) => left[i] !== avoid[slot] && ok(left.filter((_, x) => x !== i), slot + 1));
+  return good.length ? good[Math.floor(Math.random() * good.length)] : Math.floor(Math.random() * left.length);
+}
 
 function drawWheel(canvas, o, left) {
   const g = canvas.getContext("2d");
@@ -695,14 +683,13 @@ function leaderboard() {
   return el;
 }
 
-// Before class: clears scores, team answers, round 1 inputs and wheel results. Slide edits stay.
+// Before class: clears scores, team answers and wheel results. Slide edits stay.
 function wipeClassData() {
   board = emptyBoard();
-  thiviet = emptyThiviet();
   wheels = {};
   session = emptySession();
   logAction("Xóa toàn bộ điểm, đáp án và bốc thăm");
-  saveBoard(); saveThiviet(); saveWheels(); saveSession();
+  saveBoard(); saveWheels(); saveSession();
   render();
 }
 
@@ -1257,7 +1244,7 @@ document.addEventListener("keydown", (e) => {
 /* ================= Backup (move scores and edits to another computer) ================= */
 
 function backup() {
-  const data = { app: "hoc-cach-hoc-6b0", savedAt: new Date().toISOString(), board, thiviet, wheels, edits, session };
+  const data = { app: "hoc-cach-hoc-6b0", savedAt: new Date().toISOString(), board, wheels, edits, session };
   const link = document.createElement("a");
   link.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], { type: "application/json" }));
   link.download = `hoc-cach-hoc-6b0-${data.savedAt.slice(0, 16).replace(/[:T]/g, "-")}.json`;
@@ -1274,11 +1261,10 @@ function restore() {
       const data = JSON.parse(await input.files[0].text());
       if (data.app !== "hoc-cach-hoc-6b0") throw new Error("not a backup");
       board = { ...emptyBoard(), ...data.board };
-      thiviet = { ...emptyThiviet(), ...data.thiviet };
       wheels = data.wheels || {};
       edits = data.edits || {};
       session = { ...emptySession(), ...data.session };
-      saveBoard(); saveThiviet(); saveWheels(); saveEdits(); saveSession();
+      saveBoard(); saveWheels(); saveEdits(); saveSession();
       help.hidden = true;
       render();
       flash("Đã khôi phục");

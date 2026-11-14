@@ -131,12 +131,6 @@ table.t td { border-bottom: 2px solid var(--line); padding: 14px 18px; vertical-
 .vid .vl { font: 800 44px/1.2 var(--f-body); }
 .vid .vs { font: 400 28px/1.4 var(--f-body); color: #E8D6D6; }
 
-/* thiviet (round 1 results) */
-.tv-w { height: 100%; display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; }
-.tv-w table input { width: 120px; font: 700 36px/1 var(--f-body); text-align: center; border: 3px solid var(--line); border-radius: 10px; padding: 8px; }
-.tv-w .avg { display: flex; flex-direction: column; gap: 22px; justify-content: center; }
-.tv-w .avg div { border: 4px solid var(--dark); border-radius: 20px; padding: 22px 28px; font: 500 34px/1.3 var(--f-body); }
-.tv-w .avg b { font: 900 76px/1 var(--f-head); color: var(--red); display: block; margin-top: 8px; }
 
 /* wheel */
 .wh { height: 100%; display: flex; gap: 50px; align-items: center; }
@@ -162,6 +156,7 @@ table.t td { border-bottom: 2px solid var(--line); padding: 14px 18px; vertical-
 .quiz .qt { display: flex; flex-direction: column; gap: 12px; }
 .quiz .qtm { flex: 1; display: flex; gap: 8px; align-items: center; border-radius: 16px; padding: 10px 14px; color: #fff; }
 .quiz .qtm .qn { font: 800 26px/1.1 var(--f-body); flex: 1; min-width: 0; }
+.quiz .qtm .qg { font: 700 24px/1.1 var(--f-body); background: rgba(255,255,255,.22); border-radius: 10px; padding: 14px 16px; }  /* the teaching team does not answer its own hack */
 .quiz .qtm button { width: 58px; height: 58px; flex: none; border: 0; border-radius: 12px; background: rgba(255,255,255,.92); color: var(--ink); font: 800 30px/1 var(--f-body); cursor: pointer; }
 .quiz .qtm button.on { background: var(--ink); color: #fff; outline: 3px solid #fff; }
 .quiz .c-Y.qtm button.on { background: var(--t-yellow-ink); }
