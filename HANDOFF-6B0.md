@@ -1,6 +1,6 @@
 # 6B0 "Học cách học": handoff for a new session
 
-Last updated: 11 Nov 2026, 16:00 (Hanoi). Author of the session: Huy Dũng (always write the name with diacritics).
+Last updated: 14 Nov 2026 (Hanoi), hack cards restructured. Author of the session: Huy Dũng (always write the name with diacritics).
 
 Read this file first. It explains what exists, how the two HTML files work, what has been decided, and what is still open.
 
@@ -14,10 +14,11 @@ Read this file first. It explains what exists, how the two HTML files work, what
   - "Dở → Tập → Giỏi → Thích".
   - The learning ladder (thang học, based on ICAP, Chi & Wylie 2014): **1 Nhận vào · 2 Làm theo · 3 Tự chế · 4 Tương tác**.
   - The four hacks (from Oakley et al., *Learning How to Learn*):
-    1. Tập trung rồi nghỉ
+    1. Tập trung từng việc
     2. Tự đố, tự giảng
-    3. Rải đều, ngủ đủ
-    4. Luyện nhiều chỗ yếu
+    3. Nghỉ đúng, ngủ đủ
+    4. Rải đều, trộn bài
+  - Card text lives in `Tai-lieu-in-6B0.docx` pages 2–5. `The-hack-ban-moi.md` is a plain-text copy for review; regenerate it from the docx after edits.
   - Using AI (Gemini) well and badly.
   - Group slides on Canva.
 - **Format:** a game. There are 4 colour teams, chosen and seated by cô Tươi: Đỏ (R), Xanh dương (B), Xanh lá (G), Vàng (Y). Each kid is the "expert" of one hack card.
@@ -99,10 +100,10 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 - **Vòng 2:** new scenarios, deliberately unlike the card examples. The hack name is not shown.
   1. Minh does maths while a friend tells a story → **B** (slower, more mistakes).
   2. 2-minute talk about rice with no notes → **C** (practise aloud, check, repeat).
-  3. Lan learns a piano piece in 2 weeks with about 3 h → **D** (about 15 min a day, sleep on time). The right option is the shortest one, which may give it away. It could be rebalanced.
+  3. Nam has been stuck on a maths problem for 30 min → **D** (stand up and walk a few minutes, or switch subject, then come back). Replaced the Lan piano question on 14 Nov so each question maps to one card.
   4. Good at English listening, weak at spelling → **A** (mostly writing, with some listening mixed in).
 - **Chung kết:**
-  1. Biology test plan using all 4 hacks → **B**
+  1. Biology test plan using all 4 hacks → **B** (Sat, Sun, Mon 20 min each, phone in another room, self-quiz, mix chapters, sleep on time). A crams on Tuesday night, C reads Gemini's summary, D texts while studying.
   2. Using Gemini for a group talk → **C** (write your part first, then ask Gemini for 3 hard questions)
   3. An rereads vs Bình self-tests → **A** (Bình remembers more)
 
@@ -199,13 +200,21 @@ Check the PDF afterwards: it should be exactly 22 pages, with no blank ones.
 5. Optional:
    - an A4 print version of the cheat sheet (page 50 is a 16:9 slide);
    - put "Mình nghĩ trước, AI hỏi sau" back as the first "Nên" item on the cheat sheet (it was removed with the subtitle);
-   - rebalance the option lengths in Vòng 2 question 3;
    - number the 7 tick boxes on the cheat sheet.
 6. Before class: clear all test scores, wheel results and team answers.
 
 ---
 
 ## 10. Decisions log (most recent first)
+
+- **Hack cards restructured (14 Nov):**
+  - New names: Tập trung từng việc · Tự đố, tự giảng · Nghỉ đúng, ngủ đủ · Rải đều, trộn bài. Diffuse mode and sleep now share card 3; spacing and interleaving share card 4. "Luyện nhiều chỗ yếu" is no longer a hack; weak spots are a step on cards 2 and 4.
+  - Every card has the same headings: Bạn có để ý không? · Vì sao lại như vậy? · Các nhà khoa học đã thử nghiệm thế nào? · Áp dụng vào việc học như thế nào? · Gợi ý khi giảng cho đội. No "Trên thang" line.
+  - One study per card, each checked against the paper: Altmann, Trafton & Hambrick 2014 (3 s interruption doubles errors, ~4 s triples); Roediger & Karpicke 2006; Wagner et al. 2004 (59% vs 23% found the shortcut after 8 h sleep vs awake); Rohrer, Dedrick & Stershic 2015 (126 seventh-graders, 74% vs 42% a month later, within-subject: each student did one skill each way). The old card 4 numbers (140 students, 72% vs 38%) did not match the cited paper and were dropped.
+  - Timer advice is 15 min, building to 25 (the book suggests 10–15 min for ages 10–12). Sleep advice 9–12 h (AASM, Paruthi 2016).
+  - Matching cards, 2 per hack: (1) Làm bài 15 phút, điện thoại để ở phòng khác · Đang làm bài nhớ ra việc khác, ghi ra giấy rồi làm tiếp; (2) Gấp vở lại rồi viết ra những gì mình nhớ · Giảng bài cho em nhỏ, chỗ vấp là chỗ cần học lại; (3) Nghĩ mãi không ra tên bài hát, đang tắm thì nhớ ra · Bí bài toán tối qua, sáng nay thử lại thì giải ra; (4) Ôn 20 phút mỗi tối trong ba tối · Trộn ba dạng toán trong một buổi ôn.
+  - Slides updated to match: expert-round list, Vòng 2 Q3, giải lao text, ghép thẻ wrap-up, Tòa án case 3 reveal, Chung kết Q1, the wheel, and the cheat sheet hack box (card 3 icon is now a moon, card 4 a calendar).
+  - Not updated: `ToPrint.html` and `InteractiveSlides.html` (old versions), and cô Tươi's plan deck (claude.ai artifact).
 
 - **Cheat sheet (page 50):**
   - Print-friendly: 4 boxes with thin light borders, all-caps section bars and line icons, all body text at 24px, no footer.
