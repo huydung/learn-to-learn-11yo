@@ -79,7 +79,7 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 
 | Round | How | Points |
 |---|---|---|
-| Giảng hay | dot votes after all 4 talks: each kid 2 dots for 2 other teams, cô Tươi and Huy Dũng 4 dots each (40 dots) | 4·3·2·2 |
+| Giảng hay | dot votes after all 4 talks: each kid 2 dots in their own team colour for 2 other teams (a dot under its own colour is void), cô Tươi and Huy Dũng 4 white dots each (40 dots: 8 per team colour + 8 white) | 4·3·2·2 |
 | Nghe hiểu | number of the 3 questions the team answers correctly (it skips the question on the hack it taught) | 4·3·2·2 |
 | Đua ghép thẻ | correct cards (of 8); the bell order breaks ties | 4·3·2·2 |
 | Dùng AI | right outcome 2 + reason 1 + accepted appeal 1 (teams answer in their own words) | up to 4 (raw) |
