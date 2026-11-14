@@ -8,11 +8,11 @@ Take the whole `slides` folder to the class laptop, not only `6B0slides.html`.
 ## Files
 | File | What is in it | When you open it |
 |---|---|---|
-| `6B0slides.html` | All 52 slides in order, plus teams and scoring rules | To change any text, question, answer or layout |
+| `6B0slides.html` | All 51 slides in order, plus teams and scoring rules | To change any text, question, answer or layout |
 | `app.js` | How the deck works: widgets, scores, edit mode, keys | Only to change how something behaves |
 | `style.css` | Colours, fonts, sizes | To change the look |
 | `fonts/` | Merriweather and Be Vietnam Pro, so it looks right offline | Never |
-| `videos/` | Put the Tòa án AI videos here | Before class |
+| `videos/` | Put the Dùng AI videos here | Before class |
 | `map/` | Map background, 8 landmark pictures and 4 team explorers (WebP) | To swap a picture: keep the same file name |
 
 ## Two ways to edit
@@ -53,7 +53,7 @@ In the browser: press `E`, click a box, and change **Hiện ở bước** or tic
 ## Moving scores to another computer
 Press `?` and click **Sao lưu ra file**. On the other computer, open the deck, press `?` and click **Khôi phục từ file**.
 
-## Videos for Tòa án AI
+## Videos for Dùng AI
 1. Copy the video file into `videos/`.
 2. Open the case slide, press `E`, click the video box, then click **Gắn video** and pick the same file.
 

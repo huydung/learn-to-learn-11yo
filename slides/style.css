@@ -39,8 +39,8 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 4px s
 .bg-red .frame { display: none; }
 .foot { position: absolute; left: 120px; bottom: 40px; z-index: 3; font: 500 24px/1 var(--f-body); color: var(--mute); }
 .bg-red .foot { color: #F3CFCF; }
-.logo { position: absolute; right: 110px; bottom: 34px; z-index: 3; font: 900 28px/1 var(--f-head); color: var(--deep); letter-spacing: 2px; }
-.bg-red .logo { color: var(--cream); }
+.logo { position: absolute; right: 110px; bottom: 30px; z-index: 3; height: 44px; width: auto; border-radius: 4px; }
+.bg-red .logo { box-shadow: 0 0 0 3px #fff; }  /* the red mark needs an edge on red slides */
 .strip { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); z-index: 4; display: flex; gap: 14px; }
 .strip span { font: 800 28px/1 var(--f-body); color: #fff; padding: 10px 20px; border-radius: 12px; min-width: 120px; text-align: center; }
 
@@ -332,26 +332,21 @@ table.tally small { font-size: 22px; color: var(--mute); }
 .lm.here .lb { background: var(--red); color: #fff; }
 .lm.here .lb b { background: #fff; color: var(--red); }
 .lm.here img { animation: bob 1.8s ease-in-out infinite; }
-.lm.done img { filter: saturate(.6) drop-shadow(0 10px 8px rgba(0, 0, 0, .35)); }
-.lm .ck { display: none; position: absolute; top: 14px; right: 18px; width: 46px; height: 46px; border-radius: 50%; background: var(--t-green); color: #fff; font: 900 28px/46px var(--f-body); font-style: normal; text-align: center; box-shadow: 0 3px 0 rgba(0, 0, 0, .25); }
-.lm.done .ck { display: block; }
+/* Stops ahead are grey; a stop turns to full colour once the teams reach it. */
+.lm:not(.done):not(.here) img { filter: grayscale(1) brightness(1.05) drop-shadow(0 10px 8px rgba(0, 0, 0, .3)); }
+.lm:not(.done):not(.here) .lb { opacity: .8; }
+.lm img { transition: transform .2s, filter .8s; }
 @keyframes bob { 50% { transform: translateY(-10px); } }
 .toks { position: absolute; inset: 0; pointer-events: none; }
 .tok { position: absolute; left: 0; top: 0; width: 72px; height: 100px; }
 .tok img { position: relative; z-index: 1; width: 72px; height: 100px; object-fit: contain; filter: drop-shadow(0 5px 3px rgba(0, 0, 0, .35)); }
-.tok .base { position: absolute; left: 4px; right: 4px; bottom: -6px; height: 18px; border-radius: 50%; box-shadow: 0 0 0 3px #fff; }
-.tok .crown { display: none; position: absolute; z-index: 2; left: 50%; top: -34px; transform: translateX(-50%); font: 32px/1 sans-serif; font-style: normal; }
-.tok.top .crown { display: block; }
 .walking .tok img { animation: hop .32s ease-in-out infinite alternate; }
 @keyframes hop { to { transform: translateY(-12px); } }
-.mhint { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); background: rgba(29, 29, 29, .78); color: #fff; font: 600 24px/1 var(--f-body); padding: 14px 24px; border-radius: 999px; }
-.mhint kbd { background: #fff; color: var(--ink); border-radius: 6px; padding: 2px 8px; }
 
 body.mapmode:not(.panel) #stage { display: none; }
 body.mapmode #stage { z-index: 2; border-radius: 28px; box-shadow: 0 30px 90px rgba(0, 0, 0, .65); animation: panelIn .35s cubic-bezier(.2, .8, .2, 1); }
 body.mapmode .frame { border-radius: 28px; }
 body.panel #map .mp { filter: brightness(.45) blur(3px); }
-body.panel .mhint { display: none; }
 @keyframes panelIn { from { opacity: 0; } }
 
 #hud { position: fixed; inset: 0; z-index: 30; pointer-events: none; }
@@ -377,3 +372,12 @@ body.panel .mhint { display: none; }
 .vlink img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .vlink span { position: absolute; right: 16px; top: 16px; background: var(--red); color: #fff; font: 800 26px/1 var(--f-body); padding: 12px 18px; border-radius: 12px; }
 .vlink:hover span { background: var(--deep); }
+.lm:focus, .lm:focus-visible { outline: none; }  /* no focus box left on a stop after clicking it */
+
+/* HUD: every element is the same height */
+.hs, .hc, .hb button { box-sizing: border-box; height: 84px; }
+.hs { justify-content: center; gap: 4px; padding: 0 22px; }
+.hs b { font-size: 30px; white-space: nowrap; }
+.hc { padding: 0 18px 0 6px; }
+.hc img { height: 70px; }
+.hb button { display: flex; align-items: center; padding: 0 22px; }

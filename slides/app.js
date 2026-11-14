@@ -220,11 +220,6 @@ function fitStage() {
   for (const layer of [$("#map .mp"), $("#hud .hi")]) if (layer) layer.style.transform = `translate(-50%,-50%) scale(${fit})`;
 }
 
-function slideTag(slide) {
-  if (!slide.judgedBy) return slide.tag;
-  const pick = wheels[slide.judgedBy.wheel]?.[slide.judgedBy.slot];
-  return pick !== undefined ? `Đội ${TEAMS[pick].name} xử` : slide.tag;
-}
 
 /* Reveal steps: each → press shows the next group of boxes (or the next line of a data-each box). */
 const lineCount = (b) => (b.each && b.type === "text" ? (b.html.match(/<li[\s>]/g) || []).length : 0);
@@ -252,14 +247,13 @@ function buildSlide(index, onKey, shown = Infinity, anim = null) {
   const list = slides();
   const slide = list[index];
   const blocks = editing && index === current ? draft : slide.blocks;
-  const tag = slideTag(slide);
 
   const el = document.createElement("div");
   el.className = `sl bg-${slide.bg || "paper"}${editing ? " edit" : ""}`;
   el.innerHTML = `<div class="frame"></div>`
-    // The slide title already says what the slide is; the footer only adds where we are in the session.
-    + (slide.noFooter ? "" : `<div class="foot">${index + 1} / ${list.length}${tag ? ` · ${esc(tag)}` : ""}</div>`)
-    + `<div class="logo">HDI</div>`;
+    // The map HUD says where we are in the session, so the footer is only the page number.
+    + (slide.noFooter ? "" : `<div class="foot">${index + 1} / ${list.length}</div>`)
+    + `<img class="logo" src="images/hdi.webp" alt="HDI">`;
 
   blocks.forEach((block, i) => {
     const blk = document.createElement("div");
@@ -966,9 +960,8 @@ function buildMap() {
       <path class="tr-edge" d="${trailPath()}"/><path class="tr-base" d="${trailPath()}"/><path class="tr-done" d="${trailPath()}"/>
     </svg>
     ${STOPS.map((s, i) => `<button class="lm" data-s="${i}" style="left:${s.x}px;top:${s.y}px" aria-label="Chặng ${i + 1}: ${esc(s.name)}">
-      <img src="${s.art}" alt=""><span class="lb"><b>${i + 1}</b>${esc(s.name)}</span><i class="ck">✓</i></button>`).join("")}
-    <div class="toks">${TEAMS.map((t) => `<div class="tok" data-k="${t.key}"><i class="crown">👑</i><img src="${MAP_ART.team(t.key)}" alt="Đội ${t.name}"><span class="base c-${t.key}"></span></div>`).join("")}</div>
-    <div class="mhint">Bấm vào một chặng, hoặc <kbd>→</kbd> để vào chặng hiện tại</div>
+      <img src="${s.art}" alt=""><span class="lb"><b>${i + 1}</b>${esc(s.name)}</span></button>`).join("")}
+    <div class="toks">${TEAMS.map((t) => `<div class="tok" data-k="${t.key}"><img src="${MAP_ART.team(t.key)}" alt="Đội ${t.name}"></div>`).join("")}</div>
   </div>`;
   hud.innerHTML = `<div class="hi"></div>`;
   trail = $(".tr-done", mapEl);
@@ -996,19 +989,17 @@ function buildMap() {
   };
 }
 
-// Places the four tokens around a point on the trail; the leading team stands in front with a crown.
+// Places the four tokens in one row at a point on the trail, in leaderboard order: 1st on the left, 4th on the right.
+// STOPS[i].team says where the row stands: "below" the landmark (default), or to its "left" or "right".
 function placeTokens(len) {
   const pt = trail.getPointAtLength(len);
-  const t = totals(), place = places(byValue(t));
-  const anyScore = Object.values(t).some((v) => v > 0) && board.display !== "none";
-  const order = TEAMS.map((tm) => tm.key).sort((a, b) => place[a] - place[b]);
-  const side = pt.x > 1500 ? -1 : 1;  // stand beside the landmark, on the side with room
+  const place = places(byValue(totals()));
+  const order = TEAMS.map((tm) => tm.key).sort((a, b) => place[a] - place[b]);  // ties keep the TEAMS order
+  const where = STOPS[stopOf(current)].team || "below";
   order.forEach((k, i) => {
-    const tok = $(`.tok[data-k="${k}"]`, mapEl);
-    const dx = side * (118 + i * 50), dy = -96 + (i % 2) * 16;
-    tok.style.transform = `translate(${pt.x + dx - 36}px, ${pt.y + dy}px)`;
-    tok.style.zIndex = 10 - i;
-    tok.classList.toggle("top", anyScore && place[k] === 0);
+    const cx = where === "left" ? pt.x - 110 - (3 - i) * 50 : where === "right" ? pt.x + 110 + i * 50 : pt.x + (i - 1.5) * 50;
+    const top = where === "below" ? pt.y + 60 : pt.y - 110;
+    $(`.tok[data-k="${k}"]`, mapEl).style.transform = `translate(${cx - 36}px, ${top}px)`;
   });
 }
 
@@ -1055,7 +1046,7 @@ function updateMap() {
   walkTo(stopLen[s]);
   const open = slideOpen || boardOpen;
   const page = current - stopStart(s) + 1, pages = stopEnd(s) - stopStart(s) + 1;
-  $(".hi", hud).innerHTML = `<div class="hs"><span class="hsn">Chặng ${s + 1}/${STOPS.length}</span><b>${esc(STOPS[s].name)}</b>${open ? `<span class="hsp">trang ${page}/${pages}</span>` : ""}</div>
+  $(".hi", hud).innerHTML = `<div class="hs"><span class="hsn">Chặng ${s + 1}/${STOPS.length}${open ? ` · trang ${page}/${pages}` : ""}</span><b>${esc(STOPS[s].name)}</b></div>
     <div class="hteams">${teamHud()}</div>
     <div class="hb"><button data-a="board" class="${boardOpen ? "on" : ""}">🏆 Bảng điểm</button>
       <button data-a="map">${open ? "🗺 Về bản đồ" : "▶ Vào chặng"}</button></div>`;

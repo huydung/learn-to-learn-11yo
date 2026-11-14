@@ -21,7 +21,7 @@ Read this file first. It explains what exists, how the two HTML files work, what
   - Card text lives in `Tai-lieu-in-6B0.docx` pages 2–5. `The-hack-ban-moi.md` is a plain-text copy for review; regenerate it from the docx after edits.
   - Using AI (Gemini) well and badly.
   - Group slides on Canva.
-- **Format:** a game. There are 4 colour teams, chosen and seated by cô Tươi: Đỏ (R), Xanh dương (B), Xanh lá (G), Vàng (Y). Each kid is the "expert" of one hack card.
+- **Format:** a game. There are 4 colour teams, chosen and seated by cô Tươi: Red (R), Blue (B), Green (G), Yellow (Y). The names are in English everywhere (slides, HUD, printables) so they are similar in length. Each kid is the "expert" of one hack card.
 
 ### Constraints that always hold
 - Never spotlight Nam Anh (Huy Dũng's son is in the class).
@@ -63,14 +63,14 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 | 19–31 | Vòng 2 · Chuyên gia: 2 min per expert (teach + Q&A, editable timer), then 4 team questions | 13–20 |
 | 31–36 | Giải lao (5 min) | 21 |
 | 36–42 | Phần 3 · Đua ghép thẻ trên sàn (3 min) and results | 22–25 |
-| 42–50 | Phần 4 · Tòa án AI: a wheel assigns teams to 4 video cases; each video stops and the team says what happens next and why (no A/B/C) | 26–34 |
+| 42–50 | Phần 4 · Dùng AI: a wheel assigns teams to 4 video cases; each video stops and the team says what happens next and why (no A/B/C) | 26–34 |
 | 50–73 | Phần 5 · Làm slide nhóm: why cô assigns it → helps vs hurts → Văn hóa đọc hand-raise checklist (no points) → bài 20/11 outline and task split (15 min, scored) → Canva demo | 35–40 |
 | 73–83 | Phần 6 · Chung kết: 3 hard questions ×2, then a wheel gives each team one hack to explain in its own words | 41–47 |
 | 83–87 | Bảng xếp hạng, chọn quà, cẩm nang | 48–50 |
 | 87–90 | Lời kết, hỏi đáp | 51–52 |
 
 **Open timing issue:**
-- The school break at 11:00 falls around minute 45, during Tòa án AI, while the slides have their own giải lao at minute 31.
+- The school break at 11:00 falls around minute 45, during Dùng AI, while the slides have their own giải lao at minute 31.
 - This has not been reconciled. Decide whether to move giải lao onto the school break or drop it.
 
 ---
@@ -85,7 +85,7 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 | Vòng 1 Thi viết | total correct lines of the 2 writers | 4·3·2·2 |
 | Vòng 2 Chuyên gia | number of the 4 questions the team answers correctly | 4·3·2·2 |
 | Đua ghép thẻ | correct cards (of 8); the bell order breaks ties | 4·3·2·2 |
-| Tòa án AI | right outcome 2 + reason 1 + accepted appeal 1 (teams answer in their own words) | up to 4 (raw) |
+| Dùng AI | right outcome 2 + reason 1 + accepted appeal 1 (teams answer in their own words) | up to 4 (raw) |
 | Bài nhóm 20/11 | checklist points the team sheet covers | 4·3·2·2 |
 | Chung kết | number of the 3 questions correct, double points | 8·6·4·4 |
 | Giải thích một hack | correct explanation 1 + own example 1 | up to 2 |
@@ -191,7 +191,7 @@ Check the PDF afterwards: it should be exactly 22 pages, with no blank ones.
 ## 9. Open items to finalize
 
 1. Reconcile giải lao with the 11:00 school break (section 3).
-2. ~~Make the 4 Tòa án AI videos.~~ Done 12 Nov: `slides/videos/case1–4.mp4`, built in `video-src/` (see its README). Each stops by itself at the vote card (`pauseAt` in each video's `data-opts`, index.html).
+2. ~~Make the 4 Dùng AI videos.~~ Done 12 Nov: `slides/videos/case1–4.mp4`, built in `video-src/` (see its README). Each stops by itself at the vote card (`pauseAt` in each video's `data-opts`, index.html).
 3. Confirm with cô Tươi:
    - the session teams stay together for bài 20/11;
    - she gives groups in-class time later;
@@ -222,7 +222,7 @@ Check the PDF afterwards: it should be exactly 22 pages, with no blank ones.
   - Stairs sit on the box edge. The AI section is a plain Nên / Không nên list.
   - The Canva checklist is one 7-item list in two columns.
 - **Ladder steps 3–4** renamed **Tự chế** and **Tương tác** (from Tự làm / Cùng nhau).
-- **Đua ghép thẻ and Tòa án AI** split into two sections, each with its own results page.
+- **Đua ghép thẻ and Dùng AI** split into two sections, each with its own results page.
 - **Round 2:** the whole team discusses; the hack name is hidden; scenarios were rewritten to differ from the reading cards.
 - **No Wayground:** team A–D cards, with answers recorded and scored on the slides.
 - **Question slides:** options on the left, team column on the right; only the team's chosen letter pulses.

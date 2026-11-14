@@ -46,10 +46,10 @@
   <script>
   /* Teams and scoring. Slides are below, in <div id="slides">. */
   const TEAMS = [
-    { key: "R", name: "Đỏ", color: "#D32F2F" },
-    { key: "B", name: "Xanh dương", color: "#1E63C6" },
-    { key: "G", name: "Xanh lá", color: "#2E8B47" },
-    { key: "Y", name: "Vàng", color: "#F2B705" },
+    { key: "R", name: "Red", color: "#D32F2F" },
+    { key: "B", name: "Blue", color: "#1E63C6" },
+    { key: "G", name: "Green", color: "#2E8B47" },
+    { key: "Y", name: "Yellow", color: "#F2B705" },
   ];
 
   const POINTS_RANKED = [4, 3, 2, 2]; // place 1, 2, 3, 4. Ties share the higher place.
@@ -61,7 +61,7 @@
     { id: "thiviet", name: "Vòng 1 · Thi viết", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo tổng số dòng đúng" },
     { id: "chuyengia", name: "Vòng 2 · Chuyên gia", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số câu đúng của đội (4 câu)" },
     { id: "ghepthe", name: "Đua ghép thẻ", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số thẻ đúng; bằng nhau thì rung chuông trước xếp trên" },
-    { id: "toaan", name: "Vòng 3 · Tòa án AI", kind: "points", max: 4, rule: "Đúng kết cục 2 · lý do 1 · kháng cáo 1" },
+    { id: "toaan", name: "Vòng 3 · Dùng AI", kind: "points", max: 4, rule: "Đúng kết cục 2 · lý do 1 · kháng cáo 1" },
     { id: "nhom", name: "Vòng 4 · Bài nhóm", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số điểm checklist đạt" },
     { id: "chungket", name: "Chung kết ×2", kind: "rank", points: POINTS_FINAL, rule: "Xếp theo số câu đúng của đội (3 câu)" },
     { id: "thang", name: "Chung kết · giải thích hack", kind: "points", max: 2, rule: "Giải thích đúng 1 · ví dụ riêng 1" },
@@ -69,15 +69,16 @@
 
   // The session map (M). Each stop starts at slide "from" and runs until the next stop.
   // x, y = where the stop sits on the trail, in pixels on the 1920 × 1080 map. Pictures are in map/.
+  // team: where the four team explorers stand at this stop: "below" the landmark (default), "left" or "right".
   const STOPS = [
-    { from: "bia",      name: "Khởi động",     art: "map/stop1.webp", x: 260,  y: 880 },
-    { from: "p2",       name: "Bốn hack",      art: "map/stop2.webp", x: 640,  y: 700 },
-    { from: "nghi",     name: "Giải lao",      art: "map/stop3.webp", x: 560,  y: 420 },
-    { from: "p3",       name: "Đua ghép thẻ",  art: "map/stop4.webp", x: 1000, y: 570 },
-    { from: "p3b",      name: "Tòa án AI",     art: "map/stop5.webp", x: 1260, y: 330 },
-    { from: "p4",       name: "Xưởng slide",   art: "map/stop6.webp", x: 1520, y: 560 },
-    { from: "p5",       name: "Chung kết",     art: "map/stop7.webp", x: 1660,  y: 330 },
-    { from: "bangdiem", name: "Về đích",       art: "map/stop8.webp", x: 1440,  y: 850 },
+    { from: "bia",      name: "Thang học tập", art: "map/stop1.webp", x: 270,  y: 900 },
+    { from: "p2",       name: "Bốn hack",      art: "map/stop2.webp", x: 290,  y: 520 },
+    { from: "thiviet",  name: "Giảng & Test",  art: "map/stop3.webp", x: 820,  y: 330 },
+    { from: "p3",       name: "Đua ghép thẻ",  art: "map/stop4.webp", x: 880,  y: 700 },
+    { from: "p3b",      name: "Dùng AI",       art: "map/stop5.webp", x: 1250, y: 560 },
+    { from: "p4",       name: "Làm Slides",    art: "map/stop6.webp", x: 1560, y: 820 },
+    { from: "p5",       name: "Chung kết",     art: "map/stop7.webp", x: 1620, y: 520, team: "left" },
+    { from: "bangdiem", name: "Về đích",       art: "map/stop8.webp", x: 1450, y: 300, team: "right" },
   ];
   const MAP_ART = { background: "map/map.webp", team: (key) => `map/team${key}.webp` };
   </script>
@@ -107,7 +108,7 @@
 
 <section data-id="p1" data-nav="Phần 1" data-bg="red">
   <div class="divnum" data-box="96 90 620 900">1</div>
-  <div class="divt" data-box="760 250 1040 340">Khởi động</div>
+  <div class="divt" data-box="760 250 1040 340">Thang học tập</div>
   <div class="lead" data-box="760 640 1040 220" data-step="1">Dở → Tập → Giỏi → Thích, chiếc thang học tập, và luật chơi</div>
 </section>
 
@@ -267,19 +268,19 @@
 
 <section data-id="p3b" data-nav="Phần 4" data-bg="red">
   <div class="divnum" data-box="96 90 620 900">4</div>
-  <div class="divt" data-box="760 250 1040 340">Tòa án AI</div>
+  <div class="divt" data-box="760 250 1040 340">Dùng AI</div>
   <div class="lead" data-box="760 640 1040 220" data-step="1">Dùng AI thế nào thì lên thang, thế nào thì tụt xuống</div>
 </section>
 
 <section data-id="toaan" data-nav="Vòng 3" data-tag="Vòng 3">
-  <div class="h2" data-box="120 78 1300 120">Vòng 3 · Tòa án AI</div>
+  <div class="h2" data-box="120 78 1300 120">Vòng 3 · Dùng AI</div>
   <div class="body" data-box="120 220 1100 640" data-step="1" data-each><ol><li>Xem phần 1: một bạn dùng Gemini và bài xong ngay.</li><li>Đội thẩm phán đoán chuyện gì xảy ra sau đó.</li><li>Đội nói rõ cả dự đoán và lý do vì sao.</li><li>Xem phần 2. Đội khác được kháng cáo nếu thấy lý do còn thiếu.</li></ol></div>
   <div class="note" data-box="1280 220 520 560" data-step="5"><b>Điểm thẩm phán</b><br>Đúng kết cục: 2<br>Lý do gắn với hack hoặc bậc thang: 1<br><br><b>Kháng cáo</b> được chánh án chấp nhận: 1<br><span class="small">Chánh án: cô Tươi</span></div>
 </section>
 
 <section data-id="boc-toaan" data-nav="Bốc thăm tình huống" data-tag="Vòng 3">
   <div class="h2" data-box="120 78 1300 120">Bốc thăm tình huống</div>
-  <div data-widget="wheel" data-box="120 220 1680 760" data-step="1" data-opts='{"items":["Đội Đỏ","Đội Xanh dương","Đội Xanh lá","Đội Vàng"],"colors":["#D32F2F","#1E63C6","#2E8B47","#F2B705"],"slots":["Tình huống 1","Tình huống 2","Tình huống 3","Tình huống 4"]}'></div>
+  <div data-widget="wheel" data-box="120 220 1680 760" data-step="1" data-opts='{"items":["Đội Red","Đội Blue","Đội Green","Đội Yellow"],"colors":["#D32F2F","#1E63C6","#2E8B47","#F2B705"],"slots":["Tình huống 1","Tình huống 2","Tình huống 3","Tình huống 4"]}'></div>
 </section>
 
 <section data-id="case1" data-nav="Tình huống 1" data-judged-by='{"wheel":"boc-toaan","slot":0}'>
@@ -315,7 +316,7 @@
 </section>
 
 <section data-id="kq-toaan" data-nav="Vòng 3 · kết quả" data-tag="Vòng 3">
-  <div class="h2" data-box="120 78 1300 120">Tòa án AI · Kết quả</div>
+  <div class="h2" data-box="120 78 1300 120">Dùng AI · Kết quả</div>
   <div data-widget="roundres" data-box="120 200 1680 780" data-step="1" data-opts='{"round":"toaan","label":"Điểm thẩm phán + kháng cáo","max":4}'></div>
 </section>
 
@@ -404,20 +405,22 @@
 
 <section data-id="datthang" data-nav="Giải thích một hack" data-tag="Chung kết">
   <div class="h2" data-box="120 78 1300 120">Mỗi đội giải thích một hack</div>
-  <div data-widget="wheel" data-box="120 200 1100 780" data-step="1" data-opts='{"items":["Tập trung từng việc","Tự đố, tự giảng","Nghỉ đúng, ngủ đủ","Rải đều, trộn bài"],"colors":["#8E011F","#BD0129","#51000C","#A3485A"],"slots":["Đội Đỏ","Đội Xanh dương","Đội Xanh lá","Đội Vàng"]}'></div>
+  <div data-widget="wheel" data-box="120 200 1100 780" data-step="1" data-opts='{"items":["Tập trung từng việc","Tự đố, tự giảng","Nghỉ đúng, ngủ đủ","Rải đều, trộn bài"],"colors":["#8E011F","#BD0129","#51000C","#A3485A"],"slots":["Đội Red","Đội Blue","Đội Green","Đội Yellow"]}'></div>
   <div class="note" data-box="1260 200 540 620" data-step="2"><b>30 giây chuẩn bị, 1 phút nói</b><br>Hack này giúp mình leo thang thế nào? Cho một ví dụ của chính các bạn.<br><br><b>Điểm</b><br>Giải thích đúng: 1<br>Có ví dụ của riêng đội: 1</div>
 </section>
 
-<section data-id="bangdiem" data-nav="Bảng xếp hạng" data-tag="Kết quả">
-  <div class="h2" data-box="120 78 1300 120">Bảng xếp hạng cuối cùng</div>
-  <div data-widget="standings" data-box="120 240 1680 520" data-step="1"></div>
-  <div class="note" data-box="120 820 1680 100" data-step="2">Ai cũng có quà. Thắng chỉ là được chọn trước.</div>
+<section data-id="bangdiem" data-nav="Bảng xếp hạng · chọn quà">
+  <div class="h2" data-box="120 78 1500 120">Bảng xếp hạng và chọn quà</div>
+  <div data-widget="standings" data-box="120 210 1680 330" data-step="1"></div>
+  <div class="note" data-box="120 570 1680 90" data-step="2">Ai cũng có quà. Thắng chỉ là được chọn trước.</div>
+  <div class="body" data-box="120 700 1000 270" data-step="3" data-each><ol><li>Lượt 1: đội hạng nhất lên chọn, mỗi bạn một món, rồi đến các đội sau.</li><li>Lượt 2: làm lại theo đúng thứ tự đó.</li><li>Trong lúc chờ, viết vào phiếu và mang về nhà.</li></ol></div>
+  <div class="note" data-box="1180 700 620 270" data-step="6">Một môn mình chưa thích: ……………<br>Hack mình sẽ thử trong 7 ngày: ……………</div>
 </section>
 
-<section data-id="qua" data-nav="Chọn quà" data-tag="Quà">
-  <div class="h2" data-box="120 78 1300 120">Chọn quà</div>
-  <div class="lead" data-box="120 230 1680 420" data-step="1" data-each><ol><li>Lượt 1: đội hạng nhất lên chọn, mỗi bạn một món, rồi đến các đội sau.</li><li>Lượt 2: làm lại theo đúng thứ tự đó.</li><li>Trong lúc chờ, viết vào phiếu và mang về nhà:</li></ol></div>
-  <div class="note" data-box="120 680 1680 200" data-step="4">Một môn mình chưa thích: ……………………<br>Hack mình sẽ thử với môn đó trong 7 ngày: ……………………</div>
+<section data-id="loiket" data-nav="Lời kết" data-bg="red">
+  <div class="big" data-box="120 260 1680 160">Dở → Tập → Giỏi → Thích</div>
+  <div class="lead" data-box="160 470 1600 180" data-step="1">Môn bạn vừa viết có thể đang ở đoạn “dở”. Bốn hack hôm nay giúp bạn đi qua đoạn đó nhanh hơn.</div>
+  <div class="lead" data-box="160 700 1600 140" data-step="2">Hôm nay mới là màn hướng dẫn. Phần còn lại của bản đồ là của các bạn.</div>
 </section>
 
 <section data-id="camnang" data-nav="Cẩm nang mang về" data-no-footer>
@@ -443,12 +446,6 @@
    <div class="hk"><svg class="ic hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg><h4>3 · Nghỉ đúng, ngủ đủ</h4><p>Nghỉ 5 phút: đi lại, không cầm điện thoại. Bí thì nghỉ rồi quay lại. Ngủ đủ giấc.</p></div>
    <div class="hk"><svg class="ic hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"></path></svg><h4>4 · Rải đều, trộn bài</h4><p>Ôn sớm vài ngày, mỗi tối một ít. Trộn nhiều dạng bài, thêm dạng hay sai.</p></div></div></section>
 </div></div>
-</section>
-
-<section data-id="loiket" data-nav="Lời kết" data-bg="red">
-  <div class="big" data-box="120 260 1680 160">Dở → Tập → Giỏi → Thích</div>
-  <div class="lead" data-box="160 470 1600 180" data-step="1">Môn bạn vừa viết có thể đang ở đoạn “dở”. Bốn hack hôm nay giúp bạn đi qua đoạn đó nhanh hơn.</div>
-  <div class="lead" data-box="160 700 1600 140" data-step="2">Hôm nay mới là màn hướng dẫn. Phần còn lại của bản đồ là của các bạn.</div>
 </section>
 
 <section data-id="hoidap" data-nav="Hỏi đáp" data-bg="cream">
