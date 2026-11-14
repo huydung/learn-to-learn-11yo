@@ -1,7 +1,7 @@
 /* Học cách học · 6B0 — slide engine: rendering, widgets, scores, edit mode, keys.
  *
- * Slides, teams and scoring rules are in index.html. Styles are in style.css.
- * Everything the deck remembers is saved in this browser's localStorage under "hch-6b0-".
+ * Slides, teams and scoring rules are in 6B0slides.html. Styles are in style.css.
+ * Everything the deck remembers is saved in this browser's localStorage under "hch-6b0-v2-".
  *
  * Sections: slide file · storage · state · scoring · rendering · widgets · leaderboard · edit mode · grid view · navigation · save · boot
  */
@@ -15,13 +15,13 @@ const clone = (value) => JSON.parse(JSON.stringify(value));
 const LETTERS = "ABCD";
 
 /* ================= Slide file =================
- * Every slide is a <section> inside <div id="slides"> in index.html. Each child is one box:
+ * Every slide is a <section> inside <div id="slides"> in 6B0slides.html. Each child is one box:
  *   <div class="lead" data-box="x y w h">text</div>                    a text box; data-size="44" = font size set with A+/A−
  *   <div data-widget="timer" data-box="x y w h" data-opts='{...}'>…</div>  an interactive block; any inner HTML becomes opts.html
- * "Lưu vào index.html" (Ctrl+S) writes the deck back in this same format, browser edits included.
+ * "Lưu vào 6B0slides.html" (Ctrl+S) writes the deck back in this same format, browser edits included.
  */
 
-// index.html as it was before this script touched the page, with a marker where the slides go.
+// 6B0slides.html as it was before this script touched the page, with a marker where the slides go.
 const fileTemplate = (() => {
   const doc = document.documentElement.cloneNode(true);
   $("#slides", doc).innerHTML = "\n@@SLIDES@@\n";
@@ -75,7 +75,7 @@ function writeSlide(s) {
 /* ================= Storage ================= */
 
 // Every change is written at once, so a reload or a closed tab loses nothing.
-const STORE_PREFIX = "hch-6b0-";
+const STORE_PREFIX = "hch-6b0-v2-";  // v2 since 14 Nov: the deck was renamed and old browser edits no longer apply
 const store = {
   failed: false,
   get(key, fallback) {
@@ -141,7 +141,7 @@ const saveWheels = () => store.set("wheels", wheels);
 const saveEdits = () => store.set("edits", edits);
 const saveSession = () => store.set("session", session);
 
-// Where you are in the deck. Restored when you open index.html again without a #page in the address.
+// Where you are in the deck. Restored when you open 6B0slides.html again without a #page in the address.
 const view = { current: 0, boardOpen: false, showStrip: false, ...store.get("view", {}) };
 const saveView = () => store.set("view", { current, boardOpen, showStrip });
 
@@ -734,7 +734,7 @@ function renderEditBar() {
     ${block?.kind === "video" ? `<button data-a="video">Gắn video</button>` : ""}
     ${block?.kind === "timer" ? `<label>Phút <input type="number" min="0.5" step="0.5" data-a="minutes" value="${(block.opts.seconds || 60) / 60}"></label>` : ""}
     ${edits[currentSlide().id] ? `<button data-a="original">Về bản gốc</button>` : ""}
-    <button data-a="savefile">Lưu vào index.html (Ctrl+S)</button>
+    <button data-a="savefile">Lưu vào 6B0slides.html (Ctrl+S)</button>
     <button class="pri" data-a="done">Xong</button><span class="msg" id="msg"></span>`;
 }
 
@@ -781,7 +781,7 @@ $("#bar").addEventListener("change", (e) => {
   render();
 });
 
-// Videos are played from the "videos" folder next to index.html.
+// Videos are played from the "videos" folder next to 6B0slides.html.
 function pickVideo(block) {
   const input = document.createElement("input");
   input.type = "file";
@@ -962,17 +962,17 @@ stage.addEventListener("touchend", (e) => {
   touchX = null;
 });
 
-/* ================= Save slides to index.html ================= */
+/* ================= Save slides to 6B0slides.html ================= */
 
 // Chrome and Edge write straight into the file you pick (asked once per session).
-// Other browsers download index.html; drag it over the old one.
+// Other browsers download 6B0slides.html; drag it over the old one.
 let fileHandle = null;
 async function saveFile() {
   if (editing) { syncDraft(); saveDraft(); }
   const html = fileTemplate.replace("@@SLIDES@@", () => slides().map(writeSlide).join("\n\n"));
   if (window.showSaveFilePicker) {
     try {
-      fileHandle ??= await showSaveFilePicker({ suggestedName: "index.html", types: [{ description: "HTML", accept: { "text/html": [".html"] } }] });
+      fileHandle ??= await showSaveFilePicker({ suggestedName: "6B0slides.html", types: [{ description: "HTML", accept: { "text/html": [".html"] } }] });
       const out = await fileHandle.createWritable();
       await out.write(html);
       await out.close();
@@ -984,10 +984,10 @@ async function saveFile() {
   }
   const link = document.createElement("a");
   link.href = URL.createObjectURL(new Blob([html], { type: "text/html" }));
-  link.download = "index.html";
+  link.download = "6B0slides.html";
   link.click();
   URL.revokeObjectURL(link.href);
-  flash("Đã tải index.html về. Chép đè lên file cũ trong thư mục slides.");
+  flash("Đã tải 6B0slides.html về. Chép đè lên file cũ trong thư mục slides.");
 }
 
 document.addEventListener("keydown", (e) => {
@@ -1052,7 +1052,7 @@ addEventListener("hashchange", () => {
   if (i >= 0 && i !== current && !editing) { current = i; render(); }
 });
 
-// A browser edit that index.html already contains (saved with Ctrl+S) is no longer needed.
+// A browser edit that 6B0slides.html already contains (saved with Ctrl+S) is no longer needed.
 for (const s of SLIDES) if (edits[s.id] && sameBlocks(edits[s.id].blocks, s.blocks)) delete edits[s.id];
 saveEdits();
 

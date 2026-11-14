@@ -39,14 +39,14 @@ Read this file first. It explains what exists, how the two HTML files work, what
 
 | # | What | Where | Source in this folder |
 |---|---|---|---|
-| A | **Student slides + leaderboard** (projected in class) | Local folder `slides/` (open `index.html`). Older online copy: https://claude.ai/artifact/DEWBsWs7xBedRFo4CiY3Rm | `slides/` · see `slides/README.md`. `InteractiveSlides.html` is the old single-file version. |
+| A | **Student slides + leaderboard** (projected in class) | Local folder `slides/` (open `6B0slides.html`). Older online copy: https://claude.ai/artifact/DEWBsWs7xBedRFo4CiY3Rm | `slides/` · see `slides/README.md`. `InteractiveSlides.html` is the old single-file version. |
 | B | **A4 printables** (22 pages) | `Tai-lieu-in-6B0.docx` (edit and print in Word). Older online copy: https://claude.ai/artifact/AR2vJGv2TKAzz5LM2Wgv76 | `Tai-lieu-in-6B0.docx`. `ToPrint.html` is the old HTML version. |
 | C | Plan deck for cô Tươi (Slides type, 28 pages) | claude.ai artifact https://claude.ai/artifact/KFFwru2snypPApxmFKyrEx | Not a file. Edit it in the claude.ai Slides editor, or export to PDF/PPTX from there. |
 
 The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc.
 
 ### Running locally (since 11 Nov 2026)
-- **Slides:** double-click `slides/index.html`. Fonts are in `slides/fonts/`, so it works offline. Scores, wheel results and in-browser edits save to the browser's `localStorage` (prefix `hch-6b0-`). Press `?` → **Sao lưu ra file** / **Khôi phục từ file** to move them to another computer.
+- **Slides:** double-click `slides/6B0slides.html`. Fonts are in `slides/fonts/`, so it works offline. Scores, wheel results and in-browser edits save to the browser's `localStorage` (prefix `hch-6b0-v2-`; the old `hch-6b0-` keys are ignored). Press `?` → **Sao lưu ra file** / **Khôi phục từ file** to move them to another computer.
 - **Videos:** copy files into `slides/videos/`, then edit mode → **Gắn video**.
 - **Printables:** open `Tai-lieu-in-6B0.docx` in Word. Fonts used: Merriweather and Be Vietnam Pro (copies in `slides/fonts/`; install them on the printing computer, or Word substitutes).
 
@@ -121,11 +121,11 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 ## 5. How the slides work (`slides/`)
 
 `slides/README.md` explains running and editing. In short:
-- `index.html` holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 52 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
-- Edit mode (`E`) keeps changes in `localStorage`; Ctrl+S writes the whole deck back to `index.html` in the same format (File System Access API in Chrome, download elsewhere). Unchanged slides come out byte for byte the same, so `git diff` shows only real edits. (`content.js` was removed on 13 Nov; it is in the first git commit.)
+- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 52 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
+- Edit mode (`E`) keeps changes in `localStorage`; Ctrl+S writes the whole deck back to `6B0slides.html` in the same format (File System Access API in Chrome, download elsewhere). Unchanged slides come out byte for byte the same, so `git diff` shows only real edits. (`content.js` was removed on 13 Nov; it is in the first git commit.)
 - `app.js` is the engine. Widgets live in the `WIDGETS` object: `html teams timer reveal video thiviet wheel quiz tally roundres checkstep standings`.
 - `style.css` holds the brand tokens and all styles.
-- Storage keys: `hch-6b0-board`, `-thiviet`, `-wheels`, `-edits`.
+- Storage keys: `hch-6b0-v2-board`, `-thiviet`, `-wheels`, `-edits`.
 - Leaderboard → **Xóa điểm, đáp án và bốc thăm…** (click twice) clears scores, team answers, round 1 inputs and wheel results. Slide edits stay.
 - Every change saves to `localStorage` the moment it happens, including running timers (stored as an end time), Văn hóa đọc progress, revealed answers, the current slide and in-progress slide edits. A reload loses nothing. Two open tabs sync through the `storage` event. A red bar appears if the browser cannot save.
 
