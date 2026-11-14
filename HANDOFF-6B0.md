@@ -52,22 +52,19 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 
 ---
 
-## 3. Session flow (about 90 minutes, 52 slides)
+## 3. Session flow (about 90 minutes, 54 slides)
 
 | Phút | Phần | Slides |
 |---|---|---|
-| 0–7 | Mở đầu: Clash Royale, ba câu hỏi, chiếc thang | 1–5 |
-| 7–9 | Lập đội, luật chung, tín hiệu khiên | 6–8 |
-| 9–13 | Đọc im lặng (4 min timer) | 9–10 |
-| 13–19 | Vòng 1 · Thi viết A/B (2 min) and result table | 11–12 |
-| 19–31 | Vòng 2 · Chuyên gia: 2 min per expert (teach + Q&A, editable timer), then 4 team questions | 13–20 |
-| 31–36 | Giải lao (5 min) | 21 |
-| 36–42 | Phần 3 · Đua ghép thẻ trên sàn (3 min) and results | 22–25 |
-| 42–50 | Phần 4 · Dùng AI: a wheel assigns teams to 4 video cases; each video stops and the team says what happens next and why (no A/B/C) | 26–34 |
-| 50–73 | Phần 5 · Làm slide nhóm: why cô assigns it → helps vs hurts → Văn hóa đọc hand-raise checklist (no points) → bài 20/11 outline and task split (15 min, scored) → Canva demo | 35–40 |
-| 73–83 | Phần 6 · Chung kết: 3 hard questions ×2, then a wheel gives each team one hack to explain in its own words | 41–47 |
-| 83–87 | Bảng xếp hạng, chọn quà, cẩm nang | 48–50 |
-| 87–90 | Lời kết, hỏi đáp | 51–52 |
+| 0–9 | Chặng 1 · Khởi động: Clash Royale, ba câu hỏi, chiếc thang, lập đội, luật chung, tín hiệu khiên | 1–8 |
+| 9–15 | Chặng 2 · Viết nhanh: thi viết A/B (2 min) and result table | 9–11 |
+| 15–31 | Chặng 3 · Giảng giỏi: đọc im lặng (4 min), then Chuyên gia: 2 min per expert (teach + Q&A, editable timer), then 4 team questions | 12–21 |
+| 31–36 | Giải lao (5 min) | 22 |
+| 36–42 | Chặng 4 · Đúng chỗ: đua ghép thẻ trên sàn (3 min) and results | 23–26 |
+| 42–50 | Chặng 5 · Dùng AI: a wheel assigns teams to 4 video cases; each video stops and the team says what happens next and why (no A/B/C) | 27–35 |
+| 50–73 | Chặng 6 · Làm Slides: why cô assigns it → helps vs hurts → Văn hóa đọc hand-raise checklist (no points) → bài 20/11 outline and task split (15 min, scored) → Canva demo | 36–41 |
+| 73–85 | Chặng 7 · Chung kết: 5 questions on the whole session, easy to hard, ×2 (3 are ordering questions, 90 s each), then a wheel gives each team one hack to explain in its own words | 42–50 |
+| 85–90 | Chặng 8 · Về đích: bảng xếp hạng, chọn quà, lời kết, cẩm nang, hỏi đáp | 51–54 |
 
 **Open timing issue:**
 - The school break at 11:00 falls around minute 45, during Dùng AI, while the slides have their own giải lao at minute 31.
@@ -82,30 +79,33 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 
 | Round | How | Points |
 |---|---|---|
-| Vòng 1 Thi viết | total correct lines of the 2 writers | 4·3·2·2 |
-| Vòng 2 Chuyên gia | number of the 4 questions the team answers correctly | 4·3·2·2 |
+| Thi viết | total correct lines of the 2 writers | 4·3·2·2 |
+| Chuyên gia | number of the 4 questions the team answers correctly | 4·3·2·2 |
 | Đua ghép thẻ | correct cards (of 8); the bell order breaks ties | 4·3·2·2 |
 | Dùng AI | right outcome 2 + reason 1 + accepted appeal 1 (teams answer in their own words) | up to 4 (raw) |
-| Bài nhóm 20/11 | checklist points the team sheet covers | 4·3·2·2 |
-| Chung kết | number of the 3 questions correct, double points | 8·6·4·4 |
+| Slide nhóm 20/11 | checklist points the team sheet covers | 4·3·2·2 |
+| Chung kết | number of the 5 questions correct, double points | 8·6·4·4 |
 | Giải thích một hack | correct explanation 1 + own example 1 | up to 2 |
 | Khiên ✋ | quietest team when chú raises a hand | +1, max 3 |
 | Phạt | running or pushing in the card race | −1 |
 
-- **All questions are answered by the team** with one coloured A/B/C/D card (printables pages 14–17). **No Wayground.** The team discusses for 20–30 s.
+- **All questions are answered by the team** with one coloured A/B/C/D card (printables pages 14–17). **No Wayground.** The team discusses for 1 minute (90 s in Chung kết).
 - **Leaderboard display modes:** full scores, ranks only, or hidden.
 - **Gifts:** "Every kid gets a gift; winning only means choosing first" is said **only at the end** (bangdiem slide), never up front. Gifts: 40 items, 2 per kid, two picking rounds in rank order.
 
 ### Questions (answers spread A–D)
-- **Vòng 2:** new scenarios, deliberately unlike the card examples. The hack name is not shown.
+- **Chuyên gia:** new scenarios, deliberately unlike the card examples. The hack name is not shown.
   1. Minh does maths while a friend tells a story → **B** (slower, more mistakes).
   2. 2-minute talk about rice with no notes → **C** (practise aloud, check, repeat).
   3. Nam has been stuck on a maths problem for 30 min → **D** (stand up and walk a few minutes, or switch subject, then come back). Replaced the Lan piano question on 14 Nov so each question maps to one card.
   4. Good at English listening, weak at spelling → **A** (mostly writing, with some listening mixed in).
 - **Chung kết:**
-  1. Biology test plan using all 4 hacks → **B** (Sat, Sun, Mon 20 min each, phone in another room, self-quiz, mix chapters, sleep on time). A crams on Tuesday night, C reads Gemini's summary, D texts while studying.
-  2. Using Gemini for a group talk → **C** (write your part first, then ask Gemini for 3 hard questions)
-  3. An rereads vs Bình self-tests → **A** (Bình remembers more)
+  Five questions on the whole session, easy to hard. Q1, Q2 and Q4 are ordering questions: each card A–D is one ordering.
+  1. Lan learns piano, put the four stages in order → **D** (④ → ② → ③ → ①: dở, tập, giỏi, thích). A and C put "thích" before "giỏi".
+  2. Order four ways of learning from the lowest ladder step to the highest → **C** (③ watch a video → ① redo the worked example → ④ close the notebook and write it out → ② teach a friend).
+  3. Which kids use AI to move up the ladder → **B** (An, Bình, Dũng). Chi learns a Gemini summary by heart; Dũng argues with Gemini and checks the textbook.
+  4. Order the group-slide steps on Canva → **A** (② outline → ④ task table → ① each writes their part → ③ one person checks facts and spelling).
+  5. Which statements are true → **C** (① texting while working is slower, ③ hard and wrong means learning). ② scrolling the phone is not a real break; ④ cramming is not as good as spacing.
 
 ### Group-slide checklist (7 points)
 1. Thống nhất dàn ý trước
@@ -121,7 +121,7 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 ## 5. How the slides work (`slides/`)
 
 `slides/README.md` explains running and editing. In short:
-- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 52 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
+- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 54 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
 - Edit mode (`E`) keeps changes in `localStorage`; Ctrl+S writes the whole deck back to `6B0slides.html` in the same format (File System Access API in Chrome, download elsewhere). Unchanged slides come out byte for byte the same, so `git diff` shows only real edits. (`content.js` was removed on 13 Nov; it is in the first git commit.)
 - `app.js` is the engine. Widgets live in the `WIDGETS` object: `html teams timer reveal video thiviet wheel quiz tally roundres checkstep standings`.
 - `style.css` holds the brand tokens and all styles.
@@ -207,6 +207,13 @@ Check the PDF afterwards: it should be exactly 22 pages, with no blank ones.
 
 ## 10. Decisions log (most recent first)
 
+- **Map stops and Chung kết (14 Nov):**
+  - Stops 1–4 renamed Khởi động · Viết nhanh · Giảng giỏi · Đúng chỗ. The writing test is now stop 2 on its own; "Đọc im lặng" moved after it and opens stop 3, right before the experts teach.
+  - One red divider per stop, numbered like the HUD (Chặng 1–7, data-nav "Chặng N"). A new divider `p2b` opens Giảng giỏi.
+  - No "Vòng 1/2/3/4" anywhere in the slides or the Word printables. Rounds go by their activity: Thi viết, Chuyên gia, Đua ghép thẻ, Dùng AI, Slide nhóm, Chung kết.
+  - Chung kết now has 5 questions on the whole session (not only the hacks), 90 s each, laid out like the Chuyên gia questions: stem as the title, numbered items, short options.
+  - The Chuyên gia rules slide says 1 minute to match the 60 s timers. The take-home line on the last slide matches the printed slip ("Hack mình sẽ thử với môn đó").
+
 - **Hack cards restructured (14 Nov):**
   - New names: Tập trung từng việc · Tự đố, tự giảng · Nghỉ đúng, ngủ đủ · Rải đều, trộn bài. Diffuse mode and sleep now share card 3; spacing and interleaving share card 4. "Luyện nhiều chỗ yếu" is no longer a hack; weak spots are a step on cards 2 and 4.
   - Every card has the same headings: Bạn có để ý không? · Vì sao lại như vậy? · Các nhà khoa học đã thử nghiệm thế nào? · Áp dụng vào việc học như thế nào? · Gợi ý khi giảng cho đội. No "Trên thang" line.
@@ -216,7 +223,7 @@ Check the PDF afterwards: it should be exactly 22 pages, with no blank ones.
   - Slides updated to match: expert-round list, Vòng 2 Q3, giải lao text, ghép thẻ wrap-up, Tòa án case 3 reveal, Chung kết Q1, the wheel, and the cheat sheet hack box (card 3 icon is now a moon, card 4 a calendar).
   - Not updated: `ToPrint.html` and `InteractiveSlides.html` (old versions), and cô Tươi's plan deck (claude.ai artifact).
 
-- **Cheat sheet (page 50):**
+- **Cheat sheet (slide 53):**
   - Print-friendly: 4 boxes with thin light borders, all-caps section bars and line icons, all body text at 24px, no footer.
   - Title "Hết bài · Nhớ lâu · Hiểu kỹ".
   - Stairs sit on the box edge. The AI section is a plain Nên / Không nên list.

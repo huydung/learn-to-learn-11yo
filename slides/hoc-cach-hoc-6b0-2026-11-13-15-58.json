@@ -1,0 +1,289 @@
+{
+ "app": "hoc-cach-hoc-6b0",
+ "savedAt": "2026-11-13T15:58:59.763Z",
+ "board": {
+  "scores": {},
+  "shields": {
+   "R": 0,
+   "B": 0,
+   "G": 0,
+   "Y": 0
+  },
+  "adjustments": [],
+  "display": "full",
+  "log": [],
+  "answers": {},
+  "raw": {},
+  "bell": {}
+ },
+ "thiviet": {
+  "R": {
+   "A": "",
+   "B": ""
+  },
+  "B": {
+   "A": "",
+   "B": ""
+  },
+  "G": {
+   "A": "",
+   "B": ""
+  },
+  "Y": {
+   "A": "",
+   "B": ""
+  }
+ },
+ "wheels": {},
+ "edits": {
+  "p1": {
+   "blocks": [
+    {
+     "type": "text",
+     "style": "divnum",
+     "html": "1",
+     "x": 96,
+     "y": 90,
+     "w": 620,
+     "h": 900
+    },
+    {
+     "type": "text",
+     "style": "divt",
+     "html": "Khởi động",
+     "x": 760,
+     "y": 490,
+     "w": 1040,
+     "h": 340
+    },
+    {
+     "type": "text",
+     "style": "lead",
+     "html": "<br>",
+     "x": 760,
+     "y": 640,
+     "w": 1040,
+     "h": 220
+    }
+   ],
+   "savedAt": "2026-11-12T02:56:25.368Z"
+  },
+  "khien": {
+   "blocks": [
+    {
+     "type": "text",
+     "style": "h2",
+     "html": "Tín hiệu khiên ✋",
+     "x": 120,
+     "y": 78,
+     "w": 1300,
+     "h": 120
+    },
+    {
+     "type": "text",
+     "style": "lead",
+     "html": "Chú đập chuông và giơ tay → cả lớp về đúng chỗ và im lặng.",
+     "x": 120,
+     "y": 280,
+     "w": 1680,
+     "h": 120
+    },
+    {
+     "type": "text",
+     "style": "note",
+     "html": "Đội trật tự nhanh nhất được <b>+1 điểm khiên</b>.<br>Mỗi đội được tối đa <b>3 điểm khiên</b> cả buổi.",
+     "x": 120,
+     "y": 440,
+     "w": 1680,
+     "h": 200
+    }
+   ],
+   "savedAt": "2026-11-12T02:57:38.754Z"
+  },
+  "p2": {
+   "blocks": [
+    {
+     "type": "text",
+     "style": "divnum",
+     "html": "2",
+     "x": 96,
+     "y": 90,
+     "w": 620,
+     "h": 900
+    },
+    {
+     "type": "text",
+     "style": "divt",
+     "html": "Bốn hack",
+     "x": 760,
+     "y": 480,
+     "w": 1040,
+     "h": 340
+    },
+    {
+     "type": "text",
+     "style": "lead",
+     "html": "<br>",
+     "x": 760,
+     "y": 640,
+     "w": 1040,
+     "h": 220
+    }
+   ],
+   "savedAt": "2026-11-12T02:57:58.424Z"
+  },
+  "doc": {
+   "blocks": [
+    {
+     "type": "text",
+     "style": "h2",
+     "html": "Đọc im lặng",
+     "x": 120,
+     "y": 78,
+     "w": 1300,
+     "h": 120
+    },
+    {
+     "type": "text",
+     "style": "lead",
+     "html": "<ul><li>Đọc hết thẻ của mình. Không nói chuyện.</li><li>Gạch chân <b>3 ý</b> bạn sẽ giảng, có ít nhất một ví dụ.</li><li>Có thể vẽ mindmap, gạch đầu dòng ý chính, con số... ra nháp</li><li>Lát nữa bạn là chuyên gia, giảng lại thẻ này cho cả đội.</li></ul>",
+     "x": 120,
+     "y": 240,
+     "w": 1000,
+     "h": 500
+    },
+    {
+     "type": "widget",
+     "kind": "timer",
+     "x": 1180,
+     "y": 260,
+     "w": 620,
+     "h": 300,
+     "opts": {
+      "seconds": 240
+     }
+    },
+    {
+     "type": "text",
+     "style": "note",
+     "html": "Đội im lặng trọn 4 phút: <b>+1 khiên</b>.",
+     "x": 1180,
+     "y": 620,
+     "w": 620,
+     "h": 200
+    }
+   ],
+   "savedAt": "2026-11-12T02:58:30.555Z"
+  },
+  "tra-loi-theo-doi": {
+   "blocks": [
+    {
+     "type": "text",
+     "style": "h2",
+     "html": "Vòng 2 · Cả đội cùng trả lời",
+     "x": 120,
+     "y": 78,
+     "w": 1300,
+     "h": 120
+    },
+    {
+     "type": "text",
+     "style": "lead",
+     "html": "<ol><li>Cả lớp úp thẻ hack.</li><li>Mỗi câu là một tình huống mới. Cả đội bàn trong <b>45 giây</b>.</li><li>Hết giờ, cả đội giơ <b>một thẻ A, B, C hoặc D</b>.</li></ol>",
+     "x": 120,
+     "y": 240,
+     "w": 1680,
+     "h": 460
+    }
+   ],
+   "savedAt": "2026-11-12T02:59:30.152Z"
+  },
+  "v2-cau1": {
+   "blocks": [
+    {
+     "type": "text",
+     "style": "h2 qtitle",
+     "html": "Minh vừa làm bài Toán vừa hóng nghe bạn bên cạnh kể chuyện. Minh bảo: “Mình vẫn làm bài được mà.” Điều nào đúng nhất?",
+     "x": 120,
+     "y": 78,
+     "w": 1430,
+     "h": 230
+    },
+    {
+     "type": "widget",
+     "kind": "quiz",
+     "x": 120,
+     "y": 300,
+     "w": 1680,
+     "h": 690,
+     "opts": {
+      "round": "chuyengia",
+      "options": [
+       "Minh nói đúng, vì Minh đâu cần quay sang nhìn bạn.",
+       "Minh sẽ chậm và dễ sai hơn, vì đầu phải chia chỗ cho câu chuyện, bớt chỗ cho bài toán.",
+       "Nghe chuyện giúp não thư giãn, nên Minh sẽ nghĩ ra cách giải nhanh hơn.",
+       "Chỉ ảnh hưởng nếu câu chuyện buồn hoặc quá hay."
+      ],
+      "answer": "B"
+     }
+    }
+   ],
+   "savedAt": "2026-11-12T03:00:00.535Z"
+  },
+  "v2-cau2": {
+   "blocks": [
+    {
+     "type": "text",
+     "style": "h2 qtitle",
+     "html": "Thứ Sáu bạn phải thuyết trình 2 phút về cây lúa trước lớp, không được nhìn giấy. Chuẩn bị thế nào là tốt nhất?",
+     "x": 120,
+     "y": 78,
+     "w": 1480,
+     "h": 210
+    },
+    {
+     "type": "widget",
+     "kind": "quiz",
+     "x": 120,
+     "y": 300,
+     "w": 1680,
+     "h": 690,
+     "opts": {
+      "round": "chuyengia",
+      "options": [
+       "Đọc đi đọc lại bài viết cho đến khi thấy quen.",
+       "Chép bài viết ra giấy ba lần cho nhớ.",
+       "Tập tự nói, quên chỗ nào thì xem lại rồi thử lại.",
+       "Nhờ bạn đọc bài cho mình nghe thật nhiều lần."
+      ],
+      "answer": "C"
+     }
+    }
+   ],
+   "savedAt": "2026-11-12T03:01:32.029Z"
+  }
+ },
+ "session": {
+  "timers": {
+   "doc-2": {
+    "total": 240,
+    "left": 240,
+    "endsAt": null
+   },
+   "thiviet-4": {
+    "total": 120,
+    "left": 120,
+    "endsAt": null
+   },
+   "chuyengia-2": {
+    "total": 120,
+    "left": 120,
+    "endsAt": null
+   }
+  },
+  "steps": {},
+  "revealed": {
+   "v2-cau2": false
+  }
+ }
+}

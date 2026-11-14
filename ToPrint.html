@@ -168,14 +168,14 @@ TEAMS.forEach(t=>P(`<div class="abcd">${"ABCD".split("").map(L=>`<div style="--t
 /* writing sheets */
 const grid=()=>{let s="";for(let r=0;r<16;r++){const chu=r%2===0;s+=`<div class="lab${chu?"":" sep"}">${chu?"Chữ":"Số"}</div>`;for(let c=0;c<10;c++)s+=`<div class="${chu?"":"sep"}"></div>`;}return `<div class="grid10">${s}</div>`};
 [["A","Từng việc một","Viết hết dòng chữ, rồi viết hết dòng số. Xong cặp này thì làm tiếp cặp dưới."],["B","Xen kẽ","Viết một chữ ở dòng trên, rồi một số ở dòng dưới ngay bên dưới, rồi chữ tiếp theo, số tiếp theo, cứ thế."]].forEach(([m,nm,how])=>P(`
-<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:6mm"><div><div class="eyebrow">Vòng 1 · Thi viết · 2 phút</div><h1>Cách ${m}: ${nm}</h1></div><div>Đội: <span class="fill"></span></div></div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:6mm"><div><div class="eyebrow">Viết nhanh · Thi viết · 2 phút</div><h1>Cách ${m}: ${nm}</h1></div><div>Đội: <span class="fill"></span></div></div>
 <div class="note"><b>Cách viết:</b> ${how}<br>Dòng chữ: <b>H O C C A C H H O C</b> · Dòng số: <b>1 4 7 10 13 16 19 22 25 28</b> (mỗi ô một chữ hoặc một số)</div>
 ${grid()}
 <div style="display:flex;gap:10mm"><div>Trọng tài (đội): <span class="fill"></span></div><div>Số dòng đúng: <span class="fill" style="min-width:25mm"></span></div></div>
 <div class="muted" style="font-size:9pt">Trọng tài chỉ đếm dòng viết đủ 10 ô, đúng thứ tự và đúng cách ${m}. Dòng phạm luật không tính.</div>`,"Phiếu thi viết "+m));
 
 /* 16 team sheet */
-P(`<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:6mm"><div><div class="eyebrow">Vòng 4 · 15 phút · tính điểm</div><h1>Bài 20/11: dàn ý và chia việc</h1></div></div><div>Đội: <span class="fill"></span></div>
+P(`<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:6mm"><div><div class="eyebrow">Slide nhóm · 15 phút · tính điểm</div><h1>Bài 20/11: dàn ý và chia việc</h1></div></div><div>Đội: <span class="fill"></span></div>
 <h3>1. Dàn ý: các slide theo thứ tự</h3><div class="lines"><div></div><div></div><div></div><div></div><div></div><div></div></div>
 <h3>2. Phân công: mỗi bạn 1 phần nội dung + 1 việc chung</h3>
 <table class="assign"><tr><th style="width:24%">Tên</th><th style="width:34%">Phần nội dung</th><th style="width:26%">Việc chung</th><th style="width:16%">Hạn</th></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td></tr></table>
@@ -189,12 +189,12 @@ P(`<div class="slips">${Array.from({length:8},()=>`<div><b>Học cách học · 
 /* 20 poster */
 P(`<div class="eyebrow">Công bố từ đầu giờ · dán lên bảng</div><h1>Luật tính điểm</h1>
 <table><tr><th>Vòng</th><th>Cách xếp hạng</th><th>Điểm</th></tr>
-<tr><td>1 · Thi viết</td><td>Tổng số dòng viết đúng của 2 bạn thi</td><td>4 · 3 · 2 · 2</td></tr>
-<tr><td>2 · Chuyên gia</td><td>Số câu cả đội trả lời đúng (4 câu)</td><td>4 · 3 · 2 · 2</td></tr>
+<tr><td>Thi viết</td><td>Tổng số dòng viết đúng của 2 bạn thi</td><td>4 · 3 · 2 · 2</td></tr>
+<tr><td>Chuyên gia</td><td>Số câu cả đội trả lời đúng (4 câu)</td><td>4 · 3 · 2 · 2</td></tr>
 <tr><td>Đua ghép thẻ</td><td>Số thẻ đặt đúng ô. Bằng nhau thì đội rung chuông trước xếp trên</td><td>4 · 3 · 2 · 2</td></tr>
-<tr><td>3 · Tòa án AI</td><td>Đoán đúng kết cục 2 · lý do đúng 1 · kháng cáo được chấp nhận 1</td><td>tối đa 4</td></tr>
-<tr><td>4 · Bài nhóm</td><td>Số điểm checklist phiếu 20/11 đạt được</td><td>4 · 3 · 2 · 2</td></tr>
-<tr><td>Chung kết</td><td>3 câu khó, số câu cả đội trả lời đúng, điểm gấp đôi</td><td>8 · 6 · 4 · 4</td></tr>
+<tr><td>Dùng AI</td><td>Đoán đúng kết cục 2 · lý do đúng 1 · kháng cáo được chấp nhận 1</td><td>tối đa 4</td></tr>
+<tr><td>Slide nhóm</td><td>Số điểm checklist phiếu 20/11 đạt được</td><td>4 · 3 · 2 · 2</td></tr>
+<tr><td>Chung kết</td><td>5 câu về cả buổi học, số câu cả đội trả lời đúng, điểm gấp đôi</td><td>8 · 6 · 4 · 4</td></tr>
 <tr><td>Giải thích một hack</td><td>Bốc thăm một hack: giải thích đúng 1 · có ví dụ của riêng đội 1</td><td>tối đa 2</td></tr>
 <tr><td>Khiên ✋</td><td>Đội trật tự nhanh nhất khi chú giơ tay</td><td>+1, tối đa 3</td></tr>
 <tr><td>Phạt</td><td>Chạy hoặc chen lấn khi đua ghép thẻ</td><td>−1</td></tr></table>

@@ -418,7 +418,7 @@ const WIDGETS = {
     el.innerHTML = `<div class="tv-w"><div>
       <table class="t"><tr><th>Đội</th><th>Cách A</th><th>Cách B</th><th>Tổng</th></tr>
       ${TEAMS.map((t) => `<tr><td>${teamChip(t)}</td>${cell(t, "A")}${cell(t, "B")}<td class="sum" data-k="${t.key}"></td></tr>`).join("")}</table>
-      <div class="actions"><button class="btn" data-a="score">Ghi điểm vòng 1 theo tổng</button></div></div>
+      <div class="actions"><button class="btn" data-a="score">Ghi điểm thi viết theo tổng</button></div></div>
       <div class="avg"><div>Trung bình cách A<b data-avg="A">–</b></div><div>Trung bình cách B<b data-avg="B">–</b></div></div></div>`;
 
     const average = (way) => {
@@ -437,7 +437,7 @@ const WIDGETS = {
     $('[data-a="score"]', el).onclick = () => {
       if (editing) return;
       saveThiviet();
-      recordRound("thiviet", rankPoints(byTeam(total), roundById("thiviet").points), "Vòng 1 ghi điểm theo tổng số dòng");
+      recordRound("thiviet", rankPoints(byTeam(total), roundById("thiviet").points), "Thi viết: ghi điểm theo tổng số dòng");
     };
     update();
   },

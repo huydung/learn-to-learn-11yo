@@ -25,7 +25,7 @@ Each box has `data-box="x y width height"` in pixels on a 1920 × 1080 page. Qui
 The folder is a git repo, so after each save `git diff` shows exactly which lines changed.
 
 ## What survives a reload
-Everything. Each change is saved the moment you make it: scores, team answers, card counts, bell order, shields, Vòng 1 numbers, wheel results (saved before the wheel stops), running timers (they keep counting), Văn hóa đọc ticks, revealed answers, slide edits, the slide you were on, and whether the leaderboard was open.
+Everything. Each change is saved the moment you make it: scores, team answers, card counts, bell order, shields, Thi viết numbers, wheel results (saved before the wheel stops), running timers (they keep counting), Văn hóa đọc ticks, revealed answers, slide edits, the slide you were on, and whether the leaderboard was open.
 
 If the deck is open in two tabs, each tab picks up the other's changes, so one cannot wipe out the other.
 
