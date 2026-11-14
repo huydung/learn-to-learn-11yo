@@ -28,17 +28,33 @@
   </div>
 
   <div id="help" hidden=""><div class="bx">
-    <b>Phím tắt</b><br>
-    <kbd>→</kbd> <kbd>Space</kbd> hiện ý tiếp theo, hết ý thì sang trang sau · <kbd>←</kbd> lùi một ý / trang trước<br>
-    <kbd>M</kbd> bật/tắt bản đồ hành trình · trên bản đồ: bấm vào một chặng, hoặc <kbd>→</kbd> để vào chặng hiện tại · <kbd>Esc</kbd> về bản đồ<br>
-    <kbd>L</kbd> mở/đóng bảng điểm · <kbd>S</kbd> hiện điểm nhỏ dưới chân trang<br>
-    <kbd>T</kbd> bắt đầu/tạm dừng đồng hồ (nút ±30s để chỉnh nhanh; đổi hẳn số phút: chế độ Sửa, chọn đồng hồ, gõ ô Phút) · <kbd>R</kbd> mở đáp án / điểm checklist tiếp theo<br>
-    <kbd>E</kbd> chế độ sửa: bấm vào chữ để gõ, kéo ô xanh ✥ để di chuyển, kéo góc ⇲ để đổi cỡ. Mọi thay đổi tự lưu ngay; <b>Bỏ thay đổi</b> đưa trang về như lúc bấm E.<br>
-    <kbd>Ctrl</kbd>+<kbd>S</kbd> ghi các trang đã sửa vào file <b>6B0slides.html</b>. Lần đầu, chọn file 6B0slides.html trong thư mục slides để ghi đè.<br>
-    <kbd>G</kbd> xem tất cả trang dạng lưới, bấm để nhảy tới · gõ <b>số trang</b> rồi <kbd>Enter</kbd> để nhảy thẳng<br>
-    <kbd>F</kbd> toàn màn hình · <kbd>?</kbd> bảng này<br><br>
-    Điểm, đáp án, bốc thăm, đồng hồ và các trang đã sửa được lưu ngay trong trình duyệt này, trên máy này. Tải lại trang không mất gì.
-    Muốn mang điểm sang máy khác: bấm <b>Sao lưu</b> ở đây, rồi <b>Khôi phục</b> trên máy kia.<br>
+    <h3>Phím tắt</h3>
+    <div class="hgrid">
+      <table><caption>Đi trang</caption>
+        <tr><td><kbd>→</kbd> <kbd>Space</kbd></td><td>Hiện ý tiếp theo. Hết ý thì sang trang sau.</td></tr>
+        <tr><td><kbd>←</kbd></td><td>Lùi một ý, hoặc về trang trước.</td></tr>
+        <tr><td><kbd>G</kbd></td><td>Xem tất cả trang dạng lưới.</td></tr>
+        <tr><td><kbd>12</kbd> <kbd>Enter</kbd></td><td>Gõ số trang rồi Enter để nhảy tới.</td></tr>
+        <tr><td><kbd>F</kbd></td><td>Toàn màn hình.</td></tr>
+      </table>
+      <table><caption>Bản đồ</caption>
+        <tr><td><kbd>M</kbd></td><td>Bật/tắt bản đồ hành trình.</td></tr>
+        <tr><td><kbd>→</kbd></td><td>Vào chặng hiện tại. Hoặc bấm vào một chặng.</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td>Về bản đồ.</td></tr>
+      </table>
+      <table><caption>Trong lớp</caption>
+        <tr><td><kbd>L</kbd></td><td>Mở/đóng bảng điểm.</td></tr>
+        <tr><td><kbd>S</kbd></td><td>Hiện điểm nhỏ dưới chân trang.</td></tr>
+        <tr><td><kbd>T</kbd></td><td>Chạy/dừng đồng hồ.<small>Nút ±30s chỉnh nhanh. Đổi số phút: E, chọn đồng hồ, gõ ô Phút.</small></td></tr>
+        <tr><td><kbd>R</kbd></td><td>Mở đáp án, hoặc điểm checklist tiếp theo.</td></tr>
+      </table>
+      <table><caption>Sửa trang</caption>
+        <tr><td><kbd>E</kbd></td><td>Chế độ sửa. Tự lưu ngay.<small>Bấm chữ để gõ, kéo ✥ để di chuyển, kéo ⇲ để đổi cỡ. Bỏ thay đổi: về như lúc bấm E.</small></td></tr>
+        <tr><td><kbd>Ctrl</kbd> <kbd>S</kbd></td><td>Ghi trang đã sửa vào 6B0slides.html.<small>Lần đầu: chọn file 6B0slides.html trong thư mục slides.</small></td></tr>
+        <tr><td><kbd>?</kbd></td><td>Mở/đóng bảng này.</td></tr>
+      </table>
+    </div>
+    <p class="hnote">Điểm, đáp án, bốc thăm, đồng hồ và trang đã sửa tự lưu trong trình duyệt này. Muốn mang sang máy khác: bấm <b>Sao lưu ra file</b>, rồi <b>Khôi phục từ file</b> trên máy kia.</p>
     <button class="btn ghost" id="helpSave">Lưu trang vào 6B0slides.html</button>
     <button class="btn ghost" id="helpBackup">Sao lưu ra file</button>
     <button class="btn ghost" id="helpRestore">Khôi phục từ file</button>
@@ -61,12 +77,11 @@
   // "rank" rounds turn a place into points. "points" rounds give each team its own score, up to max.
   const ROUNDS = [
     { id: "giang", name: "Giảng hay", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số chấm bình chọn" },
-    { id: "chuyengia", name: "Nghe hiểu", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số câu đúng (3 câu, trừ hack đội mình giảng)" },
-    { id: "ghepthe", name: "Đua ghép thẻ", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số thẻ đúng; bằng nhau thì rung chuông trước xếp trên" },
+    { id: "chuyengia", name: "Nghe hiểu", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số câu đúng (4 câu)" },
+    { id: "ghepthe", name: "Đua ghép thẻ", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số thẻ đúng khi hết giờ" },
     { id: "toaan", name: "Dùng AI", kind: "points", max: 5, rule: "Đoán đúng +1 mỗi tình huống · đội bốc thăm giải thích đúng +1" },
-    { id: "nhom", name: "Slide nhóm", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số điểm checklist đạt" },
+    { id: "nhom", name: "Slide nhóm", kind: "points", max: 20, rule: "Mỗi ý hợp lệ, không trùng: +1" },
     { id: "chungket", name: "Chung kết ×2", kind: "rank", points: POINTS_FINAL, rule: "Xếp theo số câu đúng của đội (5 câu)" },
-    { id: "thang", name: "Chung kết · giải thích hack", kind: "points", max: 2, rule: "Giải thích đúng 1 · ví dụ riêng 1" },
   ];
 
   // The session map (M). Each stop starts at slide "from" and runs until the next stop.
@@ -76,6 +91,7 @@
     { from: "bia",      name: "Khởi động",     art: "map/stop1.webp", x: 270,  y: 900 },
     { from: "p2",       name: "Chuẩn bị",      art: "map/stop2.webp", x: 290,  y: 520 },
     { from: "p2b",      name: "Giảng giỏi",    art: "map/stop3.webp", x: 820,  y: 330 },
+    { from: "p-nghe",   name: "Nghe hiểu",     art: "map/stop-nghe.webp", x: 1110, y: 300 },
     { from: "p3",       name: "Đúng chỗ",      art: "map/stop4.webp", x: 880,  y: 700 },
     { from: "p3b",      name: "Dùng AI",       art: "map/stop5.webp", x: 1250, y: 560 },
     { from: "p4",       name: "Làm Slides",    art: "map/stop6.webp", x: 1560, y: 820 },
@@ -109,42 +125,42 @@
 </section>
 
 <section data-id="p1" data-nav="Chặng 1" data-bg="red">
-  <div class="divnum" data-box="96 90 620 900">1</div>
-  <div class="divt" data-box="760 250 1040 340">Khởi động</div>
-  <div class="lead" data-box="760 640 1040 220" data-step="1">Dở → Tập → Giỏi → Thích, chiếc thang học tập, và luật chơi</div>
+  <div class="divt" data-box="120 90 1680 900">Khởi động</div>
 </section>
 
 <section data-id="clash" data-nav="Clash Royale">
   <div class="h2" data-box="120 78 1300 120">Chú từng chơi Clash Royale rất dở</div>
   <div class="lead" data-box="120 250 960 380" data-step="1" data-each><ol><li>Thua suốt, nên không thích.</li><li>Xem một video dạy dùng lá Mega Minion, thử, thắng vài trận.</li><li>Càng chơi hay càng thích. Giờ nhớ tương tác của hơn một trăm lá bài.</li></ol></div>
   <div data-widget="html" data-box="1140 240 660 371" data-step="2"><a class="vlink" href="https://www.youtube.com/watch?v=4urpKv-NUDo" target="_blank" rel="noopener"><img src="images/clash-mega-minion.webp" alt="Lá Mega Minion trong một trận Clash Royale"><span>▶ Xem video</span></a></div>
-  <div class="big" data-box="120 640 1680 150" data-step="4">Dở → Tập → Giỏi → Thích</div>
-  <div class="small" data-box="120 820 1680 70" data-step="5">Mình thường thích một thứ <i>sau khi</i> giỏi nó, không phải trước.</div>
+  <div class="big" data-box="120 680 1680 150" data-step="3">Chú rút ra được HAI bài học</div>
 </section>
 
-<section data-id="bacau" data-nav="Ba câu hỏi">
-  <div class="h2" data-box="120 78 1300 120">Ba câu hỏi cho cả lớp</div>
-  <div class="card" data-box="120 260 520 420" data-step="1"><h3>1</h3>Bạn đang giỏi gì mà hồi đầu rất dở?</div>
-  <div class="card" data-box="700 260 520 420" data-step="2"><h3>2</h3>Cờ vua khi chỉ biết luật có vui không? Khi nào mới vui?</div>
-  <div class="card" data-box="1280 260 520 420" data-step="3"><h3>3</h3>Biết tiếng Anh giúp bạn làm được gì thêm?</div>
-  <div class="note" data-box="120 760 1680 90" data-step="4">Làm bạn cũng là thứ học được: rủ bạn chơi, xin lỗi, làm đồng đội tốt.</div>
+<section data-id="bai1" data-nav="Bài học 1">
+  <div class="h2" data-box="120 78 1500 120">Bài học 1 · Thích trước hay giỏi trước?</div>
+  <div class="lead" data-box="120 230 1680 80" data-step="1">Người ta thường nghĩ: mình thích một thứ, nên mình giỏi nó.</div>
+  <div class="big" data-box="120 320 1680 130" data-step="1">Thích → Giỏi</div>
+  <div class="small" data-box="120 460 1680 60" data-step="2">Điều đó đúng trong nhiều trường hợp.</div>
+  <div class="lead" data-box="120 570 1680 80" data-step="3">Còn một con đường phổ biến hơn nhiều:</div>
+  <div class="big" data-box="120 660 1680 130" data-step="3">Tập → Giỏi → Thích</div>
+  <div class="note" data-box="120 830 1680 120" data-step="4">Chú với Clash Royale đi đúng con đường này: tập, giỏi lên, rồi mới thích.</div>
 </section>
 
 <section data-id="thang" data-nav="Chiếc thang">
-  <div class="h2" data-box="120 78 1300 120">Chiếc thang học tập</div>
+  <div class="h2" data-box="120 78 1500 120">Bài học 2 · Chiếc thang học tập</div>
   <div class="body" data-box="120 200 1680 110" data-step="1">Leo càng cao, não càng phải tự làm, và mình học càng sâu. Mệt hơn một chút chính là lúc đang học.</div>
-  <div data-widget="html" data-box="120 320 1680 660" data-step="2"><div class="ladder">
-  <div class="st" style="min-height:380px"><div class="n">1</div><div class="nm">Nhận vào</div><div class="ex">Xem người khác chơi. Nghe giảng, đọc lại bài.</div></div>
-  <div class="st" style="min-height:470px"><div class="n">2</div><div class="nm">Làm theo</div><div class="ex">Bắt chước y hệt video. Chép lời giải.</div></div>
-  <div class="st" style="min-height:560px"><div class="n">3</div><div class="nm">Tự chế</div><div class="ex">Vào trận, tự nghĩ nước đi. Giải thích bằng lời của mình.</div></div>
-  <div class="st" style="min-height:650px"><div class="n">4</div><div class="nm">Tương tác</div><div class="ex">Cả đội bàn chiến thuật. Giảng cho bạn, tranh luận.</div></div>
-</div></div>
+  <div data-box="120 320 1680 660" data-step="2" data-each><ul class="ladder">
+  <li class="st" style="min-height:380px"><div class="n">1</div><div class="nm">Nhận vào</div><div class="ex">Xem người khác chơi. Nghe giảng, đọc lại bài.</div></li>
+  <li class="st" style="min-height:470px"><div class="n">2</div><div class="nm">Làm theo</div><div class="ex">Bắt chước y hệt video. Chép lời giải.</div></li>
+  <li class="st" style="min-height:560px"><div class="n">3</div><div class="nm">Tự chế</div><div class="ex">Vào trận, tự nghĩ nước đi. Giải thích bằng lời của mình.</div></li>
+  <li class="st" style="min-height:650px"><div class="n">4</div><div class="nm">Tương tác</div><div class="ex">Cả đội bàn chiến thuật. Giảng cho bạn, tranh luận.</div></li>
+</ul></div>
 </section>
 
 <section data-id="lapdoi" data-nav="Lập đội" data-tag="2 phút">
   <div class="h2" data-box="120 78 1300 120">Bốn đội, bốn màu</div>
   <div data-widget="teams" data-box="120 230 1680 250" data-step="1"></div>
-  <div class="body" data-box="120 540 1680 380" data-step="2" data-each><ol><li>Mỗi đội sẽ nhận <b>một hack</b>. Cả đội cùng đọc, rồi cùng giảng hack đó cho cả lớp.</li><li><b>Luật xoay vòng:</b> mỗi lần đội cần một người lên bảng, phát biểu hay đọc kết quả, cử một bạn chưa lên lần nào.</li></ol></div>
+  <div class="note" data-box="120 520 1680 120" data-step="2">Cả buổi học xoay quanh <b>2 bài học</b> vừa rồi, cộng thêm <b>4 hack</b>.</div>
+  <div class="body" data-box="120 690 1680 290" data-step="3" data-each><ol><li><b>Hack</b> là mẹo học giúp bạn đi qua đoạn “tập” nhanh hơn. Mỗi đội nhận một hack, cả đội cùng đọc rồi giảng cho cả lớp.</li><li><b>Luật xoay vòng:</b> mỗi lần đội cần một người lên bảng, phát biểu hay đọc kết quả, cử một bạn chưa lên lần nào.</li></ol></div>
 </section>
 
 <section data-id="luat" data-nav="Luật tính điểm" data-tag="Đọc kỹ trước khi chơi">
@@ -156,110 +172,109 @@
 </section>
 
 <section data-id="khien" data-nav="Tín hiệu khiên">
-  <div class="h2" data-box="120 78 1300 120">Tín hiệu khiên ✋</div>
-  <div class="lead" data-box="120 280 1680 120" data-step="1">Chú giơ tay → cả lớp giơ tay và im lặng.</div>
+  <div class="h2" data-box="120 78 1300 120">Tín hiệu khiên ✋🔔</div>
+  <div class="lead" data-box="120 280 1680 120" data-step="1">Chú giơ tay và lắc chuông → cả lớp giơ tay và im lặng.</div>
   <div class="note" data-box="120 440 1680 200" data-step="2">Đội trật tự nhanh nhất được <b>+1 điểm khiên</b>.<br>Mỗi đội được tối đa <b>3 điểm khiên</b> cả buổi.</div>
 </section>
 
 <section data-id="p2" data-nav="Chặng 2" data-bg="red">
-  <div class="divnum" data-box="96 90 620 900">2</div>
-  <div class="divt" data-box="760 250 1040 340">Chuẩn bị</div>
-  <div class="lead" data-box="760 640 1040 220" data-step="1">Mỗi đội nhận một hack, cùng đọc và chuẩn bị giảng cho cả lớp</div>
-</section>
-
-<section data-id="boc-hack" data-nav="Bốc hack" data-tag="1 phút">
-  <div class="h2" data-box="120 78 1300 120">Mỗi đội một hack</div>
-  <div data-widget="wheel" data-box="120 200 1100 780" data-step="1" data-opts='{"items":["Tập trung từng việc","Tự đố, tự giảng","Nghỉ đúng, ngủ đủ","Rải đều, trộn bài"],"colors":["#8E011F","#BD0129","#51000C","#A3485A"],"slots":["Đội Red","Đội Blue","Đội Green","Đội Yellow"]}'></div>
-  <div class="note" data-box="1260 200 540 620" data-step="2">Đội nhận hack nào thì <b>cả đội</b> là chuyên gia của hack đó.<br><br>Lát nữa cả đội cùng giảng hack này cho <b>cả lớp</b>.</div>
+  <div class="divt" data-box="120 90 1680 900">Chuẩn bị</div>
 </section>
 
 <section data-id="doc" data-nav="Đọc im lặng" data-tag="4 phút">
   <div class="h2" data-box="120 78 1300 120">Đọc im lặng</div>
-  <div class="lead" data-box="120 240 1000 500" data-step="1" data-each><ul><li>Mỗi bạn một thẻ, cả đội cùng một hack. Không nói chuyện.</li><li>Gạch chân <b>3 ý</b> quan trọng nhất.</li><li>Nghĩ sẵn một ví dụ của chính mình.</li></ul></div>
+  <div class="lead" data-box="120 240 1000 500" data-step="1" data-each><ul><li>Mỗi bạn một thẻ, cả đội cùng một hack. Không nói chuyện.</li><li>Gạch chân <b>3 ý</b> quan trọng nhất.</li><li>Tìm xem hack này <b>là gì</b>, và <b>vì sao</b> nó có tác dụng.</li></ul></div>
   <div data-widget="timer" data-box="1180 260 620 300" data-step="1" data-opts='{"seconds":240}'></div>
   <div class="note" data-box="1180 620 620 200" data-step="4">Đội im lặng trọn 4 phút: <b>+1 khiên</b>.</div>
 </section>
 
 <section data-id="chuanbi" data-nav="Chuẩn bị giảng" data-tag="5 phút">
   <div class="h2" data-box="120 78 1300 120">Cả đội chuẩn bị giảng</div>
-  <div class="body" data-box="120 230 1060 600" data-step="1" data-each><ol><li>Chọn <b>3 ý chính</b>. Ba câu hỏi “Gợi ý khi giảng” cuối thẻ giúp đội chọn.</li><li>Chọn <b>một ví dụ của chính đội</b>: ở nhà, ở lớp hay trong game.</li><li>Chia lời: <b>bạn nào cũng nói</b> một phần.</li><li>Giảng bằng lời của mình. Được cầm thẻ, nhưng đừng đọc nguyên văn.</li></ol></div>
+  <div class="body" data-box="120 210 1060 760" data-step="1" data-each><ol><li>Giảng bằng lời của mình cho rõ hai điều: hack này <b>là gì</b>, và <b>vì sao</b> nó có tác dụng.</li><li>Có từ 2 bạn trở lên cùng nói thì buổi giảng sẽ hay hơn.</li><li>Nếu được, thêm một ví dụ của chính đội: ở nhà, ở lớp hay trong game.</li><li>Có thể vẽ lên giấy A1 để làm “slide”.</li><li>Có 3 phút: giảng cả 3 phút, hoặc giảng ngắn hơn để có thêm thời gian trả lời câu hỏi.</li></ol></div>
   <div data-widget="timer" data-box="1240 240 560 280" data-step="1" data-opts='{"seconds":300}'></div>
-  <div class="note" data-box="1240 560 560 330" data-step="5">Cuối vòng, cả lớp và thầy cô bình chọn <b>đội giảng hay nhất</b>. Nghe kỹ đội bạn giảng thì trả lời đúng.</div>
+  <div class="note" data-box="1240 560 560 330" data-step="6">Giảng xong cả 4 hack, cả lớp và thầy cô bình chọn <b>đội giảng hay nhất</b>.</div>
 </section>
 
 <section data-id="p2b" data-nav="Chặng 3" data-bg="red">
-  <div class="divnum" data-box="96 90 620 900">3</div>
-  <div class="divt" data-box="760 250 1040 340">Giảng giỏi</div>
-  <div class="lead" data-box="760 640 1040 220" data-step="1">Mỗi đội giảng hack của mình cho cả lớp, ba đội kia nghe rồi trả lời</div>
+  <div class="divt" data-box="120 90 1680 900">Giảng giỏi</div>
 </section>
 
 <section data-id="luat-giang" data-nav="Luật giảng" data-tag="Giảng giỏi">
   <div class="h2" data-box="120 78 1300 120">Giảng cho cả lớp</div>
-  <div class="body" data-box="120 230 1060 560" data-step="1" data-each><ol><li>Theo thứ tự hack 1 → 4. Đội giảng có <b>3 phút</b>, cả bốn bạn đều nói.</li><li>Ba đội nghe úp thẻ. Trong 3 phút đó, được hỏi lại đội giảng.</li><li>Rồi ba đội nghe bàn <b>1 phút</b> một câu tình huống, và <b>cùng lúc</b> giơ thẻ A, B, C hoặc D.</li></ol></div>
-  <div class="card" data-box="1240 230 560 560" data-step="4"><h3>Hai bảng điểm</h3><b>Giảng hay:</b> cuối vòng, cả lớp và thầy cô dán chấm bình chọn.<br><br><b>Nghe hiểu:</b> số câu đội trả lời đúng.</div>
-  <div class="note" data-box="120 820 1680 140" data-step="5">Mỗi bảng xếp hạng 4 · 3 · 2 · 2. Đội giảng không trả lời câu về hack của mình.</div>
+  <div class="body" data-box="120 230 1680 480" data-step="1" data-each><ol><li>Theo thứ tự hack 1 → 4. Mỗi đội có <b>3 phút</b>, gồm cả phần hỏi đáp.</li><li>Các đội nghe úp thẻ, nghe kỹ, và được hỏi lại đội giảng.</li><li>Giảng xong cả 4 hack, cả lớp và thầy cô bình chọn <b>đội giảng hay nhất</b>.</li></ol></div>
+  <div class="note" data-box="120 560 1680 130" data-step="4">Nghe kỹ nhé: ở chặng sau, cả lớp trả lời câu hỏi về cả 4 hack.</div>
 </section>
 
 <section data-id="giang1" data-nav="Giảng hack 1" data-tag="Giảng giỏi · 3 phút">
   <div class="h2" data-box="120 78 1300 120">Hack 1 · Tập trung từng việc</div>
-  <div class="lead" data-box="120 260 1060 400" data-step="1" data-each><ul><li>Đội nhận hack này lên giảng, cả bốn bạn đều nói.</li><li>Ba đội còn lại úp thẻ, nghe, và được hỏi lại.</li></ul></div>
+  <div class="lead" data-box="120 260 1060 400" data-step="1" data-each><ul><li>Đội nhận hack này lên giảng: hack là gì, và vì sao nó có tác dụng.</li><li>Ba đội còn lại úp thẻ, nghe, và được hỏi lại.</li></ul></div>
   <div data-widget="timer" data-box="1240 240 560 280" data-step="1" data-opts='{"seconds":180}'></div>
-</section>
-
-<section data-id="v2-cau1" data-nav="Câu hack 1" data-tag="Giảng giỏi · hack 1">
-  <div class="h2 qtitle" data-box="120 78 1420 210">Minh vừa làm bài Toán vừa nghe bạn bên cạnh kể chuyện. Minh bảo: “Mình vẫn làm được mà.” Điều nào đúng nhất?</div>
-  <div data-widget="quiz" data-box="120 300 1680 690" data-step="1" data-opts='{"round":"chuyengia","teach":{"wheel":"boc-hack","item":0},"options":["Minh nói đúng, vì Minh đâu cần quay sang nhìn bạn.","Minh sẽ chậm và dễ sai hơn, vì đầu phải chia chỗ cho câu chuyện, bớt chỗ cho bài toán.","Nghe chuyện giúp não thư giãn, nên Minh sẽ nghĩ ra cách giải nhanh hơn.","Chỉ ảnh hưởng nếu câu chuyện buồn hoặc quá hay."],"answer":"B"}'></div>
-  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":60,"compact":true}'></div>
 </section>
 
 <section data-id="giang2" data-nav="Giảng hack 2" data-tag="Giảng giỏi · 3 phút">
-  <div class="h2" data-box="120 78 1300 120">Hack 2 · Tự đố, tự giảng</div>
-  <div class="lead" data-box="120 260 1060 400" data-step="1" data-each><ul><li>Đội nhận hack này lên giảng, cả bốn bạn đều nói.</li><li>Ba đội còn lại úp thẻ, nghe, và được hỏi lại.</li></ul></div>
+  <div class="h2" data-box="120 78 1300 120">Hack 2 · Chia nhóm, vẽ sơ đồ</div>
+  <div class="lead" data-box="120 260 1060 400" data-step="1" data-each><ul><li>Đội nhận hack này lên giảng: hack là gì, và vì sao nó có tác dụng.</li><li>Ba đội còn lại úp thẻ, nghe, và được hỏi lại.</li></ul></div>
   <div data-widget="timer" data-box="1240 240 560 280" data-step="1" data-opts='{"seconds":180}'></div>
-</section>
-
-<section data-id="v2-cau2" data-nav="Câu hack 2" data-tag="Giảng giỏi · hack 2">
-  <div class="h2 qtitle" data-box="120 78 1420 210">Thứ Sáu bạn phải thuyết trình 2 phút về cây lúa trước lớp, không được nhìn giấy. Chuẩn bị thế nào là tốt nhất?</div>
-  <div data-widget="quiz" data-box="120 300 1680 690" data-step="1" data-opts='{"round":"chuyengia","teach":{"wheel":"boc-hack","item":1},"options":["Đọc đi đọc lại bài viết cho đến khi thấy quen.","Chép bài viết ra giấy ba lần cho nhớ.","Tập nói to trước gương, không nhìn giấy; quên chỗ nào thì xem lại chỗ đó rồi nói lại từ đầu.","Nhờ bạn đọc bài cho mình nghe thật nhiều lần."],"answer":"C"}'></div>
-  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":60,"compact":true}'></div>
 </section>
 
 <section data-id="giang3" data-nav="Giảng hack 3" data-tag="Giảng giỏi · 3 phút">
   <div class="h2" data-box="120 78 1300 120">Hack 3 · Nghỉ đúng, ngủ đủ</div>
-  <div class="lead" data-box="120 260 1060 400" data-step="1" data-each><ul><li>Đội nhận hack này lên giảng, cả bốn bạn đều nói.</li><li>Ba đội còn lại úp thẻ, nghe, và được hỏi lại.</li></ul></div>
+  <div class="lead" data-box="120 260 1060 400" data-step="1" data-each><ul><li>Đội nhận hack này lên giảng: hack là gì, và vì sao nó có tác dụng.</li><li>Ba đội còn lại úp thẻ, nghe, và được hỏi lại.</li></ul></div>
   <div data-widget="timer" data-box="1240 240 560 280" data-step="1" data-opts='{"seconds":180}'></div>
-</section>
-
-<section data-id="v2-cau3" data-nav="Câu hack 3" data-tag="Giảng giỏi · hack 3">
-  <div class="h2 qtitle" data-box="120 78 1420 210">Nam làm một bài Toán khó đã 30 phút mà vẫn bí, càng làm càng bực. Bây giờ Nam nên làm gì?</div>
-  <div data-widget="quiz" data-box="120 300 1680 690" data-step="1" data-opts='{"round":"chuyengia","teach":{"wheel":"boc-hack","item":2},"options":["Cố ngồi thêm 30 phút nữa, vì bỏ dở giữa chừng là lười.","Lướt điện thoại 15 phút cho đỡ bực, rồi làm tiếp.","Chép lời giải trên mạng để còn kịp làm bài khác.","Đứng dậy đi lại vài phút, hoặc làm môn khác, rồi quay lại."],"answer":"D"}'></div>
-  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":60,"compact":true}'></div>
 </section>
 
 <section data-id="giang4" data-nav="Giảng hack 4" data-tag="Giảng giỏi · 3 phút">
   <div class="h2" data-box="120 78 1300 120">Hack 4 · Rải đều, trộn bài</div>
-  <div class="lead" data-box="120 260 1060 400" data-step="1" data-each><ul><li>Đội nhận hack này lên giảng, cả bốn bạn đều nói.</li><li>Ba đội còn lại úp thẻ, nghe, và được hỏi lại.</li></ul></div>
+  <div class="lead" data-box="120 260 1060 400" data-step="1" data-each><ul><li>Đội nhận hack này lên giảng: hack là gì, và vì sao nó có tác dụng.</li><li>Ba đội còn lại úp thẻ, nghe, và được hỏi lại.</li></ul></div>
   <div data-widget="timer" data-box="1240 240 560 280" data-step="1" data-opts='{"seconds":180}'></div>
-</section>
-
-<section data-id="v2-cau4" data-nav="Câu hack 4" data-tag="Giảng giỏi · hack 4">
-  <div class="h2 qtitle" data-box="120 78 1420 210">Bạn nghe tiếng Anh khá tốt nhưng viết hay sai chính tả. Tuần sau thi cả nghe và viết. Mỗi tối có 30 phút ôn, cách nào tốt nhất?</div>
-  <div data-widget="quiz" data-box="120 300 1680 690" data-step="1" data-opts='{"round":"chuyengia","teach":{"wheel":"boc-hack","item":3},"options":["Dành phần lớn thời gian luyện viết, xen vào vài bài nghe.","Luyện nghe thật nhiều, vì đó là phần chắc chắn được điểm.","Chia đều mỗi tối: 15 phút nghe, 15 phút viết.","Đọc lại các bài viết mẫu cho đến khi thuộc lòng."],"answer":"A"}'></div>
-  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":60,"compact":true}'></div>
-</section>
-
-<section data-id="kq2" data-nav="Nghe hiểu · kết quả" data-tag="Giảng giỏi">
-  <div class="h2" data-box="120 78 1300 120">Nghe hiểu · Kết quả</div>
-  <div data-widget="tally" data-box="120 200 1680 780" data-step="1" data-opts='{"round":"chuyengia","questions":["v2-cau1","v2-cau2","v2-cau3","v2-cau4"],"labels":["Hack 1","Hack 2","Hack 3","Hack 4"]}'></div>
 </section>
 
 <section data-id="binhchon" data-nav="Bình chọn giảng hay" data-tag="Giảng giỏi · 3 phút">
   <div class="h2" data-box="120 78 1300 120">Đội nào giảng hay nhất?</div>
-  <div class="body" data-box="120 200 1680 200" data-step="1">Mỗi bạn <b>2 chấm màu đội mình</b>, dán cho <b>2 đội khác</b>. Chấm dán nhầm vào đội mình không tính. Cô Tươi và chú mỗi người 4 chấm trắng.<br>Chọn đội giúp bạn <b>hiểu rõ nhất</b>, có <b>ví dụ dễ nhớ nhất</b>.</div>
+  <div class="body" data-box="120 200 1680 200" data-step="1">Mỗi bạn <b>2 chấm màu đội mình</b>, dán cho <b>2 đội khác</b>. Chấm dán nhầm vào đội mình không tính. Cô Tươi và chú mỗi người 4 chấm trắng.<br>Chọn đội giúp bạn <b>hiểu rõ nhất</b>: hack là gì, và vì sao nó có tác dụng.</div>
   <div data-widget="roundres" data-box="120 420 1680 560" data-step="2" data-opts='{"round":"giang","label":"Số chấm","max":40,"bell":false}'></div>
 </section>
 
-<section data-id="chot2" data-nav="Giảng giỏi · chốt" data-tag="Giảng giỏi">
+<section data-id="p-nghe" data-nav="Chặng 4" data-bg="red">
+  <div class="divt" data-box="120 90 1680 900">Nghe hiểu</div>
+</section>
+
+<section data-id="luat-nghe" data-nav="Luật nghe hiểu" data-tag="Nghe hiểu">
+  <div class="h2" data-box="120 78 1300 120">Cả lớp trả lời</div>
+  <div class="body" data-box="120 230 1680 520" data-step="1" data-each><ol><li>4 câu tình huống, mỗi câu về một hack.</li><li>Mỗi đội bàn <b>1 phút</b>, rồi <b>cùng lúc</b> giơ thẻ A, B, C hoặc D.</li><li>Xếp hạng theo số câu đúng: 4 · 3 · 2 · 2.</li></ol></div>
+  <div class="note" data-box="120 560 1680 130" data-step="4">Cả 4 đội trả lời cả 4 câu, kể cả câu về hack đội mình đã giảng.</div>
+</section>
+
+<section data-id="v2-cau1" data-nav="Câu hack 1" data-tag="Nghe hiểu · câu 1">
+  <div class="h2 qtitle" data-box="120 78 1420 210">Minh vừa làm bài Toán vừa nghe bạn bên cạnh kể chuyện. Minh bảo: “Mình vẫn làm được mà.” Điều nào đúng nhất?</div>
+  <div data-widget="quiz" data-box="120 300 1680 680" data-step="1" data-opts='{"round":"chuyengia","options":["Minh nói đúng, vì Minh đâu cần quay sang nhìn bạn.","Minh sẽ chậm và dễ sai hơn, vì đầu phải chia chỗ cho câu chuyện, bớt chỗ cho bài toán.","Nghe chuyện giúp não thư giãn, nên Minh sẽ nghĩ ra cách giải nhanh hơn.","Chỉ ảnh hưởng nếu câu chuyện buồn hoặc quá hay."],"answer":"B"}'></div>
+  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":60,"compact":true}'></div>
+</section>
+
+<section data-id="v2-cau2" data-nav="Câu hack 2" data-tag="Nghe hiểu · câu 2">
+  <div class="h2 qtitle" data-box="120 78 1420 210">Bài Lịch sử tuần này có 12 sự kiện, thứ Sáu kiểm tra. Cách nào giúp bạn nhớ và tìm lại các sự kiện dễ nhất?</div>
+  <div data-widget="quiz" data-box="120 300 1680 680" data-step="1" data-opts='{"round":"chuyengia","options":["Chép 12 sự kiện ra giấy ba lần, theo thứ tự trong sách.","Đọc đi đọc lại cả bài cho đến khi thấy quen.","Chia 12 sự kiện thành 3 giai đoạn, vẽ một đường thời gian có tên từng giai đoạn.","Đặt cho mỗi sự kiện một câu vần riêng rồi học thuộc."],"answer":"C"}'></div>
+  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":60,"compact":true}'></div>
+</section>
+
+<section data-id="v2-cau3" data-nav="Câu hack 3" data-tag="Nghe hiểu · câu 3">
+  <div class="h2 qtitle" data-box="120 78 1420 210">Nam làm một bài Toán khó đã 30 phút mà vẫn bí, càng làm càng bực. Bây giờ Nam nên làm gì?</div>
+  <div data-widget="quiz" data-box="120 300 1680 680" data-step="1" data-opts='{"round":"chuyengia","options":["Cố ngồi thêm 30 phút nữa, vì bỏ dở giữa chừng là lười.","Lướt điện thoại 15 phút cho đỡ bực, rồi làm tiếp.","Chép lời giải trên mạng để còn kịp làm bài khác.","Đứng dậy đi lại vài phút, hoặc làm môn khác, rồi quay lại."],"answer":"D"}'></div>
+  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":60,"compact":true}'></div>
+</section>
+
+<section data-id="v2-cau4" data-nav="Câu hack 4" data-tag="Nghe hiểu · câu 4">
+  <div class="h2 qtitle" data-box="120 78 1420 210">Bạn nghe tiếng Anh khá tốt nhưng viết hay sai chính tả. Tuần sau thi cả nghe và viết. Mỗi tối có 30 phút ôn, cách nào tốt nhất?</div>
+  <div data-widget="quiz" data-box="120 300 1680 680" data-step="1" data-opts='{"round":"chuyengia","options":["Dành phần lớn thời gian luyện viết, xen vào vài bài nghe.","Luyện nghe thật nhiều, vì đó là phần chắc chắn được điểm.","Chia đều mỗi tối: 15 phút nghe, 15 phút viết.","Đọc lại các bài viết mẫu cho đến khi thuộc lòng."],"answer":"A"}'></div>
+  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":60,"compact":true}'></div>
+</section>
+
+<section data-id="kq2" data-nav="Nghe hiểu · kết quả" data-tag="Nghe hiểu">
+  <div class="h2" data-box="120 78 1300 120">Nghe hiểu · Kết quả</div>
+  <div data-widget="tally" data-box="120 200 1680 780" data-step="1" data-opts='{"round":"chuyengia","questions":["v2-cau1","v2-cau2","v2-cau3","v2-cau4"],"labels":["Hack 1","Hack 2","Hack 3","Hack 4"]}'></div>
+</section>
+
+<section data-id="chot2" data-nav="Ai học nhiều nhất" data-tag="Nghe hiểu">
   <div class="h2" data-box="120 78 1300 120">Ai là người học nhiều nhất?</div>
   <div class="lead" data-box="120 260 1680 240" data-step="1">Lúc cả đội bàn và giảng: <b>bậc 3 và 4</b>.<br>Lúc chỉ ngồi nghe: <b>bậc 1</b>. Lúc phải tự trả lời: lên <b>bậc 3</b>.</div>
   <div class="note" data-box="120 560 1680 170" data-step="2">Hack nào đội mình hiểu kỹ nhất? Có phải hack đội mình đã giảng? 🙋</div>
@@ -272,34 +287,30 @@
   <div data-widget="timer" data-box="120 680 620 240" data-step="1" data-opts='{"seconds":300}'></div>
 </section>
 
-<section data-id="p3" data-nav="Chặng 4" data-bg="red">
-  <div class="divnum" data-box="96 90 620 900">4</div>
-  <div class="divt" data-box="760 250 1040 340">Đúng chỗ</div>
-  <div class="lead" data-box="760 640 1040 220" data-step="1">Không nhìn thẻ, cả đội tự nhớ lại bốn hack</div>
+<section data-id="p3" data-nav="Chặng 5" data-bg="red">
+  <div class="divt" data-box="120 90 1680 900">Đúng chỗ</div>
 </section>
 
 <section data-id="ghepthe" data-nav="Đua ghép thẻ" data-tag="Đua ghép thẻ">
   <div class="h2" data-box="120 78 1300 120">Đua ghép thẻ trên sàn</div>
-  <div class="body" data-box="120 220 1060 560" data-step="1" data-each><ol><li>Lật 8 thẻ màu đội. <b>Không nhìn thẻ hack.</b></li><li>Mang từng thẻ ra đặt vào đúng ô hack trên sàn.</li><li>Đủ 8 thẻ thì một bạn rung chuông. Đã rung là không được sửa.</li><li>Đi, không chạy. Chạy hoặc chen lấn: −1 điểm.</li></ol></div>
+  <div class="body" data-box="120 220 1060 560" data-step="1" data-each><ol><li>Lật 8 thẻ màu đội. <b>Không nhìn thẻ hack.</b></li><li>Mang từng thẻ ra đặt vào đúng ô hack trên sàn.</li><li>Được đổi chỗ thẻ cho đến khi <b>hết giờ</b>.</li><li>Đi, không chạy. Chạy hoặc chen lấn: −1 điểm.</li></ol></div>
   <div data-widget="timer" data-box="1240 230 560 280" data-step="1" data-opts='{"seconds":180}'></div>
-  <div class="note" data-box="1240 560 560 300" data-step="5">Xếp hạng theo <b>số thẻ đúng</b>.<br>Bằng nhau thì đội rung chuông trước xếp trên.</div>
+  <div class="note" data-box="1240 560 560 300" data-step="5">Hết giờ thì dừng tay.<br>Xếp hạng theo <b>số thẻ đúng</b>. Bằng nhau thì cùng hạng.</div>
 </section>
 
 <section data-id="kq-ghep" data-nav="Ghép thẻ · kết quả" data-tag="Đua ghép thẻ">
   <div class="h2" data-box="120 78 1300 120">Đua ghép thẻ · Kết quả</div>
-  <div data-widget="roundres" data-box="120 200 1680 780" data-step="1" data-opts='{"round":"ghepthe","label":"Số thẻ đúng","max":8}'></div>
+  <div data-widget="roundres" data-box="120 200 1680 780" data-step="1" data-opts='{"round":"ghepthe","label":"Số thẻ đúng","max":8,"bell":false}'></div>
 </section>
 
 <section data-id="ghepthe-chot" data-nav="Ghép thẻ · chốt" data-tag="Đua ghép thẻ">
   <div class="h2" data-box="120 78 1300 120">Vừa nghỉ xong, vẫn tự nhớ ra</div>
   <div class="lead" data-box="120 260 1680 200" data-step="1">Không nhìn thẻ mà vẫn tự lấy được kiến thức ra: đó là <b>bậc 3</b>.</div>
-  <div class="note" data-box="120 520 1680 150" data-step="2">Hai hack vừa dùng: <b>Tự đố, tự giảng</b> (tự nhớ lại, không nhìn thẻ) và <b>Rải đều, trộn bài</b> (nhớ lại sau giờ nghỉ, với 8 thẻ trộn lẫn bốn hack).</div>
+  <div class="note" data-box="120 520 1680 150" data-step="2">Hai hack vừa dùng: <b>Chia nhóm, vẽ sơ đồ</b> (xếp 8 thẻ vào 4 nhóm) và <b>Rải đều, trộn bài</b> (nhớ lại sau giờ nghỉ, với 8 thẻ trộn lẫn bốn hack).</div>
 </section>
 
-<section data-id="p3b" data-nav="Chặng 5" data-bg="red">
-  <div class="divnum" data-box="96 90 620 900">5</div>
-  <div class="divt" data-box="760 250 1040 340">Dùng AI</div>
-  <div class="lead" data-box="760 640 1040 220" data-step="1">Dùng AI thế nào thì lên thang, thế nào thì tụt xuống</div>
+<section data-id="p3b" data-nav="Chặng 6" data-bg="red">
+  <div class="divt" data-box="120 90 1680 900">Dùng AI</div>
 </section>
 
 <section data-id="toaan" data-nav="Dùng AI" data-tag="Dùng AI">
@@ -313,36 +324,68 @@
   <div data-widget="wheel" data-box="120 220 1680 760" data-step="1" data-opts='{"items":["Đội Red","Đội Blue","Đội Green","Đội Yellow"],"colors":["#D32F2F","#1E63C6","#2E8B47","#F2B705"],"slots":["Tình huống 1","Tình huống 2","Tình huống 3","Tình huống 4"]}'></div>
 </section>
 
-<section data-id="case1" data-nav="Tình huống 1" data-judged-by='{"wheel":"boc-toaan","slot":0}'>
-  <div class="h2" data-box="120 78 1300 120">Tình huống 1</div>
-  <div data-widget="video" data-box="120 200 880 495" data-step="1" data-opts='{"label":"Video 1 · phần 1 và phần 2","src":"videos/case1.mp4","pauseAt":35.2}'></div>
-  <div data-widget="quiz" data-box="1040 200 760 780" data-step="1" data-opts='{"round": "toaan", "layout": "stack", "question": "Hai tuần sau thì sao?", "options": ["Nhớ gần hết 30 từ, vì đã tự đố rất nhiều.", "Còn nhớ khoảng một nửa số từ.", "Quên gần hết, vì dùng AI thì không học được gì.", "Nhớ hết, còn nhớ tốt hơn bạn ôn mỗi tối 10 từ."], "answer": "B"}'></div>
-  <div data-widget="reveal" data-box="120 725 880 255" data-step="2" data-opts='{"label":"Phần 2 · bài học (bấm vào đây)"}'><b>Nhớ một phần. Hai tuần sau còn nhớ khoảng một nửa số từ.</b><br><span class="small">Tự đố là đúng (hack 2), nhưng dồn một tối thì mau quên. Rải ra mỗi tối 10 câu, ba tối (hack 4).</span></div>
+<section data-id="case1-v1" data-nav="Tình huống 1 · phần 1" data-tag="Dùng AI">
+  <div class="h2" data-box="120 78 1300 120">Tình huống 1 · phần 1</div>
+  <div data-widget="video" data-box="300 210 1320 743" data-opts='{"label":"Video 1 · phần 1","src":"videos/case1.mp4","pauseAt":35.2}'></div>
+</section>
+
+<section data-id="case1" data-nav="Tình huống 1 · đoán" data-tag="Dùng AI · tình huống 1">
+  <div class="h2 qtitle" data-box="120 78 1420 210">Hai tuần sau thì sao?</div>
+  <div data-widget="quiz" data-box="120 300 1680 680" data-step="1" data-opts='{"round":"toaan","explain":{"wheel":"boc-toaan","slot":0},"options":["Nhớ gần hết 30 từ, vì đã tự đố rất nhiều.","Còn nhớ khoảng một nửa số từ.","Quên gần hết, vì dùng AI thì không học được gì.","Nhớ hết, còn nhớ tốt hơn bạn ôn mỗi tối 10 từ."],"answer":"B"}'></div>
   <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":45,"compact":true}'></div>
 </section>
 
-<section data-id="case2" data-nav="Tình huống 2" data-judged-by='{"wheel":"boc-toaan","slot":1}'>
-  <div class="h2" data-box="120 78 1300 120">Tình huống 2</div>
-  <div data-widget="video" data-box="120 200 880 495" data-step="1" data-opts='{"label":"Video 2 · phần 1 và phần 2","src":"videos/case2.mp4","pauseAt":51.3}'></div>
-  <div data-widget="quiz" data-box="1040 200 760 780" data-step="1" data-opts='{"round": "toaan", "layout": "stack", "question": "Một tuần sau, cô hỏi về các loài cây. Chuyện gì xảy ra?", "options": ["Trả lời tốt, vì bài đã chép vào vở.", "Trả lời tốt, vì được cô khen nên nhớ lâu.", "Không trả lời được, vì chưa tự quan sát cây thật.", "Trả lời được một nửa, vì đã đọc bài AI viết một lần."], "answer": "C"}'></div>
-  <div data-widget="reveal" data-box="120 725 880 255" data-step="2" data-opts='{"label":"Phần 2 · bài học (bấm vào đây)"}'><b>Quên. Bạn ấy chưa từng thấy cây dương xỉ thật nên không trả lời được.</b><br><span class="small">Chép bài AI viết là bậc 1. Tự ra vườn quan sát mới là bậc 3.</span></div>
+<section data-id="case1-v2" data-nav="Tình huống 1 · phần 2" data-tag="Dùng AI">
+  <div class="h2" data-box="120 78 1300 120">Tình huống 1 · phần 2</div>
+  <div data-widget="video" data-box="300 210 1320 743" data-opts='{"label":"Video 1 · phần 2","src":"videos/case1.mp4","start":35.2}'></div>
+</section>
+
+<section data-id="case2-v1" data-nav="Tình huống 2 · phần 1" data-tag="Dùng AI">
+  <div class="h2" data-box="120 78 1300 120">Tình huống 2 · phần 1</div>
+  <div data-widget="video" data-box="300 210 1320 743" data-opts='{"label":"Video 2 · phần 1","src":"videos/case2.mp4","pauseAt":51.3}'></div>
+</section>
+
+<section data-id="case2" data-nav="Tình huống 2 · đoán" data-tag="Dùng AI · tình huống 2">
+  <div class="h2 qtitle" data-box="120 78 1420 210">Một tuần sau, cô hỏi về các loài cây. Chuyện gì xảy ra?</div>
+  <div data-widget="quiz" data-box="120 300 1680 680" data-step="1" data-opts='{"round":"toaan","explain":{"wheel":"boc-toaan","slot":1},"options":["Trả lời tốt, vì bài đã chép vào vở.","Trả lời tốt, vì được cô khen nên nhớ lâu.","Không trả lời được, vì chưa tự quan sát cây thật.","Trả lời được một nửa, vì đã đọc bài AI viết một lần."],"answer":"C"}'></div>
   <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":45,"compact":true}'></div>
 </section>
 
-<section data-id="case3" data-nav="Tình huống 3" data-judged-by='{"wheel":"boc-toaan","slot":2}'>
-  <div class="h2" data-box="120 78 1300 120">Tình huống 3</div>
-  <div data-widget="video" data-box="120 200 880 495" data-step="1" data-opts='{"label":"Video 3 · phần 1 và phần 2","src":"videos/case3.mp4","pauseAt":45.6}'></div>
-  <div data-widget="quiz" data-box="1040 200 760 780" data-step="1" data-opts='{"round": "toaan", "layout": "stack", "question": "Một tuần sau, bạn ấy viết bài văn mới. Chuyện gì xảy ra?", "options": ["Lại mắc đúng ba lỗi đó, vì AI không sửa hộ.", "Phải nhờ Gemini chỉ lỗi lại từ đầu.", "Điểm thấp hơn, vì mất 20 phút sửa là phí thời gian.", "Tự tránh được đúng ba lỗi đó."], "answer": "D"}'></div>
-  <div data-widget="reveal" data-box="120 725 880 255" data-step="2" data-opts='{"label":"Phần 2 · bài học (bấm vào đây)"}'><b>Nhớ. Bài văn tuần sau, bạn ấy tự tránh được đúng những lỗi đó.</b><br><span class="small">AI chỉ chỗ yếu, bạn vẫn là người làm: bậc 3. Học lại đúng chỗ mình bị vấp (hack 2).</span></div>
+<section data-id="case2-v2" data-nav="Tình huống 2 · phần 2" data-tag="Dùng AI">
+  <div class="h2" data-box="120 78 1300 120">Tình huống 2 · phần 2</div>
+  <div data-widget="video" data-box="300 210 1320 743" data-opts='{"label":"Video 2 · phần 2","src":"videos/case2.mp4","start":51.3}'></div>
+</section>
+
+<section data-id="case3-v1" data-nav="Tình huống 3 · phần 1" data-tag="Dùng AI">
+  <div class="h2" data-box="120 78 1300 120">Tình huống 3 · phần 1</div>
+  <div data-widget="video" data-box="300 210 1320 743" data-opts='{"label":"Video 3 · phần 1","src":"videos/case3.mp4","pauseAt":45.6}'></div>
+</section>
+
+<section data-id="case3" data-nav="Tình huống 3 · đoán" data-tag="Dùng AI · tình huống 3">
+  <div class="h2 qtitle" data-box="120 78 1420 210">Một tuần sau, bạn ấy viết bài văn mới. Chuyện gì xảy ra?</div>
+  <div data-widget="quiz" data-box="120 300 1680 680" data-step="1" data-opts='{"round":"toaan","explain":{"wheel":"boc-toaan","slot":2},"options":["Lại mắc đúng ba lỗi đó, vì AI không sửa hộ.","Phải nhờ Gemini chỉ lỗi lại từ đầu.","Điểm thấp hơn, vì mất 20 phút sửa là phí thời gian.","Tự tránh được đúng ba lỗi đó."],"answer":"D"}'></div>
   <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":45,"compact":true}'></div>
 </section>
 
-<section data-id="case4" data-nav="Tình huống 4" data-judged-by='{"wheel":"boc-toaan","slot":3}'>
-  <div class="h2" data-box="120 78 1300 120">Tình huống 4</div>
-  <div data-widget="video" data-box="120 200 880 495" data-step="1" data-opts='{"label":"Video 4 · phần 1 và phần 2","src":"videos/case4.mp4","pauseAt":39.5}'></div>
-  <div data-widget="quiz" data-box="1040 200 760 780" data-step="1" data-opts='{"round": "toaan", "layout": "stack", "question": "Khi cô chấm bài, chuyện gì xảy ra?", "options": ["Điểm thấp, vì có thông tin Gemini đưa ra đã cũ.", "Điểm cao, vì đã ghi nguồn là Gemini.", "Điểm cao, vì AI luôn đúng về số liệu.", "Bị trừ điểm chỉ vì đã dùng AI."], "answer": "A"}'></div>
-  <div data-widget="reveal" data-box="120 725 880 255" data-step="2" data-opts='{"label":"Phần 2 · bài học (bấm vào đây)"}'><b>Điểm thấp. Hai trong ba thông tin Gemini đưa ra đã cũ.</b><br><span class="small">AI có thể sai. Đối chiếu sách, hỏi cô, cãi lại AI khi nó sai: đó là bậc 4.</span></div>
+<section data-id="case3-v2" data-nav="Tình huống 3 · phần 2" data-tag="Dùng AI">
+  <div class="h2" data-box="120 78 1300 120">Tình huống 3 · phần 2</div>
+  <div data-widget="video" data-box="300 210 1320 743" data-opts='{"label":"Video 3 · phần 2","src":"videos/case3.mp4","start":45.6}'></div>
+</section>
+
+<section data-id="case4-v1" data-nav="Tình huống 4 · phần 1" data-tag="Dùng AI">
+  <div class="h2" data-box="120 78 1300 120">Tình huống 4 · phần 1</div>
+  <div data-widget="video" data-box="300 210 1320 743" data-opts='{"label":"Video 4 · phần 1","src":"videos/case4.mp4","pauseAt":39.5}'></div>
+</section>
+
+<section data-id="case4" data-nav="Tình huống 4 · đoán" data-tag="Dùng AI · tình huống 4">
+  <div class="h2 qtitle" data-box="120 78 1420 210">Khi cô chấm bài, chuyện gì xảy ra?</div>
+  <div data-widget="quiz" data-box="120 300 1680 680" data-step="1" data-opts='{"round":"toaan","explain":{"wheel":"boc-toaan","slot":3},"options":["Điểm thấp, vì có thông tin Gemini đưa ra đã cũ.","Điểm cao, vì đã ghi nguồn là Gemini.","Điểm cao, vì AI luôn đúng về số liệu.","Bị trừ điểm chỉ vì đã dùng AI."],"answer":"A"}'></div>
   <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":45,"compact":true}'></div>
+</section>
+
+<section data-id="case4-v2" data-nav="Tình huống 4 · phần 2" data-tag="Dùng AI">
+  <div class="h2" data-box="120 78 1300 120">Tình huống 4 · phần 2</div>
+  <div data-widget="video" data-box="300 210 1320 743" data-opts='{"label":"Video 4 · phần 2","src":"videos/case4.mp4","start":39.5}'></div>
 </section>
 
 <section data-id="kq-toaan" data-nav="Dùng AI · kết quả" data-tag="Dùng AI">
@@ -361,37 +404,32 @@
   <div class="note" data-box="1280 220 520 700" data-step="2">Bài đều xong cả. Khác nhau là một tuần sau còn nhớ hay không, và điều đó tùy ai là người nghĩ. AI cũng có lúc sai: việc quan trọng thì kiểm tra lại với sách hoặc thầy cô.</div>
 </section>
 
-<section data-id="p4" data-nav="Chặng 6" data-bg="red">
-  <div class="divnum" data-box="96 90 620 900">6</div>
-  <div class="divt" data-box="760 250 1040 340">Làm Slides</div>
-  <div class="lead" data-box="760 640 1040 220" data-step="1">Vì sao cô giao bài nhóm, nhìn lại bài cũ, và bắt đầu bài 20/11</div>
+<section data-id="p4" data-nav="Chặng 7" data-bg="red">
+  <div class="divt" data-box="120 90 1680 900">Làm Slides</div>
 </section>
 
 <section data-id="vi-sao" data-nav="Vì sao làm slide nhóm" data-tag="Slide nhóm">
   <div class="h2" data-box="120 78 1300 120">Vì sao cô giao bài slide nhóm?</div>
-  <div class="card" data-box="120 240 520 330" data-step="1"><h3>Tự tìm hiểu</h3>Đọc, chọn ý, viết lại bằng lời của mình. Đó là bậc 3.</div>
-  <div class="card" data-box="700 240 520 330" data-step="2"><h3>Giảng cho người khác</h3>Thuyết trình và trả lời câu hỏi của cả lớp. Đó là bậc 4.</div>
-  <div class="card" data-box="1280 240 520 330" data-step="3"><h3>Làm việc cùng nhau</h3>Chia việc, giữ hạn, nhắc nhau, góp ý cho nhau.</div>
-  <div class="note" data-box="120 620 1680 260" data-step="4">Đây là những việc người lớn làm hằng ngày ở công ty: tìm hiểu, cùng nhau làm một sản phẩm, rồi trình bày cho người khác hiểu. Slide chỉ là cái vỏ; phần học nằm ở cách cả nhóm làm ra nó.</div>
+  <div class="card" data-box="120 240 820 330" data-step="1"><h3>Tự tìm hiểu</h3>Đọc, chọn ý, viết lại bằng lời của mình. Đó là bậc 3.</div>
+  <div class="card" data-box="980 240 820 330" data-step="2"><h3>Làm việc cùng nhau</h3>Chia việc, giữ hạn, nhắc nhau, góp ý cho nhau.</div>
+  <div class="note" data-box="120 620 1680 200" data-step="3">Người lớn ở công ty cũng làm đúng những việc này mỗi ngày: tự tìm hiểu, rồi cùng nhau làm ra một sản phẩm.</div>
 </section>
 
-<section data-id="nhom" data-nav="Giúp hay cản" data-tag="Slide nhóm">
-  <div class="h2" data-box="120 78 1300 120">Slide nhóm: giúp học hay cản trở?</div>
-  <div class="card" data-box="120 240 820 640" data-step="1"><h3>Giúp học khi…</h3><ul><li>Mỗi bạn tự tìm hiểu, tự viết phần mình (bậc 3).</li><li>Chia việc sớm, mỗi buổi một ít, không dồn phút cuối (hack 4).</li><li>Làm từng đợt 15 phút, cất điện thoại (hack 1).</li><li>Tập nói, giảng phần mình, góp ý cho nhau (bậc 4, hack 2).</li></ul></div>
-  <div class="card" data-box="980 240 820 640" data-step="2"><h3>Cản trở khi…</h3><ul><li>Phần lớn thời gian chọn màu, phông, hiệu ứng.</li><li>Chép chữ, ảnh từ mạng hoặc AI (bậc 1–2).</li><li>Một bạn làm hết, các bạn khác ngồi xem.</li><li>Làm cho có, ghép vội phút cuối.</li></ul></div>
+<section data-id="y-tuong" data-nav="Luật góp ý" data-tag="Slide nhóm">
+  <div class="h2" data-box="120 78 1500 120">Làm slide nhóm thế nào cho tốt hơn?</div>
+  <div class="body" data-box="120 220 1680 760" data-step="1" data-each><ol><li>Mỗi lượt, đội nêu <b>một ý</b>: làm slide nhóm thế nào cho tốt hơn, hoặc vì sao bài slide trước đây chưa tốt.</li><li>Ý phải gắn với <b>một điều đã học hôm nay</b>: một hack, một bậc thang, hay Tập → Giỏi → Thích.</li><li>Mỗi ý đúng và không trùng ý đã nói: <b>+1 điểm</b>.</li><li>Đội đang xếp cuối nói trước, đội đang dẫn đầu nói sau cùng. Hết lượt thì quay lại từ đầu.</li><li>Chỉ <b>một bạn</b> nói cho đội, và phải nói xong khi cả lớp đếm từ 1 đến 10.</li><li>Hết 10 giây mà không đội nào có ý mới thì vòng kết thúc.</li></ol></div>
 </section>
 
-<section data-id="vanhoadoc" data-nav="Nhìn lại Văn hóa đọc" data-tag="Slide nhóm · không tính điểm">
-  <div class="h2" data-box="120 78 1300 120">Nhìn lại bài “Văn hóa đọc”</div>
-  <div class="body" data-box="120 190 1680 120" data-step="1">Mỗi bạn tự nghĩ về nhóm mình. Chú đọc từng điểm: nhóm bạn đã làm được thì giơ tay. Quá nửa lớp giơ tay thì chú đánh dấu ✓.</div>
-  <div data-widget="checkstep" data-box="120 330 1680 650" data-step="2" data-opts='{"items":["Cả nhóm thống nhất <b>dàn ý</b> trước khi làm slide.","Mỗi bạn có <b>một phần nội dung</b> riêng, tự viết bằng lời của mình.","Có <b>bảng phân công</b>: ai làm gì, hạn khi nào, cả nhóm cùng thấy.","Không chép nguyên văn từ mạng hay AI; có <b>ghi nguồn</b>.","Mỗi slide <b>một ý chính</b>, chữ ít và đủ to.","Có một bạn <b>kiểm tra</b> thông tin và chính tả trước khi nộp.","Cả nhóm <b>tập nói</b>, ai cũng trình bày được phần mình."]}'></div>
+<section data-id="y-tuong-kq" data-nav="Góp ý · điểm" data-tag="Slide nhóm">
+  <div class="h2" data-box="120 78 1300 120">Mỗi ý hay: +1</div>
+  <div data-widget="timer" data-box="1580 56 220 110" data-opts='{"seconds":10,"compact":true}'></div>
+  <div data-widget="roundres" data-box="120 220 1680 760" data-opts='{"round":"nhom","label":"Số ý hợp lệ","max":20}'></div>
 </section>
 
-<section data-id="bai2011" data-nav="Bài 20/11" data-tag="Slide nhóm · 15 phút">
-  <div class="h2" data-box="120 78 1300 120">Bài 20/11: dựng dàn ý và chia việc</div>
-  <div class="body" data-box="120 220 1100 720" data-step="1" data-each><ol><li>Cùng thống nhất dàn ý: ý chính, thứ tự các slide.</li><li>Mỗi bạn nhận <b>1 phần nội dung</b> và <b>1 việc chung</b>: tạo file và gửi link · slide bìa và kết luận · kiểm tra và chính tả · dẫn buổi tập nói.</li><li>Ghi hạn cạnh tên. Hạn kiểm tra phải sau hạn làm slide.</li><li>Chọn ngày cả nhóm tập nói. Mỗi bạn tự nói thử phần mình trước đó (hack 2).</li></ol></div>
-  <div data-widget="timer" data-box="1280 230 520 260" data-step="1" data-opts='{"seconds":900}'></div>
-  <div class="note" data-box="1280 540 520 330" data-step="5">Xếp hạng theo <b>số điểm checklist</b> phiếu của đội lo được. Không tính nhanh hay chậm.</div>
+<section data-id="nhom" data-nav="Nên và không nên" data-tag="Slide nhóm">
+  <div class="h2" data-box="120 78 1500 120">Làm slide nhóm: nên và không nên</div>
+  <div class="card" data-box="120 220 1060 620" data-step="1"><h3>Nên</h3><ol><li>Thống nhất dàn ý trước (hack 2).</li><li>Mỗi bạn một phần, tự tìm hiểu và viết bằng lời của mình (bậc 3).</li><li>Có bảng phân công: ai làm gì, hạn khi nào.</li><li>Làm rải ra nhiều buổi, không dồn phút cuối (hack 4).</li><li>Ghi nguồn cho chữ và ảnh lấy từ nơi khác.</li><li>Mỗi slide một ý, chữ ít và to.</li><li>Có một bạn kiểm tra thông tin và chính tả trước khi nộp.</li></ol></div>
+  <div class="card" data-box="1220 220 580 620" data-step="2"><h3>Không nên</h3><ol><li>Dành phần lớn thời gian chọn màu, phông, hiệu ứng.</li><li>Chép nguyên văn từ mạng hoặc AI (bậc 1–2).</li><li>Một bạn làm hết, các bạn khác ngồi xem.</li></ol></div>
 </section>
 
 <section data-id="canva" data-nav="Demo Canva" data-tag="Slide nhóm">
@@ -400,49 +438,47 @@
   <div class="note" data-box="120 810 1680 140" data-step="5">Canva chỉ là nơi làm chung. Leo lên bậc 3–4 là nhờ mỗi bạn tự viết, cả nhóm giảng cho nhau, và làm rải ra nhiều buổi.</div>
 </section>
 
-<section data-id="p5" data-nav="Chặng 7" data-bg="red">
-  <div class="divnum" data-box="96 90 620 900">7</div>
-  <div class="divt" data-box="760 250 1040 340">Chung kết</div>
-  <div class="lead" data-box="760 640 1040 220" data-step="1">Năm câu điểm gấp đôi, rồi mỗi đội tự giải thích một hack</div>
+<section data-id="p5" data-nav="Chặng 8" data-bg="red">
+  <div class="divt" data-box="120 90 1680 900">Chung kết</div>
 </section>
 
 <section data-id="ck-luat" data-nav="Chung kết · luật" data-tag="Chung kết">
   <div class="h2" data-box="120 78 1300 120">Chung kết · điểm gấp đôi</div>
-  <div class="lead" data-box="120 240 1680 520" data-step="1" data-each><ol><li><b>5 câu</b> về cả buổi học, từ dễ đến khó. Câu xếp thứ tự: mỗi thẻ A, B, C, D là một cách xếp.</li><li>Cả đội bàn <b>90 giây</b> rồi giơ một thẻ. Xếp hạng theo số câu đúng: <b>8 · 6 · 4 · 4</b>.</li><li>Sau đó mỗi đội bốc thăm một hack <b>khác hack đội đã giảng</b>, và tự giải thích hack đó giúp mình leo thang thế nào.</li></ol></div>
+  <div class="lead" data-box="120 240 1680 520" data-step="1" data-each><ol><li><b>5 câu</b> về cả buổi học, từ dễ đến khó. Câu xếp thứ tự: mỗi thẻ A, B, C, D là một cách xếp.</li><li>Cả đội bàn <b>90 giây</b> rồi giơ một thẻ. Xếp hạng theo số câu đúng: <b>8 · 6 · 4 · 4</b>.</li></ol></div>
 </section>
 
 <section data-id="ck-cau1" data-nav="Chung kết 1" data-tag="Chung kết · câu 1">
   <div class="h2 qtitle" data-box="120 78 1420 140">Lan học đàn piano. Xếp các đoạn sau theo đúng thứ tự.</div>
-  <div class="body" data-box="120 240 1680 340">① Lan tự xin cô bài khó hơn, tối nào cũng muốn tập.<br>② Lan tập mỗi tối 15 phút một đoạn ngắn, ít vấp dần.<br>③ Lan đánh trọn một bài không vấp, cả nhà vỗ tay.<br>④ Lan mới học, ngón tay vấp suốt, thấy chán.</div>
-  <div data-widget="quiz" data-box="120 600 1680 390" data-step="1" data-opts='{"round": "chungket", "options": ["④ → ① → ② → ③", "① → ④ → ② → ③", "④ → ② → ① → ③", "④ → ② → ③ → ①"], "answer": "D"}'></div>
+  <div class="body" data-box="120 230 1680 300">① Lan tự xin cô bài khó hơn, tối nào cũng muốn tập.<br>② Lan tập mỗi tối 15 phút một đoạn ngắn, ít vấp dần.<br>③ Lan đánh trọn một bài không vấp, cả nhà vỗ tay.<br>④ Lan mới học, ngón tay vấp suốt, thấy chán.</div>
+  <div data-widget="quiz" data-box="120 540 1680 440" data-step="1" data-opts='{"round": "chungket", "options": ["④ → ① → ② → ③", "① → ④ → ② → ③", "④ → ② → ① → ③", "④ → ② → ③ → ①"], "answer": "D"}'></div>
   <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":90,"compact":true}'></div>
 </section>
 
 <section data-id="ck-cau2" data-nav="Chung kết 2" data-tag="Chung kết · câu 2">
   <div class="h2 qtitle" data-box="120 78 1420 140">Xếp bốn cách học sau từ bậc thấp nhất đến bậc cao nhất trên chiếc thang học tập.</div>
-  <div class="body" data-box="120 240 1680 340">① Làm lại y hệt bài mẫu, từng bước một.<br>② Giảng bài cho bạn, bạn hỏi lại thì trả lời.<br>③ Xem video thầy giảng về phân số.<br>④ Gấp vở, tự viết lại cách giải.</div>
-  <div data-widget="quiz" data-box="120 600 1680 390" data-step="1" data-opts='{"round": "chungket", "options": ["① → ③ → ④ → ②", "③ → ① → ② → ④", "③ → ① → ④ → ②", "③ → ④ → ① → ②"], "answer": "C"}'></div>
+  <div class="body" data-box="120 230 1680 300">① Làm lại y hệt bài mẫu, từng bước một.<br>② Giảng bài cho bạn, bạn hỏi lại thì trả lời.<br>③ Xem video thầy giảng về phân số.<br>④ Gấp vở, tự viết lại cách giải.</div>
+  <div data-widget="quiz" data-box="120 540 1680 440" data-step="1" data-opts='{"round": "chungket", "options": ["① → ③ → ④ → ②", "③ → ① → ② → ④", "③ → ① → ④ → ②", "③ → ④ → ① → ②"], "answer": "C"}'></div>
   <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":90,"compact":true}'></div>
 </section>
 
 <section data-id="ck-cau3" data-nav="Chung kết 3" data-tag="Chung kết · câu 3">
   <div class="h2 qtitle" data-box="120 78 1420 140">Những bạn nào đang dùng AI để leo lên thang học tập?</div>
-  <div class="body" data-box="120 240 1680 340"><b>An</b> nhờ Gemini đố 10 câu từ vựng mỗi tối.<br><b>Bình</b> tự viết bài văn, nhờ Gemini chỉ 3 chỗ yếu, rồi tự sửa.<br><b>Chi</b> nhờ Gemini tóm tắt chương Lịch sử, rồi đọc đi đọc lại đến khi thuộc.<br><b>Dũng</b> giảng cho Gemini nghe về quang hợp. Gemini nói một ý khác sách, Dũng mở sách kiểm tra rồi cãi lại.</div>
-  <div data-widget="quiz" data-box="120 600 1680 390" data-step="1" data-opts='{"round": "chungket", "options": ["Bình và Dũng", "An, Bình và Dũng", "An, Chi và Dũng", "Cả bốn bạn"], "answer": "B"}'></div>
+  <div class="body" data-box="120 230 1680 300"><b>An</b> nhờ Gemini đố 10 câu từ vựng mỗi tối.<br><b>Bình</b> tự viết bài văn, nhờ Gemini chỉ 3 chỗ yếu, rồi tự sửa.<br><b>Chi</b> nhờ Gemini tóm tắt chương Lịch sử, rồi đọc đi đọc lại đến khi thuộc.<br><b>Dũng</b> giảng cho Gemini nghe về quang hợp. Gemini nói một ý khác sách, Dũng mở sách kiểm tra rồi cãi lại.</div>
+  <div data-widget="quiz" data-box="120 540 1680 440" data-step="1" data-opts='{"round": "chungket", "options": ["Bình và Dũng", "An, Bình và Dũng", "An, Chi và Dũng", "Cả bốn bạn"], "answer": "B"}'></div>
   <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":90,"compact":true}'></div>
 </section>
 
 <section data-id="ck-cau4" data-nav="Chung kết 4" data-tag="Chung kết · câu 4">
   <div class="h2 qtitle" data-box="120 78 1420 140">Nhóm bạn làm slide thuyết trình chung trên Canva. Xếp các việc theo đúng thứ tự.</div>
-  <div class="body" data-box="120 240 1680 340">① Mỗi bạn tự tìm hiểu, tự viết phần mình trên file chung.<br>② Cả nhóm thống nhất dàn ý: ý chính, thứ tự các slide.<br>③ Một bạn kiểm tra thông tin và chính tả.<br>④ Lập bảng phân công: ai làm phần nào, hạn khi nào.</div>
-  <div data-widget="quiz" data-box="120 600 1680 390" data-step="1" data-opts='{"round": "chungket", "options": ["② → ④ → ① → ③", "④ → ② → ① → ③", "① → ② → ④ → ③", "② → ① → ④ → ③"], "answer": "A"}'></div>
+  <div class="body" data-box="120 230 1680 300">① Mỗi bạn tự tìm hiểu, tự viết phần mình trên file chung.<br>② Cả nhóm thống nhất dàn ý: ý chính, thứ tự các slide.<br>③ Một bạn kiểm tra thông tin và chính tả.<br>④ Lập bảng phân công: ai làm phần nào, hạn khi nào.</div>
+  <div data-widget="quiz" data-box="120 540 1680 440" data-step="1" data-opts='{"round": "chungket", "options": ["② → ④ → ① → ③", "④ → ② → ① → ③", "① → ② → ④ → ③", "② → ① → ④ → ③"], "answer": "A"}'></div>
   <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":90,"compact":true}'></div>
 </section>
 
 <section data-id="ck-cau5" data-nav="Chung kết 5" data-tag="Chung kết · câu 5">
   <div class="h2 qtitle" data-box="120 78 1420 140">Những câu nào đúng?</div>
-  <div class="body" data-box="120 240 1680 340">① Vừa làm bài vừa nhắn tin thì làm chậm hơn và dễ sai hơn, dù mình thấy vẫn ổn.<br>② Nghỉ 5 phút mà lướt điện thoại thì não vẫn được nghỉ như khi đứng dậy đi lại.<br>③ Ôn mà thấy khó và sai nhiều là dấu hiệu mình đang học.<br>④ Ôn dồn 2 tiếng tối trước ngày thi thì nhớ lâu bằng chia ra 4 tối, mỗi tối 30 phút.</div>
-  <div data-widget="quiz" data-box="120 600 1680 390" data-step="1" data-opts='{"round": "chungket", "options": ["① và ④", "①, ② và ③", "① và ③", "③ và ④"], "answer": "C"}'></div>
+  <div class="body" data-box="120 230 1680 300">① Vừa làm bài vừa nhắn tin thì làm chậm hơn và dễ sai hơn, dù mình thấy vẫn ổn.<br>② Nghỉ 5 phút mà lướt điện thoại thì não vẫn được nghỉ như khi đứng dậy đi lại.<br>③ Ôn mà thấy khó và sai nhiều là dấu hiệu mình đang học.<br>④ Ôn dồn 2 tiếng tối trước ngày thi thì nhớ lâu bằng chia ra 4 tối, mỗi tối 30 phút.</div>
+  <div data-widget="quiz" data-box="120 540 1680 440" data-step="1" data-opts='{"round": "chungket", "options": ["① và ④", "①, ② và ③", "① và ③", "③ và ④"], "answer": "C"}'></div>
   <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":90,"compact":true}'></div>
 </section>
 
@@ -451,23 +487,17 @@
   <div data-widget="tally" data-box="120 200 1680 780" data-step="1" data-opts='{"round":"chungket","questions":["ck-cau1","ck-cau2","ck-cau3","ck-cau4","ck-cau5"]}'></div>
 </section>
 
-<section data-id="datthang" data-nav="Giải thích một hack" data-tag="Chung kết">
-  <div class="h2" data-box="120 78 1300 120">Mỗi đội giải thích một hack</div>
-  <div data-widget="wheel" data-box="120 200 1100 780" data-step="1" data-opts='{"items":["Tập trung từng việc","Tự đố, tự giảng","Nghỉ đúng, ngủ đủ","Rải đều, trộn bài"],"colors":["#8E011F","#BD0129","#51000C","#A3485A"],"slots":["Đội Red","Đội Blue","Đội Green","Đội Yellow"],"avoid":"boc-hack"}'></div>
-  <div class="note" data-box="1260 200 540 620" data-step="2"><b>30 giây chuẩn bị, 1 phút nói</b><br>Hack này giúp mình leo thang thế nào? Cho một ví dụ của chính các bạn.<br><br><b>Điểm</b><br>Giải thích đúng: 1<br>Có ví dụ của riêng đội: 1</div>
-</section>
-
 <section data-id="bangdiem" data-nav="Bảng xếp hạng · chọn quà">
   <div class="h2" data-box="120 78 1500 120">Bảng xếp hạng và chọn quà</div>
   <div data-widget="standings" data-box="120 210 1680 330" data-step="1"></div>
   <div class="note" data-box="120 570 1680 90" data-step="2">Ai cũng có quà. Thắng chỉ là được chọn trước.</div>
-  <div class="body" data-box="120 700 1000 270" data-step="3" data-each><ol><li>Lượt 1: đội hạng nhất lên chọn, mỗi bạn một món, rồi đến các đội sau.</li><li>Lượt 2: làm lại theo đúng thứ tự đó.</li><li>Trong lúc chờ, viết vào phiếu và mang về nhà.</li></ol></div>
+  <div class="body" data-box="120 700 1000 270" data-step="3" data-each><ol><li>Lượt 1: đội hạng nhất lên chọn, mỗi bạn một món, rồi đến các đội sau.</li><li>Lượt 2: làm lại theo đúng thứ tự đó.</li><li>Trong lúc chờ, mỗi bạn tự nghĩ câu bên phải.</li></ol></div>
   <div class="note" data-box="1180 700 620 270" data-step="6">Môn mình chưa thích: ………<br>Khi ……… (lúc nào?),<br>mình sẽ ……… (hack nào?)</div>
 </section>
 
 <section data-id="loiket" data-nav="Lời kết" data-bg="red">
-  <div class="big" data-box="120 260 1680 160">Dở → Tập → Giỏi → Thích</div>
-  <div class="lead" data-box="160 470 1600 180" data-step="1">Môn bạn vừa viết có thể đang ở đoạn “dở”. Bốn hack hôm nay giúp bạn đi qua đoạn đó nhanh hơn.</div>
+  <div class="big" data-box="120 260 1680 160">Tập → Giỏi → Thích</div>
+  <div class="lead" data-box="160 470 1600 180" data-step="1">Môn bạn vừa nghĩ tới có thể đang ở đoạn “tập”. Bốn hack hôm nay giúp bạn đi qua đoạn đó nhanh hơn.</div>
   <div class="lead" data-box="160 700 1600 140" data-step="2">Hôm nay mới là màn hướng dẫn. Phần còn lại của bản đồ là của các bạn.</div>
 </section>
 
@@ -475,22 +505,22 @@
   <div class="h2 cst" data-box="120 48 1680 90">Hết bài · Nhớ lâu · Hiểu kỹ</div>
   <div data-widget="html" data-box="100 145 1720 850"><div class="cheat">
  <section class="box"><div class="bh"><svg class="ic " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h5v-5h5v-5h5V6h3"></path></svg>Chiếc thang học tập<small>Leo càng cao, não càng phải tự làm. Thấy khó một chút là đang học.</small></div>
-  <div class="bb ladb"><div class="g4 lad"><div class="cap">Dở → Tập → Giỏi → Thích</div>
+  <div class="bb ladb"><div class="g4 lad"><div class="cap">Tập → Giỏi → Thích</div>
    <div class="st"><b>1 · Nhận vào</b><span>Nghe giảng, đọc lại bài</span></div>
    <div class="st"><b>2 · Làm theo</b><span>Bắt chước, chép lời giải</span></div>
-   <div class="st"><b>3 · Tự chế</b><span>Giải thích bằng lời mình, tự đặt câu hỏi</span></div>
+   <div class="st"><b>3 · Tự chế</b><span>Gấp vở tự nhớ lại, giải thích bằng lời mình</span></div>
    <div class="st"><b>4 · Tương tác</b><span>Bạn nói một ý, mình nghĩ tiếp; tranh luận, sửa cho nhau</span></div></div></div></section>
  <div class="g4 midrow">
   <section class="box"><div class="bh"><svg class="ic " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2"></rect><path d="M12 8V4H8M2 14h2M20 14h2M15 13v2M9 13v2"></path></svg>Dùng AI</div>
    <div class="bb g2"><div class="pan up"><h4>Nên</h4><ul class="li yes"><li>Nhờ AI đố mình</li><li>Nhờ AI chỉ chỗ yếu, rồi tự sửa</li><li>Giảng cho AI nghe, cãi khi nó sai</li><li>Hỏi lại thầy cô khi cần chắc</li></ul></div>
    <div class="pan dn"><h4>Không nên</h4><ul class="li nope"><li>Chép lời giải của AI</li><li>Học thuộc tóm tắt của AI</li><li>Nhờ AI làm hộ phần của mình</li><li>Tin AI mọi lúc</li></ul></div></div></section>
   <section class="box"><div class="bh"><svg class="ic " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="2" width="8" height="4" rx="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><path d="m9 14 2 2 4-4"></path></svg>Slide nhóm trên Canva</div>
-   <div class="bb"><ol class="li chk"><li>Thống nhất dàn ý trước</li><li>Mỗi bạn một phần, tự viết</li><li>Bảng phân công có tên và hạn</li><li>Không chép; có ghi nguồn</li><li>Mỗi slide một ý, chữ ít và to</li><li>Có người kiểm tra thông tin, chính tả</li><li>Cả nhóm tập nói, ai cũng nói được phần mình</li></ol></div></section>
+   <div class="bb"><ol class="li chk"><li>Thống nhất dàn ý trước</li><li>Mỗi bạn một phần, tự viết</li><li>Bảng phân công có tên và hạn</li><li>Làm rải ra nhiều buổi</li><li>Ghi nguồn chữ và ảnh</li><li>Mỗi slide một ý, chữ ít và to</li><li>Có người kiểm tra thông tin, chính tả</li></ol></div></section>
  </div>
  <section class="box"><div class="bh"><svg class="ic " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg>Bốn hack</div>
   <div class="bb g4 hks">
    <div class="hk"><svg class="ic hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 2h4M12 14l3-3"></path><circle cx="12" cy="14" r="8"></circle></svg><h4>1 · Tập trung từng việc</h4><p>Một việc một lúc, điện thoại để phòng khác. Hẹn giờ 15 phút, quen thì tăng dần.</p></div>
-   <div class="hk"><svg class="ic hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"></path></svg><h4>2 · Tự đố, tự giảng</h4><p>Gấp vở, tự viết ra những gì nhớ, rồi mở ra so. Giảng lại cho bạn, bố mẹ.</p></div>
+   <div class="hk"><svg class="ic hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"></rect><rect x="2" y="16" width="6" height="6" rx="1"></rect><rect x="9" y="2" width="6" height="6" rx="1"></rect><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3M12 12V8"></path></svg><h4>2 · Chia nhóm, vẽ sơ đồ</h4><p>Xem đề mục trước. Xếp ý thành sơ đồ cây, bảng hoặc đường thời gian.</p></div>
    <div class="hk"><svg class="ic hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg><h4>3 · Nghỉ đúng, ngủ đủ</h4><p>Nghỉ 5 phút: đi lại, không cầm điện thoại. Bí thì nghỉ rồi quay lại. Ngủ đủ giấc.</p></div>
    <div class="hk"><svg class="ic hi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"></path></svg><h4>4 · Rải đều, trộn bài</h4><p>Ôn sớm vài ngày, mỗi tối một ít. Trộn nhiều dạng bài, thêm dạng hay sai.</p></div></div></section>
 </div></div>

@@ -65,7 +65,7 @@ button:focus-visible, select:focus-visible, input:focus-visible { outline: 4px s
 .card h3 { font: 900 44px/1.2 var(--f-head); color: var(--red); margin: 0 0 12px; }
 .card b, .note b, .body b, .lead b { color: var(--red); }
 .divnum { font: 900 760px/1 var(--f-head); color: rgba(248,247,208,.18); letter-spacing: -20px; }
-.divt { font: 900 150px/1.05 var(--f-head); color: #fff; }
+.divt { font: 900 150px/1.05 var(--f-head); color: #fff; display: flex; align-items: center; }
 .sequence { font: 900 56px/1.42 var(--f-head); letter-spacing: 12px; }
 .sequence.numbers { letter-spacing: 8px; }
 ol, ul { margin: 0; padding-left: 1.15em; }
@@ -91,7 +91,7 @@ table.t td { border-bottom: 2px solid var(--line); padding: 14px 18px; vertical-
 .chip.mini { display: inline-block; flex: none; min-width: 0; padding: 10px 18px; font-size: 30px; }
 
 /* Ladder (slide "Chiếc thang") */
-.ladder { display: flex; align-items: flex-end; gap: 22px; height: 100%; }
+.ladder { display: flex; align-items: flex-end; gap: 22px; height: 100%; margin: 0; padding: 0; list-style: none; }
 .ladder .st { flex: 1; border: 4px solid var(--dark); padding: 24px; display: flex; flex-direction: column; gap: 10px; background: #fff; }
 .ladder .st .n { font: 900 64px/1 var(--f-head); color: var(--red); }
 .ladder .st .nm { font: 800 36px/1.15 var(--f-body); color: var(--red); }
@@ -156,7 +156,8 @@ table.t td { border-bottom: 2px solid var(--line); padding: 14px 18px; vertical-
 .quiz .qt { display: flex; flex-direction: column; gap: 12px; }
 .quiz .qtm { flex: 1; display: flex; gap: 8px; align-items: center; border-radius: 16px; padding: 10px 14px; color: #fff; }
 .quiz .qtm .qn { font: 800 26px/1.1 var(--f-body); flex: 1; min-width: 0; }
-.quiz .qtm .qg { font: 700 24px/1.1 var(--f-body); background: rgba(255,255,255,.22); border-radius: 10px; padding: 14px 16px; }  /* the teaching team does not answer its own hack */
+.quiz .qx { display: flex; align-items: center; gap: 12px; font: 700 24px/1.2 var(--f-body); color: var(--ink); background: var(--cream); border-left: 8px solid var(--dark); padding: 8px 14px; }
+.quiz .qx .chip.mini { font-size: 24px; padding: 6px 14px; }
 .quiz .qtm button { width: 58px; height: 58px; flex: none; border: 0; border-radius: 12px; background: rgba(255,255,255,.92); color: var(--ink); font: 800 30px/1 var(--f-body); cursor: pointer; }
 .quiz .qtm button.on { background: var(--ink); color: #fff; outline: 3px solid #fff; }
 .quiz .c-Y.qtm button.on { background: var(--t-yellow-ink); }
@@ -251,8 +252,17 @@ table.tally small { font-size: 22px; color: var(--mute); }
 
 /* help (?) */
 #help { position: fixed; inset: 0; z-index: 60; background: rgba(0,0,0,.6); display: grid; place-items: center; }
-#help .bx { background: #fff; border-radius: 18px; padding: 26px 30px; max-width: 600px; font: 400 16px/1.6 var(--f-body); color: var(--ink); }
-#help kbd { background: #EEE; border-radius: 6px; padding: 2px 7px; font-weight: 700; }
+#help .bx { background: #fff; border-radius: 18px; padding: 24px 30px; width: min(980px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; font: 400 16px/1.45 var(--f-body); color: var(--ink); }
+#help h3 { margin: 0 0 12px; font: 700 24px/1.2 var(--f-head); color: var(--red); }
+#help .hgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 28px; align-items: start; }
+@media (max-width: 760px) { #help .hgrid { grid-template-columns: 1fr; } }
+#help table { width: 100%; border-collapse: collapse; }
+#help caption { text-align: left; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--red); padding-bottom: 4px; border-bottom: 2px solid var(--red); }
+#help td { padding: 7px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+#help td:first-child { width: 128px; white-space: nowrap; padding-right: 12px; }
+#help td small { display: block; font-size: 13px; color: var(--mute); }
+#help kbd { display: inline-block; min-width: 26px; text-align: center; background: #F2F2F2; border: 1px solid #DDD; border-bottom-width: 2px; border-radius: 6px; padding: 1px 7px; font: 700 14px/1.5 var(--f-body); }
+#help .hnote { margin: 14px 0 8px; font-size: 14px; color: var(--mute); }
 #help .btn { font-size: 16px; padding: 10px 16px; margin: 4px 6px 0 0; }
 
 /* grid view (G) */

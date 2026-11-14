@@ -56,7 +56,6 @@ const SLIDES = $$("#slides > section").map((sec) => ({
   tag: sec.dataset.tag,
   bg: sec.dataset.bg,
   noFooter: sec.hasAttribute("data-no-footer"),
-  judgedBy: sec.dataset.judgedBy && JSON.parse(sec.dataset.judgedBy),
   blocks: [...sec.children].map(readBlock),
 }));
 $("#slides").remove();
@@ -76,7 +75,6 @@ function writeSlide(s) {
   const attrs = [`data-id="${esc(s.id)}"`];
   for (const k of ["nav", "tag", "bg"]) if (s[k]) attrs.push(`data-${k}="${esc(s[k])}"`);
   if (s.noFooter) attrs.push("data-no-footer");
-  if (s.judgedBy) attrs.push("data-judged-by=" + json(s.judgedBy));
   return `<section ${attrs.join(" ")}>\n${s.blocks.map(writeBlock).join("\n")}\n</section>`;
 }
 
@@ -203,13 +201,6 @@ function answerOf(slideId) {
   return quiz ? LETTERS.indexOf(quiz.opts.answer) : null;
 }
 
-// Team that taught a quiz's hack: opts.teach = { wheel, item } names the wheel that gave each team its hack.
-function teacherOf(opts) {
-  if (!opts?.teach) return null;
-  const k = (wheels[opts.teach.wheel] || []).indexOf(opts.teach.item);
-  return k >= 0 ? TEAMS[k].key : null;
-}
-const quizOpts = (slideId) => slides().find((s) => s.id === slideId)?.blocks.find((b) => b.kind === "quiz")?.opts;
 
 /* ================= Rendering ================= */
 
@@ -414,6 +405,8 @@ const WIDGETS = {
       let last = 0;
       v.ontimeupdate = () => { if (last < o.pauseAt && v.currentTime >= o.pauseAt) v.pause(); last = v.currentTime; };
     }
+    // start: part 2 of a case video begins where part 1 stopped.
+    if (v && o.start) v.addEventListener("loadedmetadata", () => { if (v.currentTime < o.start) v.currentTime = o.start; }, { once: true });
   },
 
 
@@ -438,7 +431,7 @@ const WIDGETS = {
     $('[data-a="spin"]', el).onclick = () => {
       if (editing || spinning || done) return;
       const segment = (2 * Math.PI) / left.length;
-      const j = pickSlot(left, picks.length, o.avoid && wheels[o.avoid]);
+      const j = Math.floor(Math.random() * left.length);
       // Save the result before the animation, so a reload mid-spin keeps it.
       wheels[ctx.slideId] = picks.concat(left[j]);
       saveWheels();
@@ -455,13 +448,13 @@ const WIDGETS = {
     const correct = LETTERS.indexOf(o.answer);
     const picks = board.answers[qid] || {};
     const options = o.options || [];
-    const teacher = teacherOf(o);
+    // explain: { wheel, slot } names the wheel that picked the team who says why (wheel items are in TEAMS order).
+    const explainer = o.explain && TEAMS[(wheels[o.explain.wheel] || [])[o.explain.slot]];
     el.innerHTML = `<div class="quiz${o.layout === "stack" ? " stack" : ""}${session.revealed[qid] ? " open" : ""}">
       ${o.question ? `<div class="qq">${o.question}</div>` : ""}
       <div class="qb">
         <div class="qo">${options.map((txt, i) => `<div class="op${i === correct ? " ok" : ""}"><b>${LETTERS[i]}</b><span>${txt}</span></div>`).join("")}</div>
-        <div class="qt">${TEAMS.map((t) => {
-          if (t.key === teacher) return `<div class="qtm c-${t.key} picked"><span class="qn">${t.name}</span><span class="qg">Đội giảng</span></div>`;
+        <div class="qt">${o.explain ? `<div class="qx">Giải thích vì sao: ${explainer ? teamChip(explainer) : "<i>chưa bốc thăm</i>"}</div>` : ""}${TEAMS.map((t) => {
           const pick = picks[t.key];
           const mark = pick === undefined ? "–" : pick === correct ? "✓" : "✗";
           const buttons = options.map((_, i) => `<button data-k="${t.key}" data-v="${i}" class="${pick === i ? "on " + (i === correct ? "ok" : "bad") : ""}" aria-label="Đội ${t.name} chọn ${LETTERS[i]}">${LETTERS[i]}</button>`).join("");
@@ -500,7 +493,6 @@ const WIDGETS = {
       ${TEAMS.map((t) => `<tr><td>${teamChip(t)}</td>
         ${o.questions.map((q) => {
           const pick = board.answers[q]?.[t.key];
-          if (teacherOf(quizOpts(q)) === t.key) return `<td><small>Đội giảng</small></td>`;
           return `<td>${pick === undefined ? "–" : (isRight(q, t.key) ? "✓" : "✗") + ` <small>${LETTERS[pick]}</small>`}</td>`;
         }).join("")}
         <td><b>${correctCount[t.key]}</b></td>
@@ -586,15 +578,6 @@ const WIDGETS = {
     el.innerHTML = teamCards([...TEAMS].sort((a, b) => t[b.key] - t[a.key]), false);
   },
 };
-
-// Random index into left for the next slot. With avoid, slot k never gets item avoid[k],
-// and only picks that still leave a valid draw for the later slots are allowed.
-function pickSlot(left, slot, avoid) {
-  if (!avoid) return Math.floor(Math.random() * left.length);
-  const ok = (items, k) => !items.length || items.some((it, i) => it !== avoid[k] && ok(items.filter((_, x) => x !== i), k + 1));
-  const good = left.map((it, i) => i).filter((i) => left[i] !== avoid[slot] && ok(left.filter((_, x) => x !== i), slot + 1));
-  return good.length ? good[Math.floor(Math.random() * good.length)] : Math.floor(Math.random() * left.length);
-}
 
 function drawWheel(canvas, o, left) {
   const g = canvas.getContext("2d");

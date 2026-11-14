@@ -1,6 +1,6 @@
 # 6B0 "Học cách học": handoff for a new session
 
-Last updated: 14 Nov 2026 (Hanoi), hack cards restructured. Author of the session: Huy Dũng (always write the name with diacritics).
+Last updated: 14 Nov 2026 (Hanoi), card 2 replaced; printables cut to 17 pages. Author of the session: Huy Dũng (always write the name with diacritics).
 
 Read this file first. It explains what exists, how the two HTML files work, what has been decided, and what is still open.
 
@@ -15,10 +15,10 @@ Read this file first. It explains what exists, how the two HTML files work, what
   - The learning ladder (thang học, based on ICAP, Chi & Wylie 2014): **1 Nhận vào · 2 Làm theo · 3 Tự chế · 4 Tương tác**.
   - The four hacks (from Oakley et al., *Learning How to Learn*):
     1. Tập trung từng việc
-    2. Tự đố, tự giảng
+    2. Chia nhóm, vẽ sơ đồ
     3. Nghỉ đúng, ngủ đủ
     4. Rải đều, trộn bài
-  - Card text lives in `Tai-lieu-in-6B0.docx` pages 2–5. `The-hack-ban-moi.md` is a plain-text copy for review; regenerate it from the docx after edits.
+  - Card text lives in `Tai-lieu-in-6B0.docx` pages 2–5 (the only copy; the old `.md` copy was removed on 14 Nov).
   - Using AI (Gemini) well and badly.
   - Group slides on Canva.
 - **Format:** a game. There are 4 colour teams, chosen and seated by cô Tươi: Red (R), Blue (B), Green (G), Yellow (Y). The names are in English everywhere (slides, HUD, printables) so they are similar in length. A wheel gives each team one hack; the whole team reads it and teaches it to the class.
@@ -40,7 +40,7 @@ Read this file first. It explains what exists, how the two HTML files work, what
 | # | What | Where | Source in this folder |
 |---|---|---|---|
 | A | **Student slides + leaderboard** (projected in class) | Local folder `slides/` (open `6B0slides.html`). Older online copy: https://claude.ai/artifact/DEWBsWs7xBedRFo4CiY3Rm | `slides/` · see `slides/README.md`. `InteractiveSlides.html` is the old single-file version. |
-| B | **A4 printables** (20 pages) | `Tai-lieu-in-6B0.docx` (edit and print in Word). Older online copy: https://claude.ai/artifact/AR2vJGv2TKAzz5LM2Wgv76 | `Tai-lieu-in-6B0.docx`. `ToPrint.html` is the old HTML version. |
+| B | **A4 printables** (17 pages) | `Tai-lieu-in-6B0.docx` (edit and print in Word). Older online copy: https://claude.ai/artifact/AR2vJGv2TKAzz5LM2Wgv76 | `Tai-lieu-in-6B0.docx`. `ToPrint.html` is the old HTML version. |
 | C | Plan deck for cô Tươi (Slides type, 28 pages) | claude.ai artifact https://claude.ai/artifact/KFFwru2snypPApxmFKyrEx | Not a file. Edit it in the claude.ai Slides editor, or export to PDF/PPTX from there. |
 
 The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc.
@@ -52,22 +52,25 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 
 ---
 
-## 3. Session flow (about 90 minutes, 58 slides)
+## 3. Session flow (66 slides, 9 map stops)
 
-| Phút | Phần | Slides |
+Durations are estimates. They add up to about 90 minutes.
+
+| Phút (khoảng) | Phần | Slides |
 |---|---|---|
-| 0–9 | Chặng 1 · Khởi động: Clash Royale, ba câu hỏi, chiếc thang, lập đội, luật chung, tín hiệu khiên | 1–8 |
-| 9–19 | Chặng 2 · Chuẩn bị: wheel gives each team one hack (1 min), everyone reads that card (4 min), team prepares the talk (5 min) | 9–12 |
-| 19–38 | Chặng 3 · Giảng giỏi: rules, then per hack 1→4: team teaches the class (3 min incl. Q&A), the 3 listening teams answer that hack's question (1 min); Nghe hiểu results; dot vote for Giảng hay (3 min); wrap-up | 13–26 |
-| 31–36 | Giải lao (5 min) | 22 |
-| 36–42 | Chặng 4 · Đúng chỗ: đua ghép thẻ trên sàn (3 min) and results | 23–26 |
-| ~42–52 | Chặng 5 · Dùng AI: a wheel picks which team explains each case; each video stops after part 1, all 4 teams raise A–D (45 s, recorded on the slide), the picked team says why, then part 2 and the answer (R) | 30–38 |
-| 50–73 | Chặng 6 · Làm Slides: why cô assigns it → helps vs hurts → Văn hóa đọc hand-raise checklist (no points) → bài 20/11 outline and task split (15 min, scored) → Canva demo | 36–41 |
-| 73–85 | Chặng 7 · Chung kết: 5 questions on the whole session, easy to hard, ×2 (3 are ordering questions, 90 s each), then a wheel gives each team one hack to explain in its own words | 42–50 |
-| 85–90 | Chặng 8 · Về đích: bảng xếp hạng, chọn quà, lời kết, cẩm nang, hỏi đáp | 51–54 |
+| 8 | Chặng 1 · Khởi động: Clash Royale story with a "HAI bài học" tease → Bài học 1 (Thích → Giỏi is common, Tập → Giỏi → Thích is far more common) → Bài học 2 (the ladder, one step per press) → lập đội (2 bài học + 4 hack; hack = mẹo to get through the "tập" part) → luật chung → tín hiệu khiên (giơ tay và lắc chuông) | 1–8 |
+| 9 | Chặng 2 · Chuẩn bị: teams pick a printed hack card at random (no wheel), read (4 min), prepare the talk (5 min) | 9–11 |
+| 16 | Chặng 3 · Giảng giỏi: teaching rules, then each team teaches hack 1→4 (3 min incl. Q&A), then the dot vote for Giảng hay. The stop ends here | 12–18 |
+| 7 | Chặng 4 · Nghe hiểu: all 4 teams answer all 4 hack questions (1 min each, A–D cards), results, "Ai học nhiều nhất" wrap-up | 19–26 |
+| 5 | Giải lao | 27 |
+| 6 | Chặng 5 · Đúng chỗ: đua ghép thẻ trên sàn (3-minute timer, teams may move cards until time runs out) and results | 28–31 |
+| 10 | Chặng 6 · Dùng AI: rules, wheel, then per case three slides: video part 1 → quiz (all teams A–D, shows the wheel-picked team that explains why) → video part 2 (chú explains aloud); results and wrap-up | 32–48 |
+| 15 | Chặng 7 · Làm Slides: why cô assigns it (tự tìm hiểu, làm việc cùng nhau) → idea round (rules slide, then a live count with a 10 s timer) → nên / không nên checklist → Canva demo | 49–54 |
+| 10 | Chặng 8 · Chung kết: 5 questions, double points | 55–62 |
+| 5 | Chặng 9 · Về đích: bảng xếp hạng, chọn quà, lời kết, cẩm nang, hỏi đáp | 63–66 |
 
 **Open timing issue:**
-- The school break at 11:00 falls around minute 45, during Dùng AI, while the slides have their own giải lao at minute 31.
+- The school break at 11:00 falls around minute 45, near the slides' own giải lao (after Nghe hiểu, around minute 40).
 - This has not been reconciled. Decide whether to move giải lao onto the school break or drop it.
 
 ---
@@ -80,12 +83,11 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 | Round | How | Points |
 |---|---|---|
 | Giảng hay | dot votes after all 4 talks: each kid 2 dots in their own team colour for 2 other teams (a dot under its own colour is void), cô Tươi and Huy Dũng 4 white dots each (40 dots: 8 per team colour + 8 white) | 4·3·2·2 |
-| Nghe hiểu | number of the 3 questions the team answers correctly (it skips the question on the hack it taught) | 4·3·2·2 |
-| Đua ghép thẻ | correct cards (of 8); the bell order breaks ties | 4·3·2·2 |
+| Nghe hiểu | number of the 4 questions the team answers correctly (every team answers all 4) | 4·3·2·2 |
+| Đua ghép thẻ | correct cards (of 8) when the timer ends; no bell, ties share the higher place | 4·3·2·2 |
 | Dùng AI | every team predicts each case with an A–D card: +1 per correct prediction; the wheel-picked team explains why (hack or ladder step): +1 | up to 5 (raw) |
-| Slide nhóm 20/11 | checklist points the team sheet covers | 4·3·2·2 |
+| Slide nhóm | idea round: +1 per valid idea linked to something from the session, no duplicates. Turns go from the last-placed team to the leader; one speaker, within a count of 10; the round ends when no team has a new idea after 10 s | +1 each (max 20) |
 | Chung kết | number of the 5 questions correct, double points | 8·6·4·4 |
-| Giải thích một hack | a hack other than the one the team taught; correct explanation 1 + own example 1 | up to 2 |
 | Khiên ✋ | quietest team when chú raises a hand | +1, max 3 |
 | Phạt | running or pushing in the card race | −1 |
 
@@ -94,9 +96,9 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 - **Gifts:** "Every kid gets a gift; winning only means choosing first" is said **only at the end** (bangdiem slide), never up front. Gifts: 40 items, 2 per kid, two picking rounds in rank order.
 
 ### Questions (answers spread A–D)
-- **Giảng giỏi** (one per hack, in card order; quiz `data-opts.teach` links each to the `boc-hack` wheel so the teaching team is shown and skipped):** new scenarios, deliberately unlike the card examples. The hack name is not shown.
+- **Nghe hiểu** (one per hack, in card order, asked after all 4 talks; every team answers every question): new scenarios, deliberately unlike the card examples. The hack name is not shown.
   1. Minh does maths while a friend tells a story → **B** (slower, more mistakes).
-  2. 2-minute talk about rice with no notes → **C** (practise aloud, check, repeat).
+  2. 12 history events, test on Friday → **C** (split into 3 periods on a labelled timeline).
   3. Nam has been stuck on a maths problem for 30 min → **D** (stand up and walk a few minutes, or switch subject, then come back). Replaced the Lan piano question on 14 Nov so each question maps to one card.
   4. Good at English listening, weak at spelling → **A** (mostly writing, with some listening mixed in).
 - **Chung kết:**
@@ -107,21 +109,24 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
   4. Order the group-slide steps on Canva → **A** (② outline → ④ task table → ① each writes their part → ③ one person checks facts and spelling).
   5. Which statements are true → **C** (① texting while working is slower, ③ hard and wrong means learning). ② scrolling the phone is not a real break; ④ cramming is not as good as spacing.
 
-### Group-slide checklist (7 points)
-1. Thống nhất dàn ý trước
-2. Mỗi bạn một phần, tự viết
-3. Bảng phân công có tên và hạn
-4. Không chép; có ghi nguồn
-5. Mỗi slide một ý, chữ ít và to
-6. Có người kiểm tra thông tin, chính tả
-7. Cả nhóm tập nói
+### Group-slide checklist (shown only after the idea round)
+Nên (7):
+1. Thống nhất dàn ý trước (hack 2)
+2. Mỗi bạn một phần, tự tìm hiểu và viết bằng lời của mình (bậc 3)
+3. Có bảng phân công: ai làm gì, hạn khi nào
+4. Làm rải ra nhiều buổi, không dồn phút cuối (hack 4)
+5. Ghi nguồn cho chữ và ảnh lấy từ nơi khác
+6. Mỗi slide một ý, chữ ít và to
+7. Có một bạn kiểm tra thông tin và chính tả trước khi nộp
+
+Không nên (3): dành phần lớn thời gian chọn màu, phông, hiệu ứng · chép nguyên văn từ mạng hoặc AI · một bạn làm hết, các bạn khác ngồi xem.
 
 ---
 
 ## 5. How the slides work (`slides/`)
 
 `slides/README.md` explains running and editing. In short:
-- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 58 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
+- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 66 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
 - Edit mode (`E`) keeps changes in `localStorage`; Ctrl+S writes the whole deck back to `6B0slides.html` in the same format (File System Access API in Chrome, download elsewhere). Unchanged slides come out byte for byte the same, so `git diff` shows only real edits. (`content.js` was removed on 13 Nov; it is in the first git commit.)
 - `app.js` is the engine. Widgets live in the `WIDGETS` object: `html teams timer reveal video thiviet wheel quiz tally roundres checkstep standings`.
 - `style.css` holds the brand tokens and all styles.
@@ -143,9 +148,7 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 | 6–9 | matching cards, 8 per team colour |
 | 10–13 | floor signs for the 4 hacks |
 | 14–17 | A/B/C/D answer cards, one page per team colour |
-| 18 | team sheet: bài 20/11 outline and task split |
-| 19 | take-home slips (8 per page) |
-| 20 | scoring poster |
+| ~~18–20~~ | team sheet, take-home slips, scoring poster: removed from the .docx on 14 Nov |
 
 **Regenerate the PDF with Playwright:**
 ```js
@@ -154,7 +157,7 @@ const h=require('fs').readFileSync('tai-lieu-in-6b0.html','utf8');
 await p.setContent(`<!doctype html><html><head><meta charset=utf8></head><body>${h}</body></html>`,{waitUntil:'networkidle'});
 await p.pdf({path:'Tai-lieu-in-6B0.pdf',format:'A4',printBackground:true,preferCSSPageSize:true});await b.close()})();
 ```
-Check the PDF afterwards: it should be exactly 20 pages in Word (LibreOffice shows 21: card 4's source line spills onto its own page), with no blank ones.
+Check the PDF afterwards: it should be exactly 17 pages in Word (LibreOffice shows 18: card 4's source line spills onto its own page), with no blank ones.
 
 ---
 
@@ -206,6 +209,31 @@ Check the PDF afterwards: it should be exactly 20 pages in Word (LibreOffice sho
 
 ## 10. Decisions log (most recent first)
 
+- **Card race, AI cases, Slides stop and Chung kết simplified (15 Nov, later):**
+  - Đua ghép thẻ: no bell. A 3-minute timer; teams may move cards until it ends. `roundres` uses `"bell":false`.
+  - Each AI case is three slides: `caseN-v1` (video part 1, stops itself at `pauseAt`), `caseN` (a normal quiz slide; `"explain":{"wheel":"boc-toaan","slot":N-1}` shows which team explains why), `caseN-v2` (video from `"start"` = the same second to the end). The on-slide lesson boxes are gone; chú explains part 2 aloud. Quiz ids stay `case1–4`, so the results tally is unchanged.
+  - Làm Slides: "Giảng cho người khác" removed from the why slide (most assignments so far were print-only). Văn hóa đọc review and the bài 20/11 team activity removed. New idea round (`y-tuong`, `y-tuong-kq`), round `nhom` is now points, +1 per valid idea. The checklist is shown afterwards as nên (7) / không nên (3); "Cả nhóm tập nói" was replaced by "Làm rải ra nhiều buổi (hack 4)". The cheat sheet uses the same 7 points.
+  - Chung kết: the "giải thích một hack" wheel and round are removed. Dead code for the teaching-team skip (`teach`), the wheel `avoid` and `data-judged-by` was deleted from app.js.
+  - Layout: quiz boxes on question slides now end at y = 980, so they no longer run into the page number and logo.
+
+- **Opening, teaching and quiz restructured (15 Nov):**
+  - "Ba câu hỏi" slide removed. The Clash Royale slide ends with "Chú rút ra được HAI bài học". New slide `bai1`: "Người ta thường nghĩ: thích thì giỏi. Đúng trong nhiều trường hợp. Còn một con đường phổ biến hơn nhiều: Tập → Giỏi → Thích." The phrase "Dở → Tập → Giỏi → Thích" is replaced by "Tập → Giỏi → Thích" everywhere (lời kết, cheat sheet).
+  - Ladder slide is "Bài học 2"; the 4 steps are a `data-each` list, one step per → press.
+  - Lập đội: a note that the session is about the 2 lessons plus 4 hacks; the first bullet says what a hack is for.
+  - Tín hiệu khiên: chú giơ tay và lắc chuông.
+  - Red section dividers show only the stop name, vertically centred (no big number, no subtitle).
+  - Wheel `boc-hack` removed: teams pick a printed card at random. So the deck no longer knows who taught what: every team answers all 4 quiz questions, and the final "giải thích một hack" wheel has no `avoid`. Its note says a team that draws its own hack swaps with another team.
+  - Chuẩn bị: the only criterion is to explain what the hack is and why it works. Two or more speakers is suggested, an own example is optional, teams may draw on A1 paper as a "slide", and they can use the 3 minutes for talking or for questions. A1 paper and markers added to the supplies note on printables page 1.
+  - Giảng giỏi and Nghe hiểu are now separate stops (9 stops). The teaching stop ends with the dot vote. The new stop `p-nghe` has its own rules slide, the 4 questions, results and the "Ai học nhiều nhất" wrap-up. Its landmark `map/stop-nghe.webp` is a mirrored copy of stop 3, a placeholder to replace with proper art.
+
+- **Card 2 replaced; printables trimmed (14 Nov, late):**
+  - "Tự đố, tự giảng" overlapped the ladder: teaching is step 4, and self-testing sits in step 3. It is now **Chia nhóm, vẽ sơ đồ**: sort ideas into named groups and lay them out as a tree, table or timeline. Theory: long-term memory is a big locker; a structure gives each idea a place and a path back. Study: Bower, Clark, Lesgold & Winzenz 1969 (112 words in 4-level trees, e.g. minerals; recall 2–3× better than the same words placed at random). The exact first-trial numbers are not yet checked against the paper, so the card says "gấp 2 đến 3 lần".
+  - Self-testing and teaching now belong to the ladder. Cheat-sheet step 3 reads "Gấp vở tự nhớ lại, giải thích bằng lời mình". Slide references that said "hack 2" for self-testing or teaching now name the ladder step (AI cases 1 and 3, Giúp hay cản, bài 20/11).
+  - Matching cards for hack 2: "Vẽ sơ đồ cây cho bài Sinh học, mỗi nhánh một ý" · "Xem các đề mục trước, rồi chia bài thành mấy phần". The ghép thẻ wrap-up names hack 2 as sorting 8 cards into 4 groups.
+  - Hack 2 question is now the 12 history events (answer C, timeline in 3 periods).
+  - Removed from the .docx: team sheet (old p. 18; the Slides activity will be redone), take-home slips and scoring poster. The bangdiem slide no longer mentions a printed slip.
+  - Memory palace was considered and rejected by Huy Dũng. The ladder is the one idea every kid should keep; remembering one or two hacks is enough.
+
 - **Dùng AI and take-home slip (14 Nov):**
   - Every team now predicts every case with an A–D card instead of one "judge" team; appeals and the chánh án role are gone. The A–D options sit beside the video on each case slide (`"layout":"stack"` quiz). R reveals the right option; the lesson box under the video opens on click.
   - Answers: case 1 B (about half remembered two weeks later), case 2 C, case 3 D, case 4 A.
@@ -218,7 +246,7 @@ Check the PDF afterwards: it should be exactly 20 pages in Word (LibreOffice sho
   - Each team gets one hack from a wheel (`boc-hack`), reads it together and teaches it to the whole class. Reason: one randomly chosen reader no longer decides a team's score, and the whole team works at bậc 3–4 while preparing.
   - Two separate scores instead of one coupled formula (a "listeners right → teacher points" scheme was tried and dropped as too hard to explain): **Giảng hay** by dot vote, with adults holding 8 of 40 dots to temper the pull towards the most eloquent team; **Nghe hiểu** by the 4 scenario questions, each team skipping its own hack. Both ranked 4·3·2·2.
   - The final "giải thích một hack" wheel never gives a team the hack it taught (`"avoid":"boc-hack"`).
-  - Map stop 2 is now "Chuẩn bị" (still 8 stops). Card footer reads "Gợi ý khi cả đội giảng cho lớp (3 phút…)".
+  - Map stop 2 is now "Chuẩn bị" (8 stops at the time). Card footer reads "Gợi ý khi cả đội giảng cho lớp (3 phút…)".
   - AI and Canva slides tied back to the hacks and ladder: case 1 reveal names hack 2 and 4; case 4 reveal now teaches bậc 4 (check and argue back); case 1 timing fixed to "hai tuần sau"; AI summary table has a Hack column; group-slide "giúp học" list and Canva note name hacks 1, 2, 4.
   - Session runs about 7 minutes longer than before; the giải lao vs 11:00 school break question is still open.
 
