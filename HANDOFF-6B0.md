@@ -103,11 +103,12 @@ Durations are estimates. They add up to about 90 minutes.
   4. Good at English listening, weak at spelling → **A** (mostly writing, with some listening mixed in).
 - **Chung kết:**
   Five questions on the whole session, easy to hard. Q1, Q2 and Q4 are ordering questions: each card A–D is one ordering.
-  1. Lan learns piano, put the four stages in order → **D** (④ → ② → ③ → ①: dở, tập, giỏi, thích). A and C put "thích" before "giỏi".
-  2. Order four ways of learning from the lowest ladder step to the highest → **C** (③ watch a video → ① redo the worked example → ④ close the notebook and write it out → ② teach a friend).
-  3. Which kids use AI to move up the ladder → **B** (An, Bình, Dũng). Chi learns a Gemini summary by heart; Dũng argues with Gemini and checks the textbook.
-  4. Order the group-slide steps on Canva → **A** (② outline → ④ task table → ① each writes their part → ③ one person checks facts and spelling).
-  5. Which statements are true → **C** (① texting while working is slower, ③ hard and wrong means learning). ② scrolling the phone is not a real break; ④ cramming is not as good as spacing.
+  Every scenario is new: none repeats a hack card, a video case, the ladder slide or the slide checklist.
+  1. Minh learns to swim, put the four stages in order → **D** (④ → ② → ③ → ①: dở, tập, giỏi, thích). A and C put "thích" before "giỏi".
+  2. Order four ways of learning an English dialogue from the lowest ladder step to the highest → **C** (③ listen to cô read it → ① copy it word for word → ④ write a new dialogue about your family → ② role-play with a friend and correct each other).
+  3. Which kids use AI to move up the ladder → **B** (An asks for 3 similar maths problems to solve; Bình writes 5 key points then asks what is missing; Dũng has Gemini grill his presentation). Chi has Gemini write her intro and copies it.
+  4. Order the steps for a group wall newspaper about Tết → **A** (② tree outline of the sections → ④ who writes what, by when → ① each writes at home a bit each evening → ③ one person proofreads).
+  5. Which statements are true → **C** (① 5 minutes of times tables every morning for 7 days beats 35 minutes in one go; ③ a 10-minute break playing đá cầu can unlock a geometry problem). ② TV on low while working still costs attention; ④ feeling familiar after rereading is not remembering.
 
 ### Group-slide checklist (shown only after the idea round)
 Nên (7):
@@ -208,6 +209,10 @@ Check the PDF afterwards: it should be exactly 17 pages in Word (LibreOffice sho
 ---
 
 ## 10. Decisions log (most recent first)
+
+- **Hack 2 tree and new Chung kết scenarios (15 Nov, evening):**
+  - Card 2 now says the groups form a tree: big groups split into smaller ones, main idea at the root, details on the branches. The library example is a tree (Khoa học → Sinh học → Động vật), and step 3 tells kids to split a crowded group further. The cheat sheet line matches.
+  - All 5 Chung kết questions rewritten with new scenarios (swimming, an English dialogue, new AI uses, a Tết wall newspaper, new hack statements). Answer letters unchanged (D, C, B, A, C).
 
 - **Card race, AI cases, Slides stop and Chung kết simplified (15 Nov, later):**
   - Đua ghép thẻ: no bell. A 3-minute timer; teams may move cards until it ends. `roundres` uses `"bell":false`.
