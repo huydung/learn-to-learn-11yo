@@ -30,16 +30,24 @@ const fileTemplate = (() => {
 
 const text = (html, x, y, w, h, style = "body") => ({ type: "text", style, html, x, y, w, h });
 
+// Reveal order: data-step="2" shows the box at the 2nd press of → (no data-step = shown from the start).
+// data-each on a box with a list shows its lines one press at a time, starting at data-step.
+function readReveal(el, block) {
+  if (Number(el.dataset.step) > 0) block.step = Number(el.dataset.step);
+  if (el.hasAttribute("data-each")) block.each = true;
+  return block;
+}
+
 function readBlock(el) {
   const [x, y, w, h] = el.dataset.box.split(" ").map(Number);
   if (el.dataset.widget) {
     const opts = JSON.parse(el.dataset.opts || "{}");
     if (el.innerHTML) opts.html = el.innerHTML;
-    return { type: "widget", kind: el.dataset.widget, x, y, w, h, opts };
+    return readReveal(el, { type: "widget", kind: el.dataset.widget, x, y, w, h, opts });
   }
   const block = text(el.innerHTML, x, y, w, h, el.className);
   if (el.dataset.size) block.fontSize = Number(el.dataset.size);
-  return block;
+  return readReveal(el, block);
 }
 
 const SLIDES = $$("#slides > section").map((sec) => ({
@@ -56,7 +64,7 @@ $("#slides").remove();
 const json = (value) => "'" + JSON.stringify(value).replace(/&/g, "&amp;").replace(/'/g, "&#39;") + "'";
 
 function writeBlock(b) {
-  const box = ` data-box="${b.x} ${b.y} ${b.w} ${b.h}"`;
+  const box = ` data-box="${b.x} ${b.y} ${b.w} ${b.h}"` + (b.step ? ` data-step="${b.step}"` : "") + (b.each ? " data-each" : "");
   if (b.type === "widget") {
     const { html = "", ...opts } = b.opts || {};
     return `  <div data-widget="${b.kind}"${box}${Object.keys(opts).length ? " data-opts=" + json(opts) : ""}>${html}</div>`;
@@ -123,6 +131,7 @@ const emptySession = () => ({
   timers: {},    // { blockKey: { total, left, endsAt } } — endsAt is set while running, so it survives a reload
   steps: {},     // checkstep progress { blockKey: { shown, ok: { index: true } } }
   revealed: {},  // { blockKey or quizSlideId: true } — answer shown
+  reveal: {},    // { slideId: n } — how many → presses of data-step boxes are shown on that slide
 });
 
 let board, thiviet, wheels, edits, session;
@@ -142,11 +151,12 @@ const saveEdits = () => store.set("edits", edits);
 const saveSession = () => store.set("session", session);
 
 // Where you are in the deck. Restored when you open 6B0slides.html again without a #page in the address.
-const view = { current: 0, boardOpen: false, showStrip: false, ...store.get("view", {}) };
-const saveView = () => store.set("view", { current, boardOpen, showStrip });
+const view = { current: 0, boardOpen: false, showStrip: false, mapMode: true, slideOpen: false, ...store.get("view", {}) };
+const saveView = () => store.set("view", { current, boardOpen, showStrip, mapMode, slideOpen });
 
 let current = view.current;
 let boardOpen = view.boardOpen, showStrip = view.showStrip, spinning = false;
+let mapMode = view.mapMode, slideOpen = view.slideOpen;  // map mode: slides open as a panel over the session map
 let editing = false, draft = null, selected = null, editStart = null;  // draft = blocks of the slide being edited
 let keyActions = {};  // { T: fn, R: fn } registered by widgets on the current slide
 
@@ -200,20 +210,45 @@ function answerOf(slideId) {
 
 const stage = $("#stage");
 
+// In map mode the slide is a panel below the HUD: 85% size, pushed 50 map-pixels down.
+const PANEL = 0.85, PANEL_DY = 50;
 function fitStage() {
-  const scale = Math.min(innerWidth / 1920, innerHeight / 1080);
-  stage.style.transform = `translate(-50%,-50%) scale(${scale})`;
+  const fit = Math.min(innerWidth / 1920, innerHeight / 1080);
+  const scale = mapMode ? fit * PANEL : fit;
+  stage.style.transform = `translate(-50%, calc(-50% + ${mapMode ? PANEL_DY * fit : 0}px)) scale(${scale})`;
   stage.dataset.scale = scale;
+  for (const layer of [$("#map .mp"), $("#hud .hi")]) if (layer) layer.style.transform = `translate(-50%,-50%) scale(${fit})`;
 }
 
 function slideTag(slide) {
   if (!slide.judgedBy) return slide.tag;
   const pick = wheels[slide.judgedBy.wheel]?.[slide.judgedBy.slot];
-  return pick !== undefined ? `Đội ${TEAMS[pick].name} xử` : slide.nav;
+  return pick !== undefined ? `Đội ${TEAMS[pick].name} xử` : slide.tag;
+}
+
+/* Reveal steps: each → press shows the next group of boxes (or the next line of a data-each box). */
+const lineCount = (b) => (b.each && b.type === "text" ? (b.html.match(/<li[\s>]/g) || []).length : 0);
+const lastStep = (b) => (b.step || 0) + Math.max(0, lineCount(b) - 1);
+const maxStep = (slide) => Math.max(0, ...slide.blocks.map(lastStep));
+// A slide you have not stepped through yet (after a reload or a jump by #id) shows everything.
+const revealOf = (slide) => Math.min(session.reveal[slide.id] ?? Infinity, maxStep(slide));
+
+// Hides what is not revealed yet and animates what the last → press showed.
+function applyReveal(blk, inner, block, shown, anim) {
+  const s = block.step || 0;
+  if (s > shown) return blk.classList.add("rv-hide");
+  if (lineCount(block)) {
+    $$("li", inner).forEach((li, k) => {
+      if (s + k > shown) li.classList.add("rv-hide");
+      else if (s + k === anim) li.classList.add("rv-in");
+    });
+    if (s === anim && s > 0 && !$("li", inner)) blk.classList.add("rv-in");
+  } else if (s === anim) blk.classList.add("rv-in");
 }
 
 // Builds one slide as a detached element. Used for the live stage and for grid thumbnails.
-function buildSlide(index, onKey) {
+// shown = how many reveal steps are visible (Infinity = all); anim = the step to animate in.
+function buildSlide(index, onKey, shown = Infinity, anim = null) {
   const list = slides();
   const slide = list[index];
   const blocks = editing && index === current ? draft : slide.blocks;
@@ -222,8 +257,8 @@ function buildSlide(index, onKey) {
   const el = document.createElement("div");
   el.className = `sl bg-${slide.bg || "paper"}${editing ? " edit" : ""}`;
   el.innerHTML = `<div class="frame"></div>`
-    + (tag ? `<div class="tag">${esc(tag)}</div>` : "")
-    + (slide.noFooter ? "" : `<div class="foot">${index + 1} / ${list.length} · ${esc(slide.nav || "")}</div>`)
+    // The slide title already says what the slide is; the footer only adds where we are in the session.
+    + (slide.noFooter ? "" : `<div class="foot">${index + 1} / ${list.length}${tag ? ` · ${esc(tag)}` : ""}</div>`)
     + `<div class="logo">HDI</div>`;
 
   blocks.forEach((block, i) => {
@@ -243,17 +278,20 @@ function buildSlide(index, onKey) {
       WIDGETS[block.kind](inner, block.opts || {}, { key: `${slide.id}-${i}`, slideId: slide.id, onKey });
     }
     blk.append(inner);
-    if (editing) blk.insertAdjacentHTML("beforeend", `<div class="hd mv" title="Kéo để di chuyển">✥</div><div class="hd rs" title="Kéo để đổi cỡ">⇲</div>`);
+    if (!editing) applyReveal(blk, inner, block, shown, anim);
+    if (editing) blk.insertAdjacentHTML("beforeend", `<div class="hd mv" title="Kéo để di chuyển">✥</div><div class="hd rs" title="Kéo để đổi cỡ">⇲</div>`
+      + `<div class="stepb" title="Hiện ở lần bấm → thứ mấy">${block.step || 0}${block.each ? " · từng dòng" : ""}</div>`);
     el.append(blk);
   });
   return el;
 }
 
-function render() {
+function render(anim = null) {
   const list = slides();
   current = Math.max(0, Math.min(current, list.length - 1));
   keyActions = {};
-  const el = buildSlide(current, (key, fn) => { keyActions[key] ??= fn; });  // first widget on the slide wins
+  const shown = editing ? Infinity : revealOf(list[current]);
+  const el = buildSlide(current, (key, fn) => { keyActions[key] ??= fn; }, shown, anim);  // first widget on the slide wins
   if (showStrip) el.append(scoreStrip());
   if (boardOpen) el.append(leaderboard());
   stage.replaceChildren(el);
@@ -261,6 +299,7 @@ function render() {
   try { history.replaceState(null, "", "#" + list[current].id); } catch {}
   saveView();
   renderEditBar();
+  updateMap();
 }
 
 function scoreStrip() {
@@ -300,7 +339,8 @@ const secondsLeft = (t) => (t.endsAt ? Math.max(0, Math.ceil((t.endsAt - Date.no
 function drawTimer(box, t) {
   const left = secondsLeft(t);
   box.querySelector(".tv").textContent = `${Math.floor(left / 60)}:${String(left % 60).padStart(2, "0")}`;
-  box.querySelector('[data-a="go"]').textContent = t.endsAt ? "Tạm dừng" : "Bắt đầu";
+  const go = box.querySelector('[data-a="go"]');  // compact timers have no buttons
+  if (go) go.textContent = t.endsAt ? "Tạm dừng" : "Bắt đầu";
   box.classList.toggle("long", left >= 600);
   box.classList.toggle("run", !!t.endsAt);
   box.classList.toggle("done", left <= 0);
@@ -328,10 +368,14 @@ const WIDGETS = {
     const seconds = o.seconds || 60;
     const t = (session.timers[ctx.key] ??= { total: seconds, left: seconds, endsAt: null });
     if (t.total !== seconds) Object.assign(t, { total: seconds, left: seconds, endsAt: null });  // length was edited
-    el.innerHTML = `<div class="timer" role="timer" data-key="${esc(ctx.key)}"><div class="tv"></div>
+    // compact: digits only, for corners of busy slides. Click starts/pauses, double-click resets.
+    el.innerHTML = o.compact
+      ? `<div class="timer mini" role="timer" data-key="${esc(ctx.key)}" title="Bấm: chạy / dừng · bấm đúp: đặt lại"><div class="tv"></div></div>`
+      : `<div class="timer" role="timer" data-key="${esc(ctx.key)}"><div class="tv"></div>
       <div class="tb"><button data-a="go"></button><button data-a="reset">Đặt lại</button>
       <div class="nudge"><button data-a="minus">−30s</button><button data-a="plus">+30s</button></div></div></div>`;
     const box = el.firstElementChild;
+    box.ondblclick = () => { if (!editing && o.compact) { t.endsAt = null; t.left = t.total; update(); } };
     const update = () => { saveSession(); drawTimer(box, t); };
     const toggle = () => {
       if (t.endsAt) { t.left = secondsLeft(t); t.endsAt = null; }  // pause
@@ -733,6 +777,8 @@ function renderEditBar() {
       <button data-a="smaller">A−</button><button data-a="bigger">A+</button>` : ""}
     ${block?.kind === "video" ? `<button data-a="video">Gắn video</button>` : ""}
     ${block?.kind === "timer" ? `<label>Phút <input type="number" min="0.5" step="0.5" data-a="minutes" value="${(block.opts.seconds || 60) / 60}"></label>` : ""}
+    ${block ? `<label title="0 = có sẵn khi mở trang; 1 = hiện ở lần bấm → đầu tiên; cùng số = hiện cùng lúc">Hiện ở bước <input type="number" min="0" step="1" data-a="step" value="${block.step || 0}"></label>` : ""}
+    ${block?.type === "text" && /<li[\s>]/.test(block.html) ? `<label><input type="checkbox" data-a="each" ${block.each ? "checked" : ""}> Từng dòng</label>` : ""}
     ${edits[currentSlide().id] ? `<button data-a="original">Về bản gốc</button>` : ""}
     <button data-a="savefile">Lưu vào 6B0slides.html (Ctrl+S)</button>
     <button class="pri" data-a="done">Xong</button><span class="msg" id="msg"></span>`;
@@ -777,6 +823,11 @@ $("#bar").addEventListener("change", (e) => {
     if (minutes > 0) block.opts.seconds = Math.round(minutes * 60);
   }
   if (e.target.dataset.a === "style") block.style = e.target.value;
+  if (e.target.dataset.a === "step") {
+    const n = parseInt(e.target.value, 10);
+    if (n > 0) block.step = n; else delete block.step;
+  }
+  if (e.target.dataset.a === "each") { if (e.target.checked) block.each = true; else delete block.each; }
   saveDraft();
   render();
 });
@@ -881,12 +932,228 @@ grid.addEventListener("keydown", (e) => {
   else if (e.target.classList.contains("th")) { e.stopPropagation(); closeGrid(); go(Number(e.target.dataset.i)); }
 });
 
+/* ================= Session map (M) =================
+ * The session as a journey: one landmark per stop (STOPS in 6B0slides.html), the four teams walking the trail,
+ * scores in a HUD on top. Slides open as a panel over the map; finishing a stop's last slide walks to the next stop.
+ */
+
+const mapEl = $("#map"), hud = $("#hud");
+const stopStart = (s) => Math.max(0, SLIDES.findIndex((sl) => sl.id === STOPS[s].from));
+function stopOf(index) {
+  let s = 0;
+  STOPS.forEach((_, i) => { if (stopStart(i) <= index) s = i; });
+  return s;
+}
+const stopEnd = (s) => (s + 1 < STOPS.length ? stopStart(s + 1) - 1 : SLIDES.length - 1);
+
+// Smooth trail through the stops (Catmull-Rom turned into cubic Béziers).
+function trailPath() {
+  const p = STOPS.map((s) => [s.x, s.y]);
+  let d = `M${p[0][0]},${p[0][1]}`;
+  for (let i = 0; i < p.length - 1; i++) {
+    const a = p[i - 1] || p[i], b = p[i], c = p[i + 1], e = p[i + 2] || c;
+    d += ` C${b[0] + (c[0] - a[0]) / 6},${b[1] + (c[1] - a[1]) / 6} ${c[0] - (e[0] - b[0]) / 6},${c[1] - (e[1] - b[1]) / 6} ${c[0]},${c[1]}`;
+  }
+  return d;
+}
+
+let trail = null, stopLen = [], tokenAt = null, travel = null;  // tokenAt = trail length where the teams stand
+
+function buildMap() {
+  mapEl.innerHTML = `<div class="mp">
+    <img class="mbg" src="${MAP_ART.background}" alt="">
+    <svg class="trail" viewBox="0 0 1920 1080" aria-hidden="true">
+      <path class="tr-edge" d="${trailPath()}"/><path class="tr-base" d="${trailPath()}"/><path class="tr-done" d="${trailPath()}"/>
+    </svg>
+    ${STOPS.map((s, i) => `<button class="lm" data-s="${i}" style="left:${s.x}px;top:${s.y}px" aria-label="Chặng ${i + 1}: ${esc(s.name)}">
+      <img src="${s.art}" alt=""><span class="lb"><b>${i + 1}</b>${esc(s.name)}</span><i class="ck">✓</i></button>`).join("")}
+    <div class="toks">${TEAMS.map((t) => `<div class="tok" data-k="${t.key}"><i class="crown">👑</i><img src="${MAP_ART.team(t.key)}" alt="Đội ${t.name}"><span class="base c-${t.key}"></span></div>`).join("")}</div>
+    <div class="mhint">Bấm vào một chặng, hoặc <kbd>→</kbd> để vào chặng hiện tại</div>
+  </div>`;
+  hud.innerHTML = `<div class="hi"></div>`;
+  trail = $(".tr-done", mapEl);
+  const total = trail.getTotalLength();
+  // Trail length at each stop: the sampled point nearest to it.
+  stopLen = STOPS.map((s) => {
+    let best = 0, dist = Infinity;
+    for (let l = 0; l <= total; l += 4) {
+      const pt = trail.getPointAtLength(l), d = (pt.x - s.x) ** 2 + (pt.y - s.y) ** 2;
+      if (d < dist) { dist = d; best = l; }
+    }
+    return best;
+  });
+  for (const p of $$("path", mapEl)) p.style.strokeDasharray = p.classList.contains("tr-done") ? `0 ${total}` : "";
+  mapEl.onclick = (e) => {
+    const lm = e.target.closest(".lm");
+    if (lm) return openStop(Number(lm.dataset.s));
+    if (slideOpen || boardOpen) closePanel();  // click outside the panel
+  };
+  hud.onclick = (e) => {
+    const a = e.target.closest("button")?.dataset.a;
+    if (a === "map") return slideOpen || boardOpen ? closePanel() : openStop(stopOf(current));
+    if (a === "board") { boardOpen = !boardOpen; render(); }
+    if (a === "classic") toggleMapMode();
+  };
+}
+
+// Places the four tokens around a point on the trail; the leading team stands in front with a crown.
+function placeTokens(len) {
+  const pt = trail.getPointAtLength(len);
+  const t = totals(), place = places(byValue(t));
+  const anyScore = Object.values(t).some((v) => v > 0) && board.display !== "none";
+  const order = TEAMS.map((tm) => tm.key).sort((a, b) => place[a] - place[b]);
+  const side = pt.x > 1500 ? -1 : 1;  // stand beside the landmark, on the side with room
+  order.forEach((k, i) => {
+    const tok = $(`.tok[data-k="${k}"]`, mapEl);
+    const dx = side * (118 + i * 50), dy = -96 + (i % 2) * 16;
+    tok.style.transform = `translate(${pt.x + dx - 36}px, ${pt.y + dy}px)`;
+    tok.style.zIndex = 10 - i;
+    tok.classList.toggle("top", anyScore && place[k] === 0);
+  });
+}
+
+// Walks the tokens along the trail from where they stand to `to` (a trail length).
+function walkTo(to) {
+  cancelAnimationFrame(travel);
+  const from = tokenAt ?? to, dist = Math.abs(to - from);
+  if (dist < 1) { tokenAt = to; trail.style.strokeDasharray = `${to} 99999`; return placeTokens(to); }
+  const ms = Math.min(4000, 900 + dist * 1.6), t0 = performance.now();
+  mapEl.classList.add("walking");
+  const step = (now) => {
+    const k = Math.min(1, (now - t0) / ms), ease = k < 0.5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
+    tokenAt = from + (to - from) * ease;
+    placeTokens(tokenAt);
+    trail.style.strokeDasharray = `${tokenAt} 99999`;
+    if (k < 1) travel = requestAnimationFrame(step);
+    else mapEl.classList.remove("walking");
+  };
+  travel = requestAnimationFrame(step);
+}
+
+function teamHud() {
+  const t = totals(), place = places(byValue(t));
+  const anyScore = Object.values(t).some((v) => v > 0);
+  return TEAMS.map((tm) => {
+    const value = board.display === "full" ? t[tm.key] : board.display === "rank" ? `#${place[tm.key] + 1}` : "";
+    return `<div class="hc c-${tm.key}${anyScore && place[tm.key] === 0 && board.display !== "none" ? " top" : ""}">
+      <img src="${MAP_ART.team(tm.key)}" alt=""><span class="hn">${tm.name}</span><b>${value}</b></div>`;
+  }).join("");
+}
+
+function updateMap() {
+  document.body.classList.toggle("mapmode", mapMode);
+  document.body.classList.toggle("panel", mapMode && (slideOpen || boardOpen || editing));
+  mapEl.hidden = hud.hidden = !mapMode;
+  hud.style.visibility = editing ? "hidden" : "";  // the edit bar sits where the HUD is
+  if (!mapMode) return;
+  if (!trail) { buildMap(); fitStage(); }
+  const s = stopOf(current);
+  $$(".lm", mapEl).forEach((lm, i) => {
+    lm.classList.toggle("done", i < s);
+    lm.classList.toggle("here", i === s);
+  });
+  walkTo(stopLen[s]);
+  const open = slideOpen || boardOpen;
+  const page = current - stopStart(s) + 1, pages = stopEnd(s) - stopStart(s) + 1;
+  $(".hi", hud).innerHTML = `<div class="hs"><span class="hsn">Chặng ${s + 1}/${STOPS.length}</span><b>${esc(STOPS[s].name)}</b>${open ? `<span class="hsp">trang ${page}/${pages}</span>` : ""}</div>
+    <div class="hteams">${teamHud()}</div>
+    <div class="hb"><button data-a="board" class="${boardOpen ? "on" : ""}">🏆 Bảng điểm</button>
+      <button data-a="map">${open ? "🗺 Về bản đồ" : "▶ Vào chặng"}</button></div>`;
+}
+
+function openStop(s) {
+  if (stopOf(current) !== s) {
+    current = stopStart(s);
+    session.reveal[slides()[current].id] = 0;
+    saveSession();
+  }
+  slideOpen = true;
+  boardOpen = false;
+  render();
+}
+
+function closePanel() {
+  if (editing) return flash("Bấm Xong để thoát chế độ sửa trước");
+  slideOpen = false;
+  boardOpen = false;
+  render();
+}
+
+// Called by next(): leaving a stop in map mode closes the panel and walks the teams on.
+function mapLeave(index) {
+  if (!mapMode || !slideOpen || stopOf(index) === stopOf(current)) return false;
+  current = index;
+  session.reveal[slides()[index].id] = 0;
+  saveSession();
+  slideOpen = false;
+  render();
+  return true;
+}
+
+function toggleMapMode() {
+  if (editing) return flash("Bấm Xong để thoát chế độ sửa trước");
+  mapMode = !mapMode;
+  slideOpen = !mapMode ? false : slideOpen;
+  fitStage();
+  render();
+}
+
+// Keys that mean something else on the map. Returns true when handled.
+function mapKey(e) {
+  if (!mapMode) return false;
+  const k = e.key;
+  if (k === "Escape" && (slideOpen || boardOpen)) { closePanel(); return true; }
+  if (slideOpen || boardOpen) return false;
+  if (["ArrowRight", "PageDown", " ", "Enter"].includes(k)) { e.preventDefault(); openStop(stopOf(current)); return true; }
+  if (k === "ArrowLeft" || k === "PageUp") {
+    e.preventDefault();
+    const s = stopOf(current);
+    if (s > 0) { current = stopStart(s - 1); render(); }
+    return true;
+  }
+  return false;
+}
+
 /* ================= Navigation, keys, messages ================= */
 
-function go(index) {
+// Opens a slide. Coming from the slide after it (back = true) shows it fully; otherwise it starts at step 0.
+function go(index, back = false) {
   if (editing) return flash("Bấm Xong để thoát chế độ sửa trước");
+  const list = slides();
+  index = Math.max(0, Math.min(index, list.length - 1));
+  session.reveal[list[index].id] = back ? maxStep(list[index]) : 0;
+  saveSession();
   current = index;
+  if (mapMode) slideOpen = true;
   render();
+}
+
+// → : show the next reveal step; when the slide is complete, move on.
+function next() {
+  if (editing) return;
+  if (mapMode && !slideOpen && !boardOpen) return openStop(stopOf(current));
+  const slide = currentSlide(), shown = revealOf(slide);
+  if (shown < maxStep(slide)) {
+    session.reveal[slide.id] = shown + 1;
+    saveSession();
+    return render(shown + 1);
+  }
+  if (current >= slides().length - 1) return;
+  if (mapLeave(current + 1)) return;  // map mode: finishing a stop walks back to the map
+  go(current + 1);
+}
+
+// ← : hide the last reveal step; at step 0, go to the previous slide, fully shown.
+function prev() {
+  if (editing) return;
+  if (mapMode && !slideOpen && !boardOpen) return;
+  const slide = currentSlide(), shown = revealOf(slide);
+  if (shown > 0) {
+    session.reveal[slide.id] = shown - 1;
+    saveSession();
+    return render();
+  }
+  if (current > 0) go(current - 1, true);
 }
 
 // Short message: in the edit bar while editing, otherwise in place of the page number.
@@ -907,8 +1174,8 @@ function toggleFullscreen() {
 }
 
 const help = $("#help");
-$("#nPrev").onclick = () => go(current - 1);
-$("#nNext").onclick = () => go(current + 1);
+$("#nPrev").onclick = prev;
+$("#nNext").onclick = next;
 $("#nBoard").onclick = () => { boardOpen = !boardOpen; render(); };
 $("#nEdit").onclick = () => (editing ? stopEdit() : startEdit());
 $("#nFull").onclick = toggleFullscreen;
@@ -936,15 +1203,17 @@ document.addEventListener("keydown", (e) => {
   }
   if (k === "Enter" && typedNumber) { const n = typedNumber; typedNumber = ""; clearTimeout(typedTimer); return jump(n); }
   if (!grid.hidden) { if (k === "Escape" || k.toLowerCase() === "g") closeGrid(); return; }
+  if (mapKey(e)) return;
 
   switch (k.length === 1 ? k.toLowerCase() : k) {
-    case "ArrowRight": case "PageDown": case " ": e.preventDefault(); go(current + 1); break;
-    case "ArrowLeft": case "PageUp": e.preventDefault(); go(current - 1); break;
+    case "ArrowRight": case "PageDown": case " ": e.preventDefault(); next(); break;
+    case "ArrowLeft": case "PageUp": e.preventDefault(); prev(); break;
     case "Home": go(0); break;
     case "End": go(slides().length - 1); break;
     case "g": openGrid(); break;
     case "l": boardOpen = !boardOpen; render(); break;
     case "s": showStrip = !showStrip; render(); break;
+    case "m": toggleMapMode(); break;
     case "e": startEdit(); break;
     case "f": toggleFullscreen(); break;
     case "t": keyActions.T?.(); break;
@@ -958,7 +1227,7 @@ stage.addEventListener("touchstart", (e) => { touchX = e.touches[0].clientX; }, 
 stage.addEventListener("touchend", (e) => {
   if (touchX === null || editing || boardOpen) return;
   const dx = e.changedTouches[0].clientX - touchX;
-  if (Math.abs(dx) > 60) go(current + (dx < 0 ? 1 : -1));
+  if (Math.abs(dx) > 60) (dx < 0 ? next : prev)();
   touchX = null;
 });
 
@@ -1049,7 +1318,7 @@ addEventListener("storage", (e) => {
 // Typing #slide-id in the address bar jumps there.
 addEventListener("hashchange", () => {
   const i = SLIDES.findIndex((s) => s.id === location.hash.slice(1));
-  if (i >= 0 && i !== current && !editing) { current = i; render(); }
+  if (i >= 0 && i !== current && !editing) { current = i; if (mapMode) slideOpen = true; render(); }
 });
 
 // A browser edit that 6B0slides.html already contains (saved with Ctrl+S) is no longer needed.
@@ -1057,7 +1326,7 @@ for (const s of SLIDES) if (edits[s.id] && sameBlocks(edits[s.id].blocks, s.bloc
 saveEdits();
 
 const fromHash = SLIDES.findIndex((s) => s.id === location.hash.slice(1));
-if (fromHash >= 0) current = fromHash;
+if (fromHash >= 0 && fromHash !== current) { current = fromHash; if (mapMode) slideOpen = true; }
 addEventListener("resize", () => { fitStage(); sizeGrid(); });
 // The corner buttons stay hidden until the mouse is in the bottom 90px of the screen.
 const nav = document.getElementById("nav");
