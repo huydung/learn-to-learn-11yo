@@ -61,7 +61,7 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 | 19–38 | Chặng 3 · Giảng giỏi: rules, then per hack 1→4: team teaches the class (3 min incl. Q&A), the 3 listening teams answer that hack's question (1 min); Nghe hiểu results; dot vote for Giảng hay (3 min); wrap-up | 13–26 |
 | 31–36 | Giải lao (5 min) | 22 |
 | 36–42 | Chặng 4 · Đúng chỗ: đua ghép thẻ trên sàn (3 min) and results | 23–26 |
-| 42–50 | Chặng 5 · Dùng AI: a wheel assigns teams to 4 video cases; each video stops and the team says what happens next and why (no A/B/C) | 27–35 |
+| ~42–52 | Chặng 5 · Dùng AI: a wheel picks which team explains each case; each video stops after part 1, all 4 teams raise A–D (45 s, recorded on the slide), the picked team says why, then part 2 and the answer (R) | 30–38 |
 | 50–73 | Chặng 6 · Làm Slides: why cô assigns it → helps vs hurts → Văn hóa đọc hand-raise checklist (no points) → bài 20/11 outline and task split (15 min, scored) → Canva demo | 36–41 |
 | 73–85 | Chặng 7 · Chung kết: 5 questions on the whole session, easy to hard, ×2 (3 are ordering questions, 90 s each), then a wheel gives each team one hack to explain in its own words | 42–50 |
 | 85–90 | Chặng 8 · Về đích: bảng xếp hạng, chọn quà, lời kết, cẩm nang, hỏi đáp | 51–54 |
@@ -82,7 +82,7 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 | Giảng hay | dot votes after all 4 talks: each kid 2 dots in their own team colour for 2 other teams (a dot under its own colour is void), cô Tươi and Huy Dũng 4 white dots each (40 dots: 8 per team colour + 8 white) | 4·3·2·2 |
 | Nghe hiểu | number of the 3 questions the team answers correctly (it skips the question on the hack it taught) | 4·3·2·2 |
 | Đua ghép thẻ | correct cards (of 8); the bell order breaks ties | 4·3·2·2 |
-| Dùng AI | right outcome 2 + reason 1 + accepted appeal 1 (teams answer in their own words) | up to 4 (raw) |
+| Dùng AI | every team predicts each case with an A–D card: +1 per correct prediction; the wheel-picked team explains why (hack or ladder step): +1 | up to 5 (raw) |
 | Slide nhóm 20/11 | checklist points the team sheet covers | 4·3·2·2 |
 | Chung kết | number of the 5 questions correct, double points | 8·6·4·4 |
 | Giải thích một hack | a hack other than the one the team taught; correct explanation 1 + own example 1 | up to 2 |
@@ -205,6 +205,13 @@ Check the PDF afterwards: it should be exactly 20 pages in Word (LibreOffice sho
 ---
 
 ## 10. Decisions log (most recent first)
+
+- **Dùng AI and take-home slip (14 Nov):**
+  - Every team now predicts every case with an A–D card instead of one "judge" team; appeals and the chánh án role are gone. The A–D options sit beside the video on each case slide (`"layout":"stack"` quiz). R reveals the right option; the lesson box under the video opens on click.
+  - Answers: case 1 B (about half remembered two weeks later), case 2 C, case 3 D, case 4 A.
+  - Results slide uses `tally` with a 0–1 "Giải thích" column for the wheel-picked team; round `toaan` is points, max 5.
+  - Take-home slip is now an if-then plan: "Khi … (lúc nào, ở đâu?), mình sẽ … (làm gì, hack nào?)" (Gollwitzer & Sheeran 2006). The slide line matches.
+  - Kept out on purpose: teams writing a "fixed" prompt for Gemini, and a live Gemini demo (Huy Dũng may show Gemini himself if time allows).
 
 - **Team teaching replaces the experts and Viết nhanh (14 Nov):**
   - Viết nhanh (thi viết A/B) removed: it gave hack 1 a live demo the other hacks did not get, pre-empted the card-1 expert and made the hack-1 question a free point. Writing sheets removed from the printables.
