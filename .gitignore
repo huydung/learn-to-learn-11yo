@@ -2,8 +2,9 @@
 ~$*
 .venv/
 node_modules/
-# Large media: rebuilt from video-src, kept in OneDrive only
+# Large media: kept in OneDrive only, except the 4 class videos the slides play
 *.mp4
+!slides/videos/*.mp4
 *.mp3
 *.wav
 # Installed skills, restored from video-src/skills-lock.json
