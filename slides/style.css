@@ -25,7 +25,7 @@
   color-scheme: light;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html, body { height: 100%; margin: 0; }
+html, body { height: 100%; margin: 0; -webkit-text-size-adjust: 100%; touch-action: manipulation; }  /* iOS: no landscape text inflation, no double-tap zoom */
 body { background: #2A1A1C; color: var(--ink); font-family: var(--f-body); overflow: hidden; }
 button:focus-visible, select:focus-visible, input:focus-visible { outline: 4px solid var(--t-blue); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
