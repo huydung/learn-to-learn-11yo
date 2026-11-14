@@ -456,7 +456,7 @@ const WIDGETS = {
     const picks = board.answers[qid] || {};
     const options = o.options || [];
     const teacher = teacherOf(o);
-    el.innerHTML = `<div class="quiz${session.revealed[qid] ? " open" : ""}">
+    el.innerHTML = `<div class="quiz${o.layout === "stack" ? " stack" : ""}${session.revealed[qid] ? " open" : ""}">
       ${o.question ? `<div class="qq">${o.question}</div>` : ""}
       <div class="qb">
         <div class="qo">${options.map((txt, i) => `<div class="op${i === correct ? " ok" : ""}"><b>${LETTERS[i]}</b><span>${txt}</span></div>`).join("")}</div>
@@ -491,10 +491,12 @@ const WIDGETS = {
     const round = roundById(o.round);
     const isRight = (q, k) => board.answers[q]?.[k] !== undefined && board.answers[q][k] === answerOf(q);
     const correctCount = byTeam((k) => o.questions.filter((q) => isRight(q, k)).length);
-    const points = rankPoints(correctCount, round.points);
+    const bonus = board.raw[o.round] || {};
+    const total = byTeam((k) => correctCount[k] + (o.bonus ? Number(bonus[k] || 0) : 0));
+    const points = round.kind === "points" ? byTeam((k) => Math.min(round.max, total[k])) : rankPoints(correctCount, round.points);
     const recorded = board.scores[o.round] || {};
     el.innerHTML = `<table class="t tally">
-      <tr><th>Đội</th>${o.questions.map((_, i) => `<th>${esc(o.labels?.[i] ?? "Câu " + (i + 1))}</th>`).join("")}<th>Số câu đúng</th><th>Điểm vòng</th></tr>
+      <tr><th>Đội</th>${o.questions.map((_, i) => `<th>${esc(o.labels?.[i] ?? "Câu " + (i + 1))}</th>`).join("")}<th>Số câu đúng</th>${o.bonus ? `<th>${esc(o.bonus)}</th>` : ""}<th>Điểm vòng</th></tr>
       ${TEAMS.map((t) => `<tr><td>${teamChip(t)}</td>
         ${o.questions.map((q) => {
           const pick = board.answers[q]?.[t.key];
@@ -502,11 +504,20 @@ const WIDGETS = {
           return `<td>${pick === undefined ? "–" : (isRight(q, t.key) ? "✓" : "✗") + ` <small>${LETTERS[pick]}</small>`}</td>`;
         }).join("")}
         <td><b>${correctCount[t.key]}</b></td>
+        ${o.bonus ? `<td><span class="stepper"><button data-a="minus" data-k="${t.key}" aria-label="Bớt">−</button><b>${Number(bonus[t.key] || 0)}</b><button data-a="plus" data-k="${t.key}" aria-label="Thêm">+</button></span></td>` : ""}
         <td><b>${points[t.key]}</b>${recorded[t.key] !== undefined ? ` <small>(đã ghi ${recorded[t.key]})</small>` : ""}</td></tr>`).join("")}
       </table>
       <div class="actions"><button class="btn" data-a="record">Ghi điểm vào bảng</button>
-      <span class="small">Bằng số câu đúng thì cùng hạng cao hơn. Đáp án các đội chọn ở từng trang câu hỏi.</span></div>`;
-    $('[data-a="record"]', el).onclick = () => { if (!editing) recordRound(o.round, points, round.name + " ghi điểm theo số câu đúng"); };
+      <span class="small">${round.kind === "points" ? `Mỗi câu đúng +1${o.bonus ? `, cộng ${esc(o.bonus.toLowerCase())} (0 hoặc 1)` : ""}.` : "Bằng số câu đúng thì cùng hạng cao hơn."} Đáp án các đội chọn ở từng trang câu hỏi.</span></div>`;
+    el.onclick = (e) => {
+      const button = e.target.closest("button");
+      if (editing || !button) return;
+      if (button.dataset.a === "record") return recordRound(o.round, points, round.name + " ghi điểm");
+      const counts = (board.raw[o.round] ??= {});
+      counts[button.dataset.k] = Math.max(0, Math.min(1, (counts[button.dataset.k] || 0) + (button.dataset.a === "plus" ? 1 : -1)));
+      saveBoard();
+      render();
+    };
   },
 
   // Results typed by hand: a count per team (card race) or points per team (Tòa án).

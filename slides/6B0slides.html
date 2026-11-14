@@ -63,7 +63,7 @@
     { id: "giang", name: "Giảng hay", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số chấm bình chọn" },
     { id: "chuyengia", name: "Nghe hiểu", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số câu đúng (3 câu, trừ hack đội mình giảng)" },
     { id: "ghepthe", name: "Đua ghép thẻ", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số thẻ đúng; bằng nhau thì rung chuông trước xếp trên" },
-    { id: "toaan", name: "Dùng AI", kind: "points", max: 4, rule: "Đúng kết cục 2 · lý do 1 · kháng cáo 1" },
+    { id: "toaan", name: "Dùng AI", kind: "points", max: 5, rule: "Đoán đúng +1 mỗi tình huống · đội bốc thăm giải thích đúng +1" },
     { id: "nhom", name: "Slide nhóm", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số điểm checklist đạt" },
     { id: "chungket", name: "Chung kết ×2", kind: "rank", points: POINTS_FINAL, rule: "Xếp theo số câu đúng của đội (5 câu)" },
     { id: "thang", name: "Chung kết · giải thích hack", kind: "points", max: 2, rule: "Giải thích đúng 1 · ví dụ riêng 1" },
@@ -255,8 +255,8 @@
 
 <section data-id="binhchon" data-nav="Bình chọn giảng hay" data-tag="Giảng giỏi · 3 phút">
   <div class="h2" data-box="120 78 1300 120">Đội nào giảng hay nhất?</div>
-  <div class="body" data-box="120 210 1680 150" data-step="1">Mỗi bạn <b>2 chấm màu đội mình</b>, dán cho <b>2 đội khác</b>. Chấm dán nhầm vào đội mình không tính. Cô Tươi và chú mỗi người 4 chấm trắng.<br>Chọn đội giúp bạn <b>hiểu rõ nhất</b>, có <b>ví dụ dễ nhớ nhất</b>.</div>
-  <div data-widget="roundres" data-box="120 400 1680 580" data-step="2" data-opts='{"round":"giang","label":"Số chấm","max":40,"bell":false}'></div>
+  <div class="body" data-box="120 200 1680 200" data-step="1">Mỗi bạn <b>2 chấm màu đội mình</b>, dán cho <b>2 đội khác</b>. Chấm dán nhầm vào đội mình không tính. Cô Tươi và chú mỗi người 4 chấm trắng.<br>Chọn đội giúp bạn <b>hiểu rõ nhất</b>, có <b>ví dụ dễ nhớ nhất</b>.</div>
+  <div data-widget="roundres" data-box="120 420 1680 560" data-step="2" data-opts='{"round":"giang","label":"Số chấm","max":40,"bell":false}'></div>
 </section>
 
 <section data-id="chot2" data-nav="Giảng giỏi · chốt" data-tag="Giảng giỏi">
@@ -304,8 +304,8 @@
 
 <section data-id="toaan" data-nav="Dùng AI" data-tag="Dùng AI">
   <div class="h2" data-box="120 78 1300 120">Dùng AI</div>
-  <div class="body" data-box="120 220 1100 640" data-step="1" data-each><ol><li>Xem phần 1: một bạn dùng Gemini và bài xong ngay.</li><li>Đội thẩm phán đoán chuyện gì xảy ra sau đó.</li><li>Đội nói rõ cả dự đoán và lý do vì sao.</li><li>Xem phần 2. Đội khác được kháng cáo nếu thấy lý do còn thiếu.</li></ol></div>
-  <div class="note" data-box="1280 220 520 560" data-step="5"><b>Điểm thẩm phán</b><br>Đúng kết cục: 2<br>Lý do gắn với hack hoặc bậc thang: 1<br><br><b>Kháng cáo</b> được chánh án chấp nhận: 1<br><span class="small">Chánh án: cô Tươi</span></div>
+  <div class="body" data-box="120 220 1100 640" data-step="1" data-each><ol><li>Xem phần 1: một bạn dùng Gemini và bài xong ngay. Video tự dừng.</li><li><b>Cả bốn đội</b> bàn 45 giây, rồi cùng lúc giơ thẻ A, B, C hoặc D: chuyện gì xảy ra sau đó?</li><li>Đội được bốc thăm nói <b>vì sao</b>, gắn với hack hoặc bậc thang.</li><li>Xem phần 2 để biết đáp án.</li></ol></div>
+  <div class="note" data-box="1280 220 520 560" data-step="5"><b>Điểm</b><br>Mỗi tình huống, đội đoán đúng: <b>+1</b><br>Đội được bốc thăm giải thích đúng vì sao: <b>+1</b><br><br><span class="small">Cô Tươi là trọng tài.</span></div>
 </section>
 
 <section data-id="boc-toaan" data-nav="Bốc thăm tình huống" data-tag="Dùng AI">
@@ -315,39 +315,39 @@
 
 <section data-id="case1" data-nav="Tình huống 1" data-judged-by='{"wheel":"boc-toaan","slot":0}'>
   <div class="h2" data-box="120 78 1300 120">Tình huống 1</div>
-  <div data-widget="video" data-box="120 220 1000 560" data-step="1" data-opts='{"label":"Video 1 · phần 1 và phần 2","src":"videos/case1.mp4","pauseAt":35.2}'></div>
-  <div class="card" data-box="1180 220 620 400" data-step="2"><b>Phần 1</b><br>Tối trước ngày kiểm tra, bạn ấy nhờ Gemini đố 30 câu từ vựng liền trong một tiếng và được điểm 8.</div>
-  <div data-widget="reveal" data-box="1180 650 620 320" data-step="3" data-opts='{"label":"Phần 2 · hai tuần sau (bấm hoặc R)"}'><b>Nhớ một phần. Hai tuần sau còn nhớ khoảng một nửa số từ.</b><br><span class="small">Tự đố là đúng (hack 2), nhưng dồn một tối thì mau quên. Rải ra mỗi tối 10 câu, ba tối (hack 4).</span></div>
-  <div class="note" data-box="120 820 1000 80" data-step="4">Đoán: hai tuần sau chuyện gì xảy ra? Vì sao?</div>
+  <div data-widget="video" data-box="120 200 880 495" data-step="1" data-opts='{"label":"Video 1 · phần 1 và phần 2","src":"videos/case1.mp4","pauseAt":35.2}'></div>
+  <div data-widget="quiz" data-box="1040 200 760 780" data-step="1" data-opts='{"round": "toaan", "layout": "stack", "question": "Hai tuần sau thì sao?", "options": ["Nhớ gần hết 30 từ, vì đã tự đố rất nhiều.", "Còn nhớ khoảng một nửa số từ.", "Quên gần hết, vì dùng AI thì không học được gì.", "Nhớ hết, còn nhớ tốt hơn bạn ôn mỗi tối 10 từ."], "answer": "B"}'></div>
+  <div data-widget="reveal" data-box="120 725 880 255" data-step="2" data-opts='{"label":"Phần 2 · bài học (bấm vào đây)"}'><b>Nhớ một phần. Hai tuần sau còn nhớ khoảng một nửa số từ.</b><br><span class="small">Tự đố là đúng (hack 2), nhưng dồn một tối thì mau quên. Rải ra mỗi tối 10 câu, ba tối (hack 4).</span></div>
+  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":45,"compact":true}'></div>
 </section>
 
 <section data-id="case2" data-nav="Tình huống 2" data-judged-by='{"wheel":"boc-toaan","slot":1}'>
   <div class="h2" data-box="120 78 1300 120">Tình huống 2</div>
-  <div data-widget="video" data-box="120 220 1000 560" data-step="1" data-opts='{"label":"Video 2 · phần 1 và phần 2","src":"videos/case2.mp4","pauseAt":51.3}'></div>
-  <div class="card" data-box="1180 220 620 400" data-step="2"><b>Phần 1</b><br>Cô giao quan sát 5 loài cây quanh nhà rồi xếp nhóm. Bạn ấy ngại ra vườn, nhờ Gemini viết hộ, chép vào vở và được cô khen.</div>
-  <div data-widget="reveal" data-box="1180 650 620 320" data-step="3" data-opts='{"label":"Phần 2 · một tuần sau (bấm hoặc R)"}'><b>Quên. Bạn ấy chưa từng thấy cây dương xỉ thật nên không trả lời được.</b><br><span class="small">Chép bài AI viết là bậc 1. Tự ra vườn quan sát mới là bậc 3.</span></div>
-  <div class="note" data-box="120 820 1000 80" data-step="4">Đoán: một tuần sau chuyện gì xảy ra? Vì sao?</div>
+  <div data-widget="video" data-box="120 200 880 495" data-step="1" data-opts='{"label":"Video 2 · phần 1 và phần 2","src":"videos/case2.mp4","pauseAt":51.3}'></div>
+  <div data-widget="quiz" data-box="1040 200 760 780" data-step="1" data-opts='{"round": "toaan", "layout": "stack", "question": "Một tuần sau, cô hỏi về các loài cây. Chuyện gì xảy ra?", "options": ["Trả lời tốt, vì bài đã chép vào vở.", "Trả lời tốt, vì được cô khen nên nhớ lâu.", "Không trả lời được, vì chưa tự quan sát cây thật.", "Trả lời được một nửa, vì đã đọc bài AI viết một lần."], "answer": "C"}'></div>
+  <div data-widget="reveal" data-box="120 725 880 255" data-step="2" data-opts='{"label":"Phần 2 · bài học (bấm vào đây)"}'><b>Quên. Bạn ấy chưa từng thấy cây dương xỉ thật nên không trả lời được.</b><br><span class="small">Chép bài AI viết là bậc 1. Tự ra vườn quan sát mới là bậc 3.</span></div>
+  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":45,"compact":true}'></div>
 </section>
 
 <section data-id="case3" data-nav="Tình huống 3" data-judged-by='{"wheel":"boc-toaan","slot":2}'>
   <div class="h2" data-box="120 78 1300 120">Tình huống 3</div>
-  <div data-widget="video" data-box="120 220 1000 560" data-step="1" data-opts='{"label":"Video 3 · phần 1 và phần 2","src":"videos/case3.mp4","pauseAt":45.6}'></div>
-  <div class="card" data-box="1180 220 620 400" data-step="2"><b>Phần 1</b><br>Viết xong bài văn, bạn ấy nhờ Gemini chỉ ra ba chỗ yếu nhưng không sửa hộ, rồi tự sửa. Mất thêm 20 phút.</div>
-  <div data-widget="reveal" data-box="1180 650 620 320" data-step="3" data-opts='{"label":"Phần 2 · một tuần sau (bấm hoặc R)"}'><b>Nhớ. Bài văn tuần sau, bạn ấy tự tránh được đúng những lỗi đó.</b><br><span class="small">AI chỉ chỗ yếu, bạn vẫn là người làm: bậc 3. Học lại đúng chỗ mình bị vấp (hack 2).</span></div>
-  <div class="note" data-box="120 820 1000 80" data-step="4">Đoán: một tuần sau chuyện gì xảy ra? Vì sao?</div>
+  <div data-widget="video" data-box="120 200 880 495" data-step="1" data-opts='{"label":"Video 3 · phần 1 và phần 2","src":"videos/case3.mp4","pauseAt":45.6}'></div>
+  <div data-widget="quiz" data-box="1040 200 760 780" data-step="1" data-opts='{"round": "toaan", "layout": "stack", "question": "Một tuần sau, bạn ấy viết bài văn mới. Chuyện gì xảy ra?", "options": ["Lại mắc đúng ba lỗi đó, vì AI không sửa hộ.", "Phải nhờ Gemini chỉ lỗi lại từ đầu.", "Điểm thấp hơn, vì mất 20 phút sửa là phí thời gian.", "Tự tránh được đúng ba lỗi đó."], "answer": "D"}'></div>
+  <div data-widget="reveal" data-box="120 725 880 255" data-step="2" data-opts='{"label":"Phần 2 · bài học (bấm vào đây)"}'><b>Nhớ. Bài văn tuần sau, bạn ấy tự tránh được đúng những lỗi đó.</b><br><span class="small">AI chỉ chỗ yếu, bạn vẫn là người làm: bậc 3. Học lại đúng chỗ mình bị vấp (hack 2).</span></div>
+  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":45,"compact":true}'></div>
 </section>
 
 <section data-id="case4" data-nav="Tình huống 4" data-judged-by='{"wheel":"boc-toaan","slot":3}'>
   <div class="h2" data-box="120 78 1300 120">Tình huống 4</div>
-  <div data-widget="video" data-box="120 220 1000 560" data-step="1" data-opts='{"label":"Video 4 · phần 1 và phần 2","src":"videos/case4.mp4","pauseAt":39.5}'></div>
-  <div class="card" data-box="1180 220 620 400" data-step="2"><b>Phần 1</b><br>Tìm hiểu về Hà Nội, bạn ấy hỏi Gemini ba thông tin chính, chép vào bài, ghi nguồn là Gemini, không kiểm tra lại.</div>
-  <div data-widget="reveal" data-box="1180 650 620 320" data-step="3" data-opts='{"label":"Phần 2 · một tuần sau (bấm hoặc R)"}'><b>Điểm thấp. Hai trong ba thông tin Gemini đưa ra đã cũ.</b><br><span class="small">AI có thể sai. Đối chiếu sách, hỏi cô, cãi lại AI khi nó sai: đó là bậc 4.</span></div>
-  <div class="note" data-box="120 820 1000 80" data-step="4">Đoán: một tuần sau chuyện gì xảy ra? Vì sao?</div>
+  <div data-widget="video" data-box="120 200 880 495" data-step="1" data-opts='{"label":"Video 4 · phần 1 và phần 2","src":"videos/case4.mp4","pauseAt":39.5}'></div>
+  <div data-widget="quiz" data-box="1040 200 760 780" data-step="1" data-opts='{"round": "toaan", "layout": "stack", "question": "Khi cô chấm bài, chuyện gì xảy ra?", "options": ["Điểm thấp, vì có thông tin Gemini đưa ra đã cũ.", "Điểm cao, vì đã ghi nguồn là Gemini.", "Điểm cao, vì AI luôn đúng về số liệu.", "Bị trừ điểm chỉ vì đã dùng AI."], "answer": "A"}'></div>
+  <div data-widget="reveal" data-box="120 725 880 255" data-step="2" data-opts='{"label":"Phần 2 · bài học (bấm vào đây)"}'><b>Điểm thấp. Hai trong ba thông tin Gemini đưa ra đã cũ.</b><br><span class="small">AI có thể sai. Đối chiếu sách, hỏi cô, cãi lại AI khi nó sai: đó là bậc 4.</span></div>
+  <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":45,"compact":true}'></div>
 </section>
 
 <section data-id="kq-toaan" data-nav="Dùng AI · kết quả" data-tag="Dùng AI">
   <div class="h2" data-box="120 78 1300 120">Dùng AI · Kết quả</div>
-  <div data-widget="roundres" data-box="120 200 1680 780" data-step="1" data-opts='{"round":"toaan","label":"Điểm thẩm phán + kháng cáo","max":4}'></div>
+  <div data-widget="tally" data-box="120 200 1680 780" data-step="1" data-opts='{"round":"toaan","questions":["case1","case2","case3","case4"],"labels":["TH 1","TH 2","TH 3","TH 4"],"bonus":"Giải thích"}'></div>
 </section>
 
 <section data-id="toaan-chot" data-nav="Dùng AI · chốt" data-tag="Dùng AI">
@@ -462,7 +462,7 @@
   <div data-widget="standings" data-box="120 210 1680 330" data-step="1"></div>
   <div class="note" data-box="120 570 1680 90" data-step="2">Ai cũng có quà. Thắng chỉ là được chọn trước.</div>
   <div class="body" data-box="120 700 1000 270" data-step="3" data-each><ol><li>Lượt 1: đội hạng nhất lên chọn, mỗi bạn một món, rồi đến các đội sau.</li><li>Lượt 2: làm lại theo đúng thứ tự đó.</li><li>Trong lúc chờ, viết vào phiếu và mang về nhà.</li></ol></div>
-  <div class="note" data-box="1180 700 620 270" data-step="6">Một môn mình chưa thích: ……………<br>Hack mình sẽ thử với môn đó: ……………</div>
+  <div class="note" data-box="1180 700 620 270" data-step="6">Môn mình chưa thích: ………<br>Khi ……… (lúc nào?),<br>mình sẽ ……… (hack nào?)</div>
 </section>
 
 <section data-id="loiket" data-nav="Lời kết" data-bg="red">

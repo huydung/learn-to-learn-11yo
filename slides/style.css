@@ -166,6 +166,15 @@ table.t td { border-bottom: 2px solid var(--line); padding: 14px 18px; vertical-
 .quiz.open .qtm button.on.ok { background: #1F7A3A; color: #fff; animation: pulse-green 1s ease-in-out infinite; }
 .quiz.open .qtm button.on.bad { background: #7A0010; color: #fff; animation: pulse-red 1s ease-in-out infinite; }
 .quiz .qr { flex: none; padding: 14px 18px; font-size: 24px; }
+/* stack: options above the team column, narrow enough to sit beside a video */
+.quiz.stack .qq { font-size: 32px; line-height: 1.25; }
+.quiz.stack .qb { grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: 14px; }
+.quiz.stack .qo { grid-column: auto; grid-template-columns: 1fr; grid-template-rows: none; gap: 8px; }
+.quiz.stack .op { font-size: 26px; padding: 8px 14px; border-width: 3px; border-radius: 14px; align-items: center; }
+.quiz.stack .op b { font-size: 30px; }
+.quiz.stack .qt { gap: 8px; }
+.quiz.stack .qtm { padding: 6px 12px; }
+.quiz.stack .qtm button { width: 50px; height: 50px; font-size: 26px; }
 @keyframes pulse-green { 0%, 100% { box-shadow: 0 0 0 0 rgba(46,139,71,.75); } 50% { box-shadow: 0 0 0 14px rgba(46,139,71,0); } }
 @keyframes pulse-red { 0%, 100% { box-shadow: 0 0 0 0 rgba(211,47,47,.75); } 50% { box-shadow: 0 0 0 14px rgba(211,47,47,0); } }
 
