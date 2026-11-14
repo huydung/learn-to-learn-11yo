@@ -60,7 +60,8 @@
 
   // "rank" rounds turn a place into points. "points" rounds give each team its own score, up to max.
   const ROUNDS = [
-    { id: "chuyengia", name: "Giảng giỏi", kind: "rank", points: POINTS_RANKED, rule: "Nghe đúng +2 · đội giảng +1 mỗi đội nghe đúng; xếp theo tổng" },
+    { id: "giang", name: "Giảng hay", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số chấm bình chọn" },
+    { id: "chuyengia", name: "Nghe hiểu", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số câu đúng (3 câu, trừ hack đội mình giảng)" },
     { id: "ghepthe", name: "Đua ghép thẻ", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số thẻ đúng; bằng nhau thì rung chuông trước xếp trên" },
     { id: "toaan", name: "Dùng AI", kind: "points", max: 4, rule: "Đúng kết cục 2 · lý do 1 · kháng cáo 1" },
     { id: "nhom", name: "Slide nhóm", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số điểm checklist đạt" },
@@ -183,7 +184,7 @@
   <div class="h2" data-box="120 78 1300 120">Cả đội chuẩn bị giảng</div>
   <div class="body" data-box="120 230 1060 600" data-step="1" data-each><ol><li>Chọn <b>3 ý chính</b>. Ba câu hỏi “Gợi ý khi giảng” cuối thẻ giúp đội chọn.</li><li>Chọn <b>một ví dụ của chính đội</b>: ở nhà, ở lớp hay trong game.</li><li>Chia lời: <b>bạn nào cũng nói</b> một phần.</li><li>Giảng bằng lời của mình. Được cầm thẻ, nhưng đừng đọc nguyên văn.</li></ol></div>
   <div data-widget="timer" data-box="1240 240 560 280" data-step="1" data-opts='{"seconds":300}'></div>
-  <div class="note" data-box="1240 560 560 330" data-step="5">Giảng xong, ba đội kia trả lời một câu về hack của đội bạn. <b>Lớp hiểu đúng thì đội giảng được điểm.</b></div>
+  <div class="note" data-box="1240 560 560 330" data-step="5">Cuối vòng, cả lớp và thầy cô bình chọn <b>đội giảng hay nhất</b>. Nghe kỹ đội bạn giảng thì trả lời đúng.</div>
 </section>
 
 <section data-id="p2b" data-nav="Chặng 3" data-bg="red">
@@ -195,8 +196,8 @@
 <section data-id="luat-giang" data-nav="Luật giảng" data-tag="Giảng giỏi">
   <div class="h2" data-box="120 78 1300 120">Giảng cho cả lớp</div>
   <div class="body" data-box="120 230 1060 560" data-step="1" data-each><ol><li>Theo thứ tự hack 1 → 4. Đội giảng có <b>3 phút</b>, cả bốn bạn đều nói.</li><li>Ba đội nghe úp thẻ. Trong 3 phút đó, được hỏi lại đội giảng.</li><li>Rồi ba đội nghe bàn <b>1 phút</b> một câu tình huống, và <b>cùng lúc</b> giơ thẻ A, B, C hoặc D.</li></ol></div>
-  <div class="card" data-box="1240 230 560 340" data-step="4"><h3>Điểm mỗi câu</h3>Đội nghe đúng: <b>+2</b><br>Đội giảng: <b>+1</b> cho mỗi đội nghe đúng</div>
-  <div class="note" data-box="120 820 1680 140" data-step="5">Cố tình trả lời sai thì đội mình mất 2, đội giảng chỉ mất 1. Giảng rõ và nghe kỹ mới thắng. Cộng cả 4 câu, xếp hạng 4 · 3 · 2 · 2.</div>
+  <div class="card" data-box="1240 230 560 560" data-step="4"><h3>Hai bảng điểm</h3><b>Giảng hay:</b> cuối vòng, cả lớp và thầy cô dán chấm bình chọn.<br><br><b>Nghe hiểu:</b> số câu đội trả lời đúng.</div>
+  <div class="note" data-box="120 820 1680 140" data-step="5">Mỗi bảng xếp hạng 4 · 3 · 2 · 2. Đội giảng không trả lời câu về hack của mình.</div>
 </section>
 
 <section data-id="giang1" data-nav="Giảng hack 1" data-tag="Giảng giỏi · 3 phút">
@@ -247,9 +248,15 @@
   <div data-widget="timer" data-box="1580 56 220 110" data-step="1" data-opts='{"seconds":60,"compact":true}'></div>
 </section>
 
-<section data-id="kq2" data-nav="Giảng giỏi · kết quả" data-tag="Giảng giỏi">
-  <div class="h2" data-box="120 78 1300 120">Giảng giỏi · Kết quả</div>
-  <div data-widget="tally" data-box="120 200 1680 780" data-step="1" data-opts='{"round":"chuyengia","teach":true,"questions":["v2-cau1","v2-cau2","v2-cau3","v2-cau4"],"labels":["Hack 1","Hack 2","Hack 3","Hack 4"]}'></div>
+<section data-id="kq2" data-nav="Nghe hiểu · kết quả" data-tag="Giảng giỏi">
+  <div class="h2" data-box="120 78 1300 120">Nghe hiểu · Kết quả</div>
+  <div data-widget="tally" data-box="120 200 1680 780" data-step="1" data-opts='{"round":"chuyengia","questions":["v2-cau1","v2-cau2","v2-cau3","v2-cau4"],"labels":["Hack 1","Hack 2","Hack 3","Hack 4"]}'></div>
+</section>
+
+<section data-id="binhchon" data-nav="Bình chọn giảng hay" data-tag="Giảng giỏi · 3 phút">
+  <div class="h2" data-box="120 78 1300 120">Đội nào giảng hay nhất?</div>
+  <div class="body" data-box="120 210 1680 150" data-step="1">Mỗi bạn <b>2 chấm</b>, dán cho <b>2 đội khác</b> đội mình. Cô Tươi và chú mỗi người 4 chấm.<br>Chọn đội giúp bạn <b>hiểu rõ nhất</b>, có <b>ví dụ dễ nhớ nhất</b>.</div>
+  <div data-widget="roundres" data-box="120 400 1680 580" data-step="2" data-opts='{"round":"giang","label":"Số chấm","max":40,"bell":false}'></div>
 </section>
 
 <section data-id="chot2" data-nav="Giảng giỏi · chốt" data-tag="Giảng giỏi">

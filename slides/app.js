@@ -488,17 +488,17 @@ const WIDGETS = {
 
   // Results of a quiz round: which teams got which question right.
   tally(el, o) {
-    if (o.teach) return WIDGETS.teachtally(el, o);
     const round = roundById(o.round);
     const isRight = (q, k) => board.answers[q]?.[k] !== undefined && board.answers[q][k] === answerOf(q);
     const correctCount = byTeam((k) => o.questions.filter((q) => isRight(q, k)).length);
     const points = rankPoints(correctCount, round.points);
     const recorded = board.scores[o.round] || {};
     el.innerHTML = `<table class="t tally">
-      <tr><th>Đội</th>${o.questions.map((_, i) => `<th>Câu ${i + 1}</th>`).join("")}<th>Số câu đúng</th><th>Điểm vòng</th></tr>
+      <tr><th>Đội</th>${o.questions.map((_, i) => `<th>${esc(o.labels?.[i] ?? "Câu " + (i + 1))}</th>`).join("")}<th>Số câu đúng</th><th>Điểm vòng</th></tr>
       ${TEAMS.map((t) => `<tr><td>${teamChip(t)}</td>
         ${o.questions.map((q) => {
           const pick = board.answers[q]?.[t.key];
+          if (teacherOf(quizOpts(q)) === t.key) return `<td><small>Đội giảng</small></td>`;
           return `<td>${pick === undefined ? "–" : (isRight(q, t.key) ? "✓" : "✗") + ` <small>${LETTERS[pick]}</small>`}</td>`;
         }).join("")}
         <td><b>${correctCount[t.key]}</b></td>
@@ -509,58 +509,28 @@ const WIDGETS = {
     $('[data-a="record"]', el).onclick = () => { if (!editing) recordRound(o.round, points, round.name + " ghi điểm theo số câu đúng"); };
   },
 
-  // Teaching round: each listening team that is right gets 2; the teaching team gets 1 per listening team that is right.
-  // Raw points are then ranked like any other round, so answering wrong on purpose never helps a team.
-  teachtally(el, o) {
-    const round = roundById(o.round);
-    const isRight = (q, k) => board.answers[q]?.[k] !== undefined && board.answers[q][k] === answerOf(q);
-    const raw = byTeam(() => 0);
-    const cells = o.questions.map((q) => {
-      const teacher = teacherOf(quizOpts(q));
-      const right = TEAMS.filter((t) => t.key !== teacher && isRight(q, t.key)).length;
-      if (teacher) raw[teacher] += right;
-      return byTeam((k) => {
-        if (k === teacher) return `Giảng · ${right}/3 đúng → <b>+${right}</b>`;
-        const pick = board.answers[q]?.[k];
-        if (pick === undefined) return "–";
-        if (isRight(q, k)) { raw[k] += 2; return `✓ <small>${LETTERS[pick]}</small> <b>+2</b>`; }
-        return `✗ <small>${LETTERS[pick]}</small>`;
-      });
-    });
-    const points = rankPoints(raw, round.points);
-    const recorded = board.scores[o.round] || {};
-    el.innerHTML = `<table class="t tally">
-      <tr><th>Đội</th>${o.questions.map((q, i) => `<th>${esc(o.labels?.[i] ?? "Câu " + (i + 1))}</th>`).join("")}<th>Tổng</th><th>Điểm vòng</th></tr>
-      ${TEAMS.map((t) => `<tr><td>${teamChip(t)}</td>${cells.map((c) => `<td>${c[t.key]}</td>`).join("")}
-        <td><b>${raw[t.key]}</b></td>
-        <td><b>${points[t.key]}</b>${recorded[t.key] !== undefined ? ` <small>(đã ghi ${recorded[t.key]})</small>` : ""}</td></tr>`).join("")}
-      </table>
-      <div class="actions"><button class="btn" data-a="record">Ghi điểm vào bảng</button>
-      <span class="small">Đội nghe đúng: +2. Đội giảng: +1 cho mỗi đội nghe đúng. Xếp hạng theo tổng: ${round.points.join(" · ")}.</span></div>`;
-    $('[data-a="record"]', el).onclick = () => { if (!editing) recordRound(o.round, points, round.name + " ghi điểm"); };
-  },
-
   // Results typed by hand: a count per team (card race) or points per team (Tòa án).
   roundres(el, o) {
     const round = roundById(o.round);
     const ranked = round.kind === "rank";
+    const useBell = ranked && o.bell !== false;
     const raw = board.raw[o.round] || {};
     const bell = board.bell[o.round] || {};
     const value = (k) => Number(raw[k] || 0);
-    const beats = (a, b) => value(a) > value(b) || (ranked && value(a) === value(b) && bell[a] && bell[b] && bell[a] < bell[b]);
+    const beats = (a, b) => value(a) > value(b) || (useBell && value(a) === value(b) && bell[a] && bell[b] && bell[a] < bell[b]);
     const place = places(beats);
     const points = byTeam((k) => (ranked ? round.points[place[k]] : Math.min(round.max, value(k))));
     const recorded = board.scores[o.round] || {};
     el.innerHTML = `<table class="t tally">
-      <tr><th>Đội</th><th>${esc(o.label)}</th>${ranked ? "<th>Rung chuông</th>" : ""}<th>Hạng</th><th>Điểm vòng</th></tr>
+      <tr><th>Đội</th><th>${esc(o.label)}</th>${useBell ? "<th>Rung chuông</th>" : ""}<th>Hạng</th><th>Điểm vòng</th></tr>
       ${TEAMS.map((t) => `<tr><td>${teamChip(t)}</td>
         <td><span class="stepper"><button data-a="minus" data-k="${t.key}" aria-label="Bớt">−</button><b>${value(t.key)}</b><button data-a="plus" data-k="${t.key}" aria-label="Thêm">+</button></span></td>
-        ${ranked ? `<td><select data-k="${t.key}" aria-label="Thứ tự rung chuông đội ${t.name}"><option value="">–</option>${[1, 2, 3, 4].map((n) => `<option ${bell[t.key] == n ? "selected" : ""}>${n}</option>`).join("")}</select></td>` : ""}
+        ${useBell ? `<td><select data-k="${t.key}" aria-label="Thứ tự rung chuông đội ${t.name}"><option value="">–</option>${[1, 2, 3, 4].map((n) => `<option ${bell[t.key] == n ? "selected" : ""}>${n}</option>`).join("")}</select></td>` : ""}
         <td><b>#${place[t.key] + 1}</b></td>
         <td><b>${points[t.key]}</b>${recorded[t.key] !== undefined ? ` <small>(đã ghi ${recorded[t.key]})</small>` : ""}</td></tr>`).join("")}
       </table>
       <div class="actions"><button class="btn" data-a="record">Ghi điểm vào bảng</button>
-      <span class="small">${ranked ? `Xếp theo số thẻ đúng; bằng nhau thì đội rung chuông trước xếp trên. Điểm ${round.points.join(" · ")}.` : `Mỗi đội được đúng số điểm của mình, tối đa ${round.max}.`}</span></div>`;
+      <span class="small">${ranked ? `${useBell ? "Xếp theo số thẻ đúng; bằng nhau thì đội rung chuông trước xếp trên." : "Bằng nhau thì cùng hạng cao hơn."} Điểm ${round.points.join(" · ")}.` : `Mỗi đội được đúng số điểm của mình, tối đa ${round.max}.`}</span></div>`;
 
     el.onclick = (e) => {
       const button = e.target.closest("button");

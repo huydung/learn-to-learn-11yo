@@ -8,7 +8,7 @@ Take the whole `slides` folder to the class laptop, not only `6B0slides.html`.
 ## Files
 | File | What is in it | When you open it |
 |---|---|---|
-| `6B0slides.html` | All 57 slides in order, plus teams and scoring rules | To change any text, question, answer or layout |
+| `6B0slides.html` | All 58 slides in order, plus teams and scoring rules | To change any text, question, answer or layout |
 | `app.js` | How the deck works: widgets, scores, edit mode, keys | Only to change how something behaves |
 | `style.css` | Colours, fonts, sizes | To change the look |
 | `fonts/` | Merriweather and Be Vietnam Pro, so it looks right offline | Never |
