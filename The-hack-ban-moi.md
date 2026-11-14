@@ -38,7 +38,7 @@ Năm 2014, nhóm của giáo sư Altmann cho khoảng 300 người làm một vi
 1. Hẹn giờ **15 phút** và chỉ tập trung làm bài. Khi đã quen rồi thì tăng lên 20, rồi 25 phút. Hết giờ chưa xong cũng không sao.
 1. Đang làm mà nhớ ra việc khác, hãy ghi ra giấy rồi làm tiếp. Hết giờ thì nghỉ thật thư giãn, như thẻ 3 hướng dẫn.
 
-## Gợi ý khi giảng cho đội (2 phút, gồm cả hỏi đáp):
+## Gợi ý khi cả đội giảng cho lớp (3 phút, gồm cả hỏi đáp):
 
 Trí nhớ làm việc giữ được mấy thứ một lúc? Bị ngắt 3 giây thì số lần nhầm thay đổi thế nào? Tối nay bạn sẽ thử làm gì?
 
@@ -80,7 +80,7 @@ Năm 2006, hai nhà khoa học Roediger và Karpicke cho 120 sinh viên học m�
 1. Làm thẻ ghi nhớ: mặt trước ghi câu hỏi, mặt sau ghi đáp án, rồi tự đố mình.
 1. Giảng lại cho bạn bè, em nhỏ hay bố mẹ, rồi học lại đúng chỗ mình bị vấp.
 
-## Gợi ý khi giảng cho đội (2 phút, gồm cả hỏi đáp):
+## Gợi ý khi cả đội giảng cho lớp (3 phút, gồm cả hỏi đáp):
 
 Vì sao tự đố giúp nhớ chắc hơn đọc lại? Sau 5 phút và sau 1 tuần, hai nhóm khác nhau thế nào? Tối nay bạn sẽ thử làm gì?
 
@@ -122,7 +122,7 @@ Năm 2004, nhóm của nhà khoa học Wagner ở Đức cho 66 người trẻ l
 1. Cố thật 10 đến 15 phút mà vẫn bí thì nghỉ, hoặc làm môn khác, rồi quay lại. Vì vậy, hãy làm môn khó nhất trước.
 1. Đi ngủ đúng giờ và đủ thời gian. Sáng hôm sau, thử giải lại bài khó của tối qua chưa làm được.
 
-## Gợi ý khi giảng cho đội (2 phút, gồm cả hỏi đáp):
+## Gợi ý khi cả đội giảng cho lớp (3 phút, gồm cả hỏi đáp):
 
 Hai chế độ của não giống hai loại đèn nào? Nhóm ngủ và nhóm thức khác nhau thế nào? Tối nay bạn sẽ thử làm gì?
 
@@ -164,7 +164,7 @@ Năm 2015, nhóm giáo sư Rohrer theo dõi 126 học sinh lớp 7 luyện toán
 1. Khi ôn, trộn nhiều dạng bài với nhau. Mệt hơn, nhưng nhớ lâu hơn.
 1. Xem lại bài kiểm tra cũ, tìm dạng mình hay sai, rồi trộn thêm dạng đó vào mỗi buổi ôn.
 
-## Gợi ý khi giảng cho đội (2 phút, gồm cả hỏi đáp):
+## Gợi ý khi cả đội giảng cho lớp (3 phút, gồm cả hỏi đáp):
 
 Vì sao rải đều và trộn bài giúp nhớ lâu hơn? Luyện theo cụm và luyện trộn khác nhau thế nào? Tối nay bạn sẽ thử làm gì?
 

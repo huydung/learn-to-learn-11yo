@@ -21,7 +21,7 @@ Read this file first. It explains what exists, how the two HTML files work, what
   - Card text lives in `Tai-lieu-in-6B0.docx` pages 2–5. `The-hack-ban-moi.md` is a plain-text copy for review; regenerate it from the docx after edits.
   - Using AI (Gemini) well and badly.
   - Group slides on Canva.
-- **Format:** a game. There are 4 colour teams, chosen and seated by cô Tươi: Red (R), Blue (B), Green (G), Yellow (Y). The names are in English everywhere (slides, HUD, printables) so they are similar in length. Each kid is the "expert" of one hack card.
+- **Format:** a game. There are 4 colour teams, chosen and seated by cô Tươi: Red (R), Blue (B), Green (G), Yellow (Y). The names are in English everywhere (slides, HUD, printables) so they are similar in length. A wheel gives each team one hack; the whole team reads it and teaches it to the class.
 
 ### Constraints that always hold
 - Never spotlight Nam Anh (Huy Dũng's son is in the class).
@@ -40,7 +40,7 @@ Read this file first. It explains what exists, how the two HTML files work, what
 | # | What | Where | Source in this folder |
 |---|---|---|---|
 | A | **Student slides + leaderboard** (projected in class) | Local folder `slides/` (open `6B0slides.html`). Older online copy: https://claude.ai/artifact/DEWBsWs7xBedRFo4CiY3Rm | `slides/` · see `slides/README.md`. `InteractiveSlides.html` is the old single-file version. |
-| B | **A4 printables** (22 pages) | `Tai-lieu-in-6B0.docx` (edit and print in Word). Older online copy: https://claude.ai/artifact/AR2vJGv2TKAzz5LM2Wgv76 | `Tai-lieu-in-6B0.docx`. `ToPrint.html` is the old HTML version. |
+| B | **A4 printables** (20 pages) | `Tai-lieu-in-6B0.docx` (edit and print in Word). Older online copy: https://claude.ai/artifact/AR2vJGv2TKAzz5LM2Wgv76 | `Tai-lieu-in-6B0.docx`. `ToPrint.html` is the old HTML version. |
 | C | Plan deck for cô Tươi (Slides type, 28 pages) | claude.ai artifact https://claude.ai/artifact/KFFwru2snypPApxmFKyrEx | Not a file. Edit it in the claude.ai Slides editor, or export to PDF/PPTX from there. |
 
 The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc.
@@ -52,13 +52,13 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 
 ---
 
-## 3. Session flow (about 90 minutes, 54 slides)
+## 3. Session flow (about 90 minutes, 57 slides)
 
 | Phút | Phần | Slides |
 |---|---|---|
 | 0–9 | Chặng 1 · Khởi động: Clash Royale, ba câu hỏi, chiếc thang, lập đội, luật chung, tín hiệu khiên | 1–8 |
-| 9–15 | Chặng 2 · Viết nhanh: thi viết A/B (2 min) and result table | 9–11 |
-| 15–31 | Chặng 3 · Giảng giỏi: đọc im lặng (4 min), then Chuyên gia: 2 min per expert (teach + Q&A, editable timer), then 4 team questions | 12–21 |
+| 9–19 | Chặng 2 · Chuẩn bị: wheel gives each team one hack (1 min), everyone reads that card (4 min), team prepares the talk (5 min) | 9–12 |
+| 19–38 | Chặng 3 · Giảng giỏi: rules, then per hack 1→4: team teaches the class (3 min incl. Q&A), the 3 listening teams answer that hack's question (1 min); results; wrap-up | 13–25 |
 | 31–36 | Giải lao (5 min) | 22 |
 | 36–42 | Chặng 4 · Đúng chỗ: đua ghép thẻ trên sàn (3 min) and results | 23–26 |
 | 42–50 | Chặng 5 · Dùng AI: a wheel assigns teams to 4 video cases; each video stops and the team says what happens next and why (no A/B/C) | 27–35 |
@@ -79,13 +79,12 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 
 | Round | How | Points |
 |---|---|---|
-| Thi viết | total correct lines of the 2 writers | 4·3·2·2 |
-| Chuyên gia | number of the 4 questions the team answers correctly | 4·3·2·2 |
+| Giảng giỏi | per question: each listening team right +2; the teaching team +1 per listening team right (it does not answer its own hack); total of 4 questions ranked | 4·3·2·2 |
 | Đua ghép thẻ | correct cards (of 8); the bell order breaks ties | 4·3·2·2 |
 | Dùng AI | right outcome 2 + reason 1 + accepted appeal 1 (teams answer in their own words) | up to 4 (raw) |
 | Slide nhóm 20/11 | checklist points the team sheet covers | 4·3·2·2 |
 | Chung kết | number of the 5 questions correct, double points | 8·6·4·4 |
-| Giải thích một hack | correct explanation 1 + own example 1 | up to 2 |
+| Giải thích một hack | a hack other than the one the team taught; correct explanation 1 + own example 1 | up to 2 |
 | Khiên ✋ | quietest team when chú raises a hand | +1, max 3 |
 | Phạt | running or pushing in the card race | −1 |
 
@@ -94,7 +93,7 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 - **Gifts:** "Every kid gets a gift; winning only means choosing first" is said **only at the end** (bangdiem slide), never up front. Gifts: 40 items, 2 per kid, two picking rounds in rank order.
 
 ### Questions (answers spread A–D)
-- **Chuyên gia:** new scenarios, deliberately unlike the card examples. The hack name is not shown.
+- **Giảng giỏi** (one per hack, in card order; quiz `data-opts.teach` links each to the `boc-hack` wheel so the teaching team is shown and skipped):** new scenarios, deliberately unlike the card examples. The hack name is not shown.
   1. Minh does maths while a friend tells a story → **B** (slower, more mistakes).
   2. 2-minute talk about rice with no notes → **C** (practise aloud, check, repeat).
   3. Nam has been stuck on a maths problem for 30 min → **D** (stand up and walk a few minutes, or switch subject, then come back). Replaced the Lan piano question on 14 Nov so each question maps to one card.
@@ -121,12 +120,12 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 ## 5. How the slides work (`slides/`)
 
 `slides/README.md` explains running and editing. In short:
-- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 54 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
+- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 57 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
 - Edit mode (`E`) keeps changes in `localStorage`; Ctrl+S writes the whole deck back to `6B0slides.html` in the same format (File System Access API in Chrome, download elsewhere). Unchanged slides come out byte for byte the same, so `git diff` shows only real edits. (`content.js` was removed on 13 Nov; it is in the first git commit.)
 - `app.js` is the engine. Widgets live in the `WIDGETS` object: `html teams timer reveal video thiviet wheel quiz tally roundres checkstep standings`.
 - `style.css` holds the brand tokens and all styles.
 - Storage keys: `hch-6b0-v2-board`, `-thiviet`, `-wheels`, `-edits`.
-- Leaderboard → **Xóa điểm, đáp án và bốc thăm…** (click twice) clears scores, team answers, round 1 inputs and wheel results. Slide edits stay.
+- Leaderboard → **Xóa điểm, đáp án và bốc thăm…** (click twice) clears scores, team answers and wheel results. Slide edits stay.
 - Every change saves to `localStorage` the moment it happens, including running timers (stored as an end time), Văn hóa đọc progress, revealed answers, the current slide and in-progress slide edits. A reload loses nothing. Two open tabs sync through the `storage` event. A red bar appears if the browser cannot save.
 
 ## 6. How the old `ToPrint.html` worked (the .docx replaces it)
@@ -143,10 +142,9 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 | 6–9 | matching cards, 8 per team colour |
 | 10–13 | floor signs for the 4 hacks |
 | 14–17 | A/B/C/D answer cards, one page per team colour |
-| 18–19 | writing sheets, cách A and cách B |
-| 20 | team sheet: bài 20/11 outline and task split |
-| 21 | take-home slips (8 per page) |
-| 22 | scoring poster |
+| 18 | team sheet: bài 20/11 outline and task split |
+| 19 | take-home slips (8 per page) |
+| 20 | scoring poster |
 
 **Regenerate the PDF with Playwright:**
 ```js
@@ -155,7 +153,7 @@ const h=require('fs').readFileSync('tai-lieu-in-6b0.html','utf8');
 await p.setContent(`<!doctype html><html><head><meta charset=utf8></head><body>${h}</body></html>`,{waitUntil:'networkidle'});
 await p.pdf({path:'Tai-lieu-in-6B0.pdf',format:'A4',printBackground:true,preferCSSPageSize:true});await b.close()})();
 ```
-Check the PDF afterwards: it should be exactly 22 pages, with no blank ones.
+Check the PDF afterwards: it should be exactly 20 pages in Word (LibreOffice shows 21: card 4's source line spills onto its own page), with no blank ones.
 
 ---
 
@@ -206,6 +204,15 @@ Check the PDF afterwards: it should be exactly 22 pages, with no blank ones.
 ---
 
 ## 10. Decisions log (most recent first)
+
+- **Team teaching replaces the experts and Viết nhanh (14 Nov):**
+  - Viết nhanh (thi viết A/B) removed: it gave hack 1 a live demo the other hacks did not get, pre-empted the card-1 expert and made the hack-1 question a free point. Writing sheets removed from the printables.
+  - Each team gets one hack from a wheel (`boc-hack`), reads it together and teaches it to the whole class. Reason: one randomly chosen reader no longer decides a team's score, and the whole team works at bậc 3–4 while preparing.
+  - Scoring chosen over dot voting: dots reward popularity and invite tactical votes. Listeners right +2, teaching team +1 per listener right, so answering wrong on purpose always costs the saboteur more than the teaching team. Totals ranked 4·3·2·2.
+  - The final "giải thích một hack" wheel never gives a team the hack it taught (`"avoid":"boc-hack"`).
+  - Map stop 2 is now "Chuẩn bị" (still 8 stops). Card footer reads "Gợi ý khi cả đội giảng cho lớp (3 phút…)".
+  - AI and Canva slides tied back to the hacks and ladder: case 1 reveal names hack 2 and 4; case 4 reveal now teaches bậc 4 (check and argue back); case 1 timing fixed to "hai tuần sau"; AI summary table has a Hack column; group-slide "giúp học" list and Canva note name hacks 1, 2, 4.
+  - Session runs about 7 minutes longer than before; the giải lao vs 11:00 school break question is still open.
 
 - **Map stops and Chung kết (14 Nov):**
   - Stops 1–4 renamed Khởi động · Viết nhanh · Giảng giỏi · Đúng chỗ. The writing test is now stop 2 on its own; "Đọc im lặng" moved after it and opens stop 3, right before the experts teach.

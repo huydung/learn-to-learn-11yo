@@ -8,7 +8,7 @@ Take the whole `slides` folder to the class laptop, not only `6B0slides.html`.
 ## Files
 | File | What is in it | When you open it |
 |---|---|---|
-| `6B0slides.html` | All 51 slides in order, plus teams and scoring rules | To change any text, question, answer or layout |
+| `6B0slides.html` | All 57 slides in order, plus teams and scoring rules | To change any text, question, answer or layout |
 | `app.js` | How the deck works: widgets, scores, edit mode, keys | Only to change how something behaves |
 | `style.css` | Colours, fonts, sizes | To change the look |
 | `fonts/` | Merriweather and Be Vietnam Pro, so it looks right offline | Never |
@@ -25,7 +25,7 @@ Each box has `data-box="x y width height"` in pixels on a 1920 × 1080 page. Qui
 The folder is a git repo, so after each save `git diff` shows exactly which lines changed.
 
 ## What survives a reload
-Everything. Each change is saved the moment you make it: scores, team answers, card counts, bell order, shields, Thi viết numbers, wheel results (saved before the wheel stops), running timers (they keep counting), Văn hóa đọc ticks, revealed answers, slide edits, the slide you were on, and whether the leaderboard was open.
+Everything. Each change is saved the moment you make it: scores, team answers, card counts, bell order, shields, wheel results (saved before the wheel stops), running timers (they keep counting), Văn hóa đọc ticks, revealed answers, slide edits, the slide you were on, and whether the leaderboard was open.
 
 If the deck is open in two tabs, each tab picks up the other's changes, so one cannot wipe out the other.
 
@@ -58,7 +58,7 @@ Press `?` and click **Sao lưu ra file**. On the other computer, open the deck, 
 2. Open the case slide, press `E`, click the video box, then click **Gắn video** and pick the same file.
 
 ## Before class
-Open the leaderboard (`L`) and click **Xóa điểm, đáp án và bốc thăm…** twice. It clears scores, team answers, round 1 numbers and wheel results. Your slide edits stay.
+Open the leaderboard (`L`) and click **Xóa điểm, đáp án và bốc thăm…** twice. It clears scores, team answers and wheel results. Your slide edits stay.
 
 ## Keys
 `→` / `Space` next idea, then next slide · `←` back · `M` map · `L` leaderboard · `S` small score strip · `T` timer · `R` reveal answer · `E` edit · `G` all slides · type a number and `Enter` to jump · `F` fullscreen · `?` help
