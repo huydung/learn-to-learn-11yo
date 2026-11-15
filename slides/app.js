@@ -207,7 +207,7 @@ function answerOf(slideId) {
 const stage = $("#stage");
 
 // In map mode the slide is a panel below the HUD: 85% size, pushed 50 map-pixels down.
-const PANEL = 0.85, PANEL_DY = 50;
+const PANEL = 0.92, PANEL_DY = 32;  // slide panel over the map: size, and how far down it sits to clear the HUD
 function fitStage() {
   const fit = Math.min(innerWidth / 1920, innerHeight / 1080);
   const scale = mapMode ? fit * PANEL : fit;
@@ -300,7 +300,7 @@ function scoreStrip() {
   return el;
 }
 
-const teamChip = (t) => `<span class="chip mini c-${t.key}">${t.name}</span>`;
+const teamChip = (t) => `<span class="chip mini c-${t.key}"><img class="tk" src="${MAP_ART.team(t.key)}" alt="">${t.name}</span>`;
 
 // Team score cards, shared by the standings slide and the leaderboard overlay.
 function teamCards(teams, withActions) {
@@ -351,7 +351,7 @@ const WIDGETS = {
   },
 
   teams(el) {
-    el.innerHTML = `<div class="chips">${TEAMS.map((t, i) => `<div class="chip c-${t.key}">Đội ${t.name}<small>Đội ${i + 1}</small></div>`).join("")}</div>`;
+    el.innerHTML = `<div class="chips">${TEAMS.map((t, i) => `<div class="chip c-${t.key}"><img class="tk" src="${MAP_ART.team(t.key)}" alt="">Đội ${t.name}<small>Đội ${i + 1}</small></div>`).join("")}</div>`;
   },
 
   timer(el, o, ctx) {
@@ -396,17 +396,9 @@ const WIDGETS = {
 
   video(el, o) {
     el.innerHTML = o.src
-      ? `<div class="vid"><video src="${esc(o.src)}" controls preload="metadata"></video></div>`
+      ? `<div class="vid"><video src="${esc(preloaded[o.src] || o.src)}" controls preload="auto"></video></div>`
       : `<div class="vid"><div class="vl">${esc(o.label || "Video")}</div>
          <div class="vs">Chưa gắn video. Kể phần 1 bằng lời, hoặc gắn video:<br>chép file vào thư mục <b>videos</b>, bật chế độ Sửa (E), chọn ô này, bấm “Gắn video”.</div></div>`;
-    // pauseAt: stop once at the vote card between part 1 and part 2; Play continues.
-    const v = el.querySelector("video");
-    if (v && o.pauseAt) {
-      let last = 0;
-      v.ontimeupdate = () => { if (last < o.pauseAt && v.currentTime >= o.pauseAt) v.pause(); last = v.currentTime; };
-    }
-    // start: part 2 of a case video begins where part 1 stopped.
-    if (v && o.start) v.addEventListener("loadedmetadata", () => { if (v.currentTime < o.start) v.currentTime = o.start; }, { once: true });
   },
 
 
@@ -907,6 +899,19 @@ grid.addEventListener("keydown", (e) => {
   else if (e.target.classList.contains("th")) { e.stopPropagation(); closeGrid(); go(Number(e.target.dataset.i)); }
 });
 
+/* Videos download one by one in the background after the deck opens, so a video slide plays at once.
+ * Opened from disk (file://) the fetch fails and the video plays from the file as before. */
+const preloaded = {};  // src -> blob: URL
+async function preloadVideos() {
+  const srcs = [...new Set(slides().flatMap((s) => s.blocks.filter((b) => b.kind === "video" && b.opts?.src).map((b) => b.opts.src)))];
+  for (const src of srcs) {
+    try {
+      const r = await fetch(src);
+      if (r.ok) preloaded[src] = URL.createObjectURL(await r.blob());
+    } catch { return; }
+  }
+}
+
 /* ================= Session map (M) =================
  * The session as a journey: one landmark per stop (STOPS in 6B0slides.html), the four teams walking the trail,
  * scores in a HUD on top. Slides open as a panel over the map; finishing a stop's last slide walks to the next stop.
@@ -1026,8 +1031,7 @@ function updateMap() {
   });
   walkTo(stopLen[s]);
   const open = slideOpen || boardOpen;
-  const page = current - stopStart(s) + 1, pages = stopEnd(s) - stopStart(s) + 1;
-  $(".hi", hud).innerHTML = `<div class="hs"><span class="hsn">Chặng ${s + 1}/${STOPS.length}${open ? ` · trang ${page}/${pages}` : ""}</span><b>${esc(STOPS[s].name)}</b></div>
+  $(".hi", hud).innerHTML = `<div class="hs"><span class="hsn">Chặng ${s + 1}/${STOPS.length}</span><b>${esc(STOPS[s].name)}</b></div>
     <div class="hteams">${teamHud()}</div>
     <div class="hb"><button data-a="board" class="${boardOpen ? "on" : ""}">🏆 Bảng điểm</button>
       <button data-a="map">${open ? "🗺 Về bản đồ" : "▶ Vào chặng"}</button></div>`;
@@ -1301,9 +1305,13 @@ if (fromHash >= 0 && fromHash !== current) { current = fromHash; if (mapMode) sl
 addEventListener("resize", () => { fitStage(); sizeGrid(); });
 // The corner buttons stay hidden until the mouse is in the bottom 90px of the screen.
 const nav = document.getElementById("nav");
-addEventListener("mousemove", (e) => nav.classList.toggle("show", e.clientY > innerHeight - 90));
-document.documentElement.addEventListener("mouseleave", () => nav.classList.remove("show"));
+addEventListener("mousemove", (e) => {
+  nav.classList.toggle("show", e.clientY > innerHeight - 90);
+  hud.classList.toggle("scores", e.clientY < 90);  // team scores in the HUD show only near the top
+});
+document.documentElement.addEventListener("mouseleave", () => { nav.classList.remove("show"); hud.classList.remove("scores"); });
 fitStage();
 render();
-document.fonts.ready.then(render);  // wheel labels are measured on a canvas, so redraw once fonts load
+document.fonts.ready.then(render);
+preloadVideos();  // wheel labels are measured on a canvas, so redraw once fonts load
 })();

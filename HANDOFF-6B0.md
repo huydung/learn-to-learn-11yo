@@ -210,13 +210,15 @@ Check the PDF afterwards: it should be exactly 17 pages in Word (LibreOffice sho
 
 ## 10. Decisions log (most recent first)
 
+- **Case videos split in two (15 Nov, evening):** each AI case video is now two files, `slides/videos/caseN-1.mp4` (up to the vote card) and `caseN-2.mp4` (the rest), cut by `video-src/tools/split.sh`, which `make.sh` now runs. One file with a start time failed because `python3 -m http.server` cannot seek, so part 2 restarted at 0:00. The deck also downloads all video files in the background after it opens (blob URLs), so video slides play at once online; from `file://` it falls back to the files on disk.
+
 - **Hack 2 tree and new Chung kết scenarios (15 Nov, evening):**
   - Card 2 now says the groups form a tree: big groups split into smaller ones, main idea at the root, details on the branches. The library example is a tree (Khoa học → Sinh học → Động vật), and step 3 tells kids to split a crowded group further. The cheat sheet line matches.
   - All 5 Chung kết questions rewritten with new scenarios (swimming, an English dialogue, new AI uses, a Tết wall newspaper, new hack statements). Answer letters unchanged (D, C, B, A, C).
 
 - **Card race, AI cases, Slides stop and Chung kết simplified (15 Nov, later):**
   - Đua ghép thẻ: no bell. A 3-minute timer; teams may move cards until it ends. `roundres` uses `"bell":false`.
-  - Each AI case is three slides: `caseN-v1` (video part 1, stops itself at `pauseAt`), `caseN` (a normal quiz slide; `"explain":{"wheel":"boc-toaan","slot":N-1}` shows which team explains why), `caseN-v2` (video from `"start"` = the same second to the end). The on-slide lesson boxes are gone; chú explains part 2 aloud. Quiz ids stay `case1–4`, so the results tally is unchanged.
+  - Each AI case is three slides: `caseN-v1` (video part 1), `caseN` (a normal quiz slide; `"explain":{"wheel":"boc-toaan","slot":N-1}` shows which team explains why), `caseN-v2` (video part 2). The on-slide lesson boxes are gone; chú explains part 2 aloud. Quiz ids stay `case1–4`, so the results tally is unchanged.
   - Làm Slides: "Giảng cho người khác" removed from the why slide (most assignments so far were print-only). Văn hóa đọc review and the bài 20/11 team activity removed. New idea round (`y-tuong`, `y-tuong-kq`), round `nhom` is now points, +1 per valid idea. The checklist is shown afterwards as nên (7) / không nên (3); "Cả nhóm tập nói" was replaced by "Làm rải ra nhiều buổi (hack 4)". The cheat sheet uses the same 7 points.
   - Chung kết: the "giải thích một hack" wheel and round are removed. Dead code for the teaching-team skip (`teach`), the wheel `avoid` and `data-judged-by` was deleted from app.js.
   - Layout: quiz boxes on question slides now end at y = 980, so they no longer run into the page number and logo.

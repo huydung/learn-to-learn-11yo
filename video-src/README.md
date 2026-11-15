@@ -24,9 +24,8 @@ Scripts as approved: `SCRIPTS-2-4.md`. Cases 1, 3 and 4 share `lib/base.css` and
 tools/make.sh case1                      # voice + build + render, default voice Ngọc Linh
 tools/make.sh case1 vieneu "Thiện Minh"  # another voice
 ```
-It writes `slides/videos/case1.mp4` and prints `pauseAt`. Copy that number into `VIDEOS` in `slides/content.js`.
-The deck stops the video there so the teams can vote, then Play continues with part 2.
-Each voice run differs slightly, so always copy the new `pauseAt`. To re-render without new voices: `cd caseN && python3 ../tools/build.py caseN && npx hyperframes render --quality looks -o ../../slides/videos/caseN.mp4`.
+It renders the full video, then `tools/split.sh` cuts it at the vote card (the `pauseAt` time that `build.py` prints) into `slides/videos/case1-1.mp4` (part 1, shown before the quiz slide) and `case1-2.mp4` (part 2, shown after it). Nothing to copy into the slides; the file names stay the same.
+To re-render without new voices: `cd caseN && python3 ../tools/build.py caseN && npx hyperframes render --quality looks -o ../../slides/videos/caseN.mp4 && cd .. && tools/split.sh caseN <pauseAt>`.
 
 Preview while editing: `cd case1 && npx hyperframes preview`.
 
