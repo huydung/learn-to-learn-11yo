@@ -927,8 +927,9 @@ function stopOf(index) {
 const stopEnd = (s) => (s + 1 < STOPS.length ? stopStart(s + 1) - 1 : SLIDES.length - 1);
 
 // Smooth trail through the stops (Catmull-Rom turned into cubic Béziers).
+// A stop's "via" points bend the trail on the way to the next stop, e.g. over the bridge.
 function trailPath() {
-  const p = STOPS.map((s) => [s.x, s.y]);
+  const p = STOPS.flatMap((s) => [[s.x, s.y], ...(s.via || [])]);
   let d = `M${p[0][0]},${p[0][1]}`;
   for (let i = 0; i < p.length - 1; i++) {
     const a = p[i - 1] || p[i], b = p[i], c = p[i + 1], e = p[i + 2] || c;
@@ -937,7 +938,10 @@ function trailPath() {
   return d;
 }
 
-let trail = null, stopLen = [], tokenAt = null, travel = null;  // tokenAt = trail length where the teams stand
+let trail = null, stopLen = [], tokenAt = null, travel = null;
+// Fog over the map: radius of the clear patch around a stop not reached yet, the current stop, a finished stop,
+// and the teams as they walk. FOG_LIFT moves each patch up from the stop's point onto its picture.
+const FOG = { ahead: 150, here: 280, done: 470, team: 190 }, FOG_LIFT = 80;  // tokenAt = trail length where the teams stand
 
 function buildMap() {
   mapEl.innerHTML = `<div class="mp">
@@ -945,6 +949,12 @@ function buildMap() {
     <svg class="trail" viewBox="0 0 1920 1080" aria-hidden="true">
       <path class="tr-edge" d="${trailPath()}"/><path class="tr-base" d="${trailPath()}"/><path class="tr-done" d="${trailPath()}"/>
     </svg>
+    <svg class="fog" viewBox="0 0 1920 1080" aria-hidden="true"><defs>
+      <radialGradient id="fogHole"><stop offset=".45" stop-color="#000"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+      <mask id="fogMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><rect width="1920" height="1080" fill="#fff"/>
+        ${STOPS.map((st) => `<circle class="fh" cx="${st.x}" cy="${st.y - FOG_LIFT}" r="${FOG.ahead}" fill="url(#fogHole)"/>`).join("")}
+        <circle class="fh-team" r="${FOG.team}" fill="url(#fogHole)"/></mask></defs>
+      <image href="${MAP_ART.fog}" width="1920" height="1080" preserveAspectRatio="none" mask="url(#fogMask)"/></svg>
     ${STOPS.map((s, i) => `<button class="lm" data-s="${i}" style="left:${s.x}px;top:${s.y}px" aria-label="Chặng ${i + 1}: ${esc(s.name)}">
       <img src="${s.art}" alt=""><span class="lb"><b>${i + 1}</b>${esc(s.name)}</span></button>`).join("")}
     <div class="toks">${TEAMS.map((t) => `<div class="tok" data-k="${t.key}"><img src="${MAP_ART.team(t.key)}" alt="Đội ${t.name}"></div>`).join("")}</div>
@@ -979,6 +989,9 @@ function buildMap() {
 // STOPS[i].team says where the row stands: "below" the landmark (default), or to its "left" or "right".
 function placeTokens(len) {
   const pt = trail.getPointAtLength(len);
+  const lamp = $(".fh-team", mapEl);  // the teams clear the fog around them as they walk
+  lamp.setAttribute("cx", pt.x);
+  lamp.setAttribute("cy", pt.y);
   const place = places(byValue(totals()));
   const order = TEAMS.map((tm) => tm.key).sort((a, b) => place[a] - place[b]);  // ties keep the TEAMS order
   const where = STOPS[stopOf(current)].team || "below";
@@ -1029,6 +1042,7 @@ function updateMap() {
     lm.classList.toggle("done", i < s);
     lm.classList.toggle("here", i === s);
   });
+  $$(".fh", mapEl).forEach((c, i) => (c.style.r = `${i < s ? FOG.done : i === s ? FOG.here : FOG.ahead}px`));
   walkTo(stopLen[s]);
   const open = slideOpen || boardOpen;
   $(".hi", hud).innerHTML = `<div class="hs"><span class="hsn">Chặng ${s + 1}/${STOPS.length}</span><b>${esc(STOPS[s].name)}</b></div>

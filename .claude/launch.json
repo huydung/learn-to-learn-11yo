@@ -1,6 +1,14 @@
 {
   "version": "0.0.1",
   "configurations": [
-    { "name": "slides", "runtimeExecutable": "python3", "runtimeArgs": ["-m", "http.server", "8611", "--directory", "slides"], "port": 8611 }
+    {
+      "name": "slides",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-c",
+        "import http.server as h, functools as f\nclass H(h.SimpleHTTPRequestHandler):\n    def end_headers(self):\n        self.send_header('Cache-Control', 'no-store')  # always serve the newest files\n        super().end_headers()\nh.ThreadingHTTPServer(('', 8611), f.partial(H, directory='slides')).serve_forever()"
+      ],
+      "port": 8611
+    }
   ]
 }

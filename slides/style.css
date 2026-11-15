@@ -336,8 +336,10 @@ table.tally small { font-size: 22px; color: var(--mute); }
 #map { position: fixed; inset: 0; z-index: 1; background: #2C8FC6; overflow: hidden; }
 #map .mp { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: center; transition: filter .35s; }
 .mbg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.trail { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.trail { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .5; }
 .trail path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.fog { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.fog .fh { transition: r 2.5s ease-out; }  /* a reached stop clears its fog slowly */
 .tr-edge { stroke: rgba(81, 0, 12, .35); stroke-width: 36; }
 .tr-base { stroke: #F6E7BC; stroke-width: 26; }
 .tr-done { stroke: var(--red); stroke-width: 10; }

@@ -86,10 +86,11 @@
 
   // The session map (M). Each stop starts at slide "from" and runs until the next stop.
   // x, y = where the stop sits on the trail, in pixels on the 1920 × 1080 map. Pictures are in map/.
+  // via: extra points the trail passes through on the way to the next stop.
   // team: where the four team explorers stand at this stop: "below" the landmark (default), "left" or "right".
   const STOPS = [
     { from: "bia",      name: "Khởi động",     art: "map/stop1.webp", x: 270,  y: 900 },
-    { from: "p2",       name: "Chuẩn bị",      art: "map/stop2.webp", x: 290,  y: 520 },
+    { from: "p2",       name: "Chuẩn bị",      art: "map/stop2.webp", x: 290,  y: 520, via: [[480, 378], [600, 355]] },  // over the bridge
     { from: "p2b",      name: "Giảng giỏi",    art: "map/stop3.webp", x: 820,  y: 330 },
     { from: "p-nghe",   name: "Nghe hiểu",     art: "map/stop-nghe.webp", x: 1110, y: 300 },
     { from: "p3",       name: "Đúng chỗ",      art: "map/stop4.webp", x: 880,  y: 700 },
@@ -98,7 +99,7 @@
     { from: "p5",       name: "Chung kết",     art: "map/stop7.webp", x: 1620, y: 520, team: "left" },
     { from: "bangdiem", name: "Về đích",       art: "map/stop8.webp", x: 1450, y: 300, team: "right" },
   ];
-  const MAP_ART = { background: "map/map.webp", team: (key) => `map/team${key}.webp` };
+  const MAP_ART = { background: "map/map.webp", fog: "map/fog.webp", team: (key) => `map/team${key}.webp` };
   </script>
 
   <!--

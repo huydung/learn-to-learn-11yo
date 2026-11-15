@@ -210,6 +210,11 @@ Check the PDF afterwards: it should be exactly 17 pages in Word (LibreOffice sho
 
 ## 10. Decisions log (most recent first)
 
+- **Map fog, bridge, caching (15 Nov, evening):**
+  - Fog over the map (`map/fog.webp`, generated cloud texture) sits above the background and trail, below the landmarks and teams. Clear patches: small at stops not reached yet, larger at the current stop, large at finished stops (they open up over 2.5 s), plus one that follows the teams as they walk. Sizes are `FOG` in app.js.
+  - The trail goes over the bridge between stops 2 and 3 (`via` points in `STOPS`) and is 50% transparent.
+  - The local preview server sends `Cache-Control: no-store` (`.claude/launch.json`), and the Pages deploy adds `?v=<commit>` to style.css and app.js, so browsers stop showing old versions after a change.
+
 - **Case videos split in two (15 Nov, evening):** each AI case video is now two files, `slides/videos/caseN-1.mp4` (up to the vote card) and `caseN-2.mp4` (the rest), cut by `video-src/tools/split.sh`, which `make.sh` now runs. One file with a start time failed because `python3 -m http.server` cannot seek, so part 2 restarted at 0:00. The deck also downloads all video files in the background after it opens (blob URLs), so video slides play at once online; from `file://` it falls back to the files on disk.
 
 - **Hack 2 tree and new Chung kết scenarios (15 Nov, evening):**
