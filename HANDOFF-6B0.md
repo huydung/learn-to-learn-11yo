@@ -210,6 +210,12 @@ Check the PDF afterwards: it should be exactly 17 pages in Word (LibreOffice sho
 
 ## 10. Decisions log (most recent first)
 
+- **AI case results move to part 2; explorers on the leaderboard (15 Nov, evening):**
+  - Quiz slides `case1–4` have `"noReveal":true`: they record each team's card but show no result and have no reveal button.
+  - The part 2 slides have a new `aicase` panel beside the video: the answers saved on the quiz slide, buttons to set the team that explains (stored as the `boc-toaan` wheel result for that case), Đúng / Chưa đúng for its explanation (stored as the `toaan` Giải thích bonus the results slide already reads), and the answer, shown when the video ends or on R. The panel redraws only itself, so clicks never restart the video.
+  - Team cards (leaderboard slide and the L overlay) show each team's explorer.
+  - Behind an open slide, a blurred, dimmed copy of the map fills the screen edges, so there are no light strips on screens that are not 16:9.
+
 - **Map fog, bridge, caching (15 Nov, evening):**
   - Fog over the map (`map/fog.webp`, generated cloud texture) sits above the background and trail, below the landmarks and teams. Clear patches: small at stops not reached yet, larger at the current stop, large at finished stops (they open up over 2.5 s), plus one that follows the teams as they walk. Sizes are `FOG` in app.js.
   - The trail goes over the bridge between stops 2 and 3 (`via` points in `STOPS`) and is 50% transparent.

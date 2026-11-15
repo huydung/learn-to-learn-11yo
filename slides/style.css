@@ -170,6 +170,23 @@ table.t td { border-bottom: 2px solid var(--line); padding: 14px 18px; vertical-
 .quiz.open .qtm button.on.ok { background: #1F7A3A; color: #fff; animation: pulse-green 1s ease-in-out infinite; }
 .quiz.open .qtm button.on.bad { background: #7A0010; color: #fff; animation: pulse-red 1s ease-in-out infinite; }
 .quiz .qr { flex: none; padding: 14px 18px; font-size: 24px; }
+/* aicase: results panel beside the part 2 video of a Dùng AI case */
+.aic { height: 100%; display: flex; flex-direction: column; gap: 10px; }
+.aic-h { font: 800 22px/1.2 var(--f-body); color: var(--mute); text-transform: uppercase; letter-spacing: 1px; margin-top: 6px; }
+.aic-r { display: flex; align-items: center; gap: 14px; }
+.aic-r .chip.mini { font-size: 24px; width: 220px; }
+.aic-r .chip.mini .tk { height: 34px; }
+.aic-r b { width: 64px; height: 56px; display: grid; place-items: center; border-radius: 12px; background: var(--ink); color: #fff; font: 900 32px/1 var(--f-body); }
+.aic-r b.ok { background: #1F7A3A; } .aic-r b.bad { background: #7A0010; }
+.aic-r em { font: 900 34px/1 var(--f-body); font-style: normal; }
+.aic-x, .aic-v { display: flex; gap: 8px; }
+.aic-x button, .aic-v button { flex: 1; height: 54px; border: 3px solid transparent; border-radius: 12px; font: 800 22px/1 var(--f-body); color: #fff; cursor: pointer; opacity: .35; }
+.aic-x button.on { opacity: 1; border-color: var(--ink); }
+.aic-v button { background: #fff; color: var(--ink); border-color: var(--dark); opacity: 1; }
+.aic-v button.on.ok { background: #1F7A3A; color: #fff; } .aic-v button.on.bad { background: #7A0010; color: #fff; }
+.aic-v button:disabled { opacity: .35; cursor: default; }
+.aic-a { margin-top: auto; padding: 16px; font-size: 26px; }
+.aic.open .aic-a { background: #1F7A3A; }
 /* stack: options above the team column, narrow enough to sit beside a video */
 .quiz.stack .qq { font-size: 32px; line-height: 1.25; }
 .quiz.stack .qb { grid-template-columns: 1fr; grid-template-rows: auto 1fr; gap: 14px; }
@@ -204,6 +221,7 @@ table.tally small { font-size: 22px; color: var(--mute); }
 .tm { border-radius: 22px; color: #fff; padding: 20px 24px; display: flex; flex-direction: column; gap: 8px; position: relative; min-height: 200px; }
 .tm .nm { font: 800 40px/1 var(--f-body); }
 .tm .tot { font: 900 84px/1 var(--f-head); font-variant-numeric: tabular-nums; }
+.tm .tk { position: absolute; right: 118px; top: 12px; height: 132px; filter: drop-shadow(0 6px 6px rgba(0, 0, 0, .3)); }
 .tm .rk { position: absolute; right: 22px; top: 20px; background: rgba(255,255,255,.95); color: var(--ink); font: 900 34px/1 var(--f-head); border-radius: 999px; padding: 12px 20px; }
 .tm .bar { height: 16px; background: rgba(255,255,255,.35); border-radius: 999px; overflow: hidden; }
 .tm .bar i { display: block; height: 100%; background: #fff; }
@@ -334,6 +352,9 @@ table.tally small { font-size: 22px; color: var(--mute); }
 
 /* ---------- Session map (M): map, team tokens, HUD, slide panel ---------- */
 #map { position: fixed; inset: 0; z-index: 1; background: #2C8FC6; overflow: hidden; }
+/* A blurred copy of the map fills the screen edges the 16:9 map does not cover, dimmed with it behind a slide. */
+#map::before { content: ""; position: absolute; inset: -40px; background: url("map/map.webp") center / cover; filter: blur(16px); transition: filter .35s; }
+body.panel #map::before { filter: blur(16px) brightness(.45); }
 #map .mp { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: center; transition: filter .35s; }
 .mbg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .trail { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .5; }

@@ -309,6 +309,7 @@ function teamCards(teams, withActions) {
   const max = Math.max(1, ...Object.values(t));
   return `<div class="teams show-${board.display}">${teams.map((tm) => `
     <div class="tm c-${tm.key}">
+      <img class="tk" src="${MAP_ART.team(tm.key)}" alt="">
       <div class="rk">#${place[tm.key] + 1}</div><div class="nm">${tm.name}</div><div class="tot">${t[tm.key]}</div>
       <div class="bar"><i style="width:${Math.round((100 * t[tm.key]) / max)}%"></i></div>
       ${withActions ? `<div class="act">
@@ -452,12 +453,12 @@ const WIDGETS = {
           const buttons = options.map((_, i) => `<button data-k="${t.key}" data-v="${i}" class="${pick === i ? "on " + (i === correct ? "ok" : "bad") : ""}" aria-label="Đội ${t.name} chọn ${LETTERS[i]}">${LETTERS[i]}</button>`).join("");
           return `<div class="qtm c-${t.key}${pick !== undefined ? " picked" : ""}"><span class="qn">${t.name}</span>${buttons}<em>${mark}</em></div>`;
         }).join("")}
-          <button class="btn ghost qr">Hiện đáp án (R)</button></div>
+          ${o.noReveal ? "" : `<button class="btn ghost qr">Hiện đáp án (R)</button>`}</div>
       </div></div>`;
     if (editing) $$(".qq, .op span", el).forEach((x) => (x.contentEditable = "true"));
 
     const toggle = () => { session.revealed[qid] = !session.revealed[qid]; saveSession(); render(); };
-    ctx.onKey("R", toggle);
+    if (!o.noReveal) ctx.onKey("R", toggle);  // noReveal: the answer is shown on the next slide instead
     el.onclick = (e) => {
       const button = e.target.closest("button");
       if (editing || !button) return;
@@ -469,6 +470,47 @@ const WIDGETS = {
       saveBoard();
       render();
     };
+  },
+
+  // Part 2 of a Dùng AI case, beside the video: the answers the teams gave on the quiz slide, which team explains,
+  // whether its explanation was right (the "Giải thích" bonus on the results slide), and the answer, shown when
+  // the video ends or on R. opts = { quiz, wheel, slot }. It redraws only itself, so a click never restarts the video.
+  aicase(el, o, ctx) {
+    const q = o.quiz, correct = answerOf(q);
+    const draw = () => {
+      const picks = board.answers[q] || {}, open = !!session.revealed[q];
+      const ex = (wheels[o.wheel] || [])[o.slot], exTeam = TEAMS[ex];
+      const verdict = exTeam ? board.raw.toaan?.[exTeam.key] : undefined;
+      el.innerHTML = `<div class="aic${open ? " open" : ""}">
+        <div class="aic-h">Các đội đã chọn</div>
+        ${TEAMS.map((t) => {
+          const p = picks[t.key], res = p === undefined ? "" : p === correct ? "ok" : "bad";
+          return `<div class="aic-r">${teamChip(t)}<b class="${open ? res : ""}">${p === undefined ? "–" : LETTERS[p]}</b><em>${open && res ? (res === "ok" ? "✓" : "✗") : ""}</em></div>`;
+        }).join("")}
+        <div class="aic-h">Đội giải thích vì sao</div>
+        <div class="aic-x">${TEAMS.map((t, i) => `<button data-x="${i}" class="c-${t.key}${ex === i ? " on" : ""}">${t.name}</button>`).join("")}</div>
+        <div class="aic-v"><button data-v="1" class="${verdict === 1 ? "on ok" : ""}"${exTeam ? "" : " disabled"}>✓ Đúng</button><button data-v="0" class="${verdict === 0 ? "on bad" : ""}"${exTeam ? "" : " disabled"}>✗ Chưa đúng</button></div>
+        <button class="btn aic-a">${open ? `Đáp án: ${LETTERS[correct]}` : "Hiện đáp án (R)"}</button></div>`;
+    };
+    const reveal = (on) => { session.revealed[q] = on; saveSession(); draw(); };
+    draw();
+    ctx.onKey("R", () => reveal(!session.revealed[q]));
+    el.onclick = (e) => {
+      const b = e.target.closest("button");
+      if (editing || !b) return;
+      if (b.classList.contains("aic-a")) return reveal(!session.revealed[q]);
+      const raw = (board.raw.toaan ??= {}), picked = (wheels[o.wheel] ??= []);
+      if (b.dataset.x !== undefined) {
+        const old = TEAMS[picked[o.slot]];
+        if (old) delete raw[old.key];  // the verdict belonged to the team that was picked before
+        picked[o.slot] = Number(b.dataset.x);
+        saveWheels();
+      } else raw[TEAMS[picked[o.slot]].key] = Number(b.dataset.v);
+      saveBoard();
+      draw();
+    };
+    // Show the answer when the video on this slide ends. The panel is attached to the slide just after this runs.
+    setTimeout(() => el.closest(".sl")?.querySelector("video")?.addEventListener("ended", () => { if (!session.revealed[q]) reveal(true); }));
   },
 
   // Results of a quiz round: which teams got which question right.
