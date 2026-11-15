@@ -426,7 +426,9 @@ const WIDGETS = {
       const segment = (2 * Math.PI) / left.length;
       const j = Math.floor(Math.random() * left.length);
       // Save the result before the animation, so a reload mid-spin keeps it.
-      wheels[ctx.slideId] = picks.concat(left[j]);
+      const next = picks.concat(left[j]), rest = left.filter((_, x) => x !== j);
+      if (rest.length === 1 && next.length === o.slots.length - 1) next.push(rest[0]);  // last slot gets the last item, no spin
+      wheels[ctx.slideId] = next;
       saveWheels();
       spinning = true;
       const jitter = (Math.random() - 0.5) * segment * 0.6;
