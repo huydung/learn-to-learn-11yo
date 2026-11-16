@@ -121,6 +121,7 @@ const emptyBoard = () => ({
   answers: {},                // { quizSlideId: { R: optionIndex } } — the card each team raised
   raw: {},                    // { roundId: { R: count } } — counts typed on result slides
   bell: {},                   // { roundId: { R: 1..4 } } — bell order in the card race
+  ideas: [],                  // [{ team: "R" | "host", kind: "nen" | "khong", text }] — sticky notes from the slide idea round
 });
 
 // Class state during the session. Cleared by "Xóa điểm, đáp án và bốc thăm…".
@@ -349,6 +350,62 @@ setInterval(() => {
 const WIDGETS = {
   html(el, o) {
     el.innerHTML = o.html || "";
+    // <ol data-ideas="nen" data-max="7"> lists the class's sticky notes of that kind (cheat sheet); blank lines if there are none yet.
+    el.querySelectorAll("[data-ideas]").forEach((list) => {
+      const max = Number(list.dataset.max || 7);
+      const texts = board.ideas.filter((n) => n.kind === list.dataset.ideas).map((n) => n.text).slice(0, max);
+      list.innerHTML = (texts.length ? texts.map(esc) : Array(max).fill("……………………………………")).map((t) => `<li>${t}</li>`).join("");
+    });
+  },
+
+  // Slide idea round: one sticky note per valid idea, in the team's colour. Each team note is +1 in round "nhom".
+  ideas(el, o) {
+    const notes = board.ideas;
+    const count = byTeam((k) => notes.filter((n) => n.team === k).length);
+    const note = (n, i) => `<div class="id-note ${n.team === "host" ? "host" : "c-" + n.team}"><span>${esc(n.text)}</span>
+      <small>${n.team === "host" ? "Chú" : teamName(n.team)}</small><button data-del="${i}" aria-label="Xóa ý này">×</button></div>`;
+    const col = (kind, title) => `<div class="id-col ${kind}"><h3>${title}</h3><div class="id-notes">${notes.map((n, i) => (n.kind === kind ? note(n, i) : "")).join("")}</div></div>`;
+    el.innerHTML = `<div class="ideas">
+      <div class="id-board">${col("nen", "✓ Nên")}${col("khong", "✗ Không nên")}</div>
+      <div class="id-bar">${TEAMS.map((t) => `<button class="btn c-${t.key}" data-add="${t.key}">+ ${t.name} <b>${count[t.key]}</b></button>`).join("")}
+        <button class="btn ghost" data-add="host">+ Ý của chú</button><button class="btn ghost" data-a="record">Ghi điểm</button></div>
+      <form class="id-form" hidden><b></b><input maxlength="80" placeholder="Ghi ngắn ý vừa nói…" aria-label="Ý mới">
+        <button class="btn" value="nen">✓ Nên</button><button class="btn" value="khong">✗ Không nên</button><button class="btn ghost" type="button" data-a="cancel">Hủy</button></form></div>`;
+    const form = el.querySelector(".id-form"), input = form.querySelector("input");
+    const save = () => {
+      const counts = byTeam((k) => notes.filter((n) => n.team === k).length);
+      board.raw.nhom = counts;  // the same counts the results table would show
+      saveBoard();
+      render();
+    };
+    el.onclick = (e) => {
+      const b = e.target.closest("button");
+      if (editing || !b) return;
+      if (b.dataset.add) {
+        form.dataset.team = b.dataset.add;
+        form.className = `id-form ${b.dataset.add === "host" ? "host" : "c-" + b.dataset.add}`;
+        form.querySelector("b").textContent = b.dataset.add === "host" ? "Chú:" : teamName(b.dataset.add) + ":";
+        form.hidden = false;
+        input.value = "";
+        input.focus();
+      } else if (b.dataset.del !== undefined) {
+        notes.splice(Number(b.dataset.del), 1);
+        save();
+      } else if (b.dataset.a === "cancel") form.hidden = true;
+      else if (b.dataset.a === "record") {
+        const round = roundById("nhom");
+        recordRound("nhom", byTeam((k) => Math.min(round.max, count[k])), round.name + " ghi điểm");
+      }
+    };
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if (!text) return input.focus();
+      notes.push({ team: form.dataset.team, kind: e.submitter?.value || "nen", text });
+      logAction(`Ý slide nhóm: ${form.dataset.team === "host" ? "Chú" : teamName(form.dataset.team)}`);
+      save();
+    };
+    input.onkeydown = (e) => { if (e.key === "Escape") form.hidden = true; };
   },
 
   teams(el) {
@@ -1023,7 +1080,8 @@ function buildMap() {
   };
   hud.onclick = (e) => {
     const a = e.target.closest("button")?.dataset.a;
-    if (a === "map") return slideOpen || boardOpen ? closePanel() : openStop(stopOf(current));
+    if (a === "map") return openStop(stopOf(current));
+    if (a === "help") { help.hidden = false; return; }
     if (a === "board") { boardOpen = !boardOpen; render(); }
     if (a === "classic") toggleMapMode();
   };
@@ -1092,7 +1150,8 @@ function updateMap() {
   $(".hi", hud).innerHTML = `<div class="hs"><span class="hsn">Chặng ${s + 1}/${STOPS.length}</span><b>${esc(STOPS[s].name)}</b></div>
     <div class="hteams">${teamHud()}</div>
     <div class="hb"><button data-a="board" class="${boardOpen ? "on" : ""}">🏆 Bảng điểm</button>
-      <button data-a="map">${open ? "🗺 Về bản đồ" : "▶ Vào chặng"}</button></div>`;
+      ${open ? "" : `<button data-a="map">▶ Vào chặng</button>`}
+      <button data-a="help" class="hq" aria-label="Phím tắt" title="Phím tắt (?)">?</button></div>`;
 }
 
 function openStop(s) {

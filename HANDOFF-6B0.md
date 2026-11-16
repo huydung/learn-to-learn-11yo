@@ -1,6 +1,6 @@
 # 6B0 "Học cách học": handoff for a new session
 
-Last updated: 14 Nov 2026 (Hanoi), card 2 replaced; printables cut to 17 pages. Author of the session: Huy Dũng (always write the name with diacritics).
+Last updated: 16 Nov 2026 (Hanoi), spacing moved to card 3, card 4 is now weak spots + mixing; printables still 17 pages. Author of the session: Huy Dũng (always write the name with diacritics).
 
 Read this file first. It explains what exists, how the two HTML files work, what has been decided, and what is still open.
 
@@ -16,8 +16,8 @@ Read this file first. It explains what exists, how the two HTML files work, what
   - The four hacks (from Oakley et al., *Learning How to Learn*):
     1. Tập trung từng việc
     2. Chia nhóm, vẽ sơ đồ
-    3. Nghỉ đúng, ngủ đủ
-    4. Rải đều, trộn bài
+    3. Nghỉ đúng, ôn rải đều
+    4. Luyện chỗ yếu, trộn bài
   - Card text lives in `Tai-lieu-in-6B0.docx` pages 2–5 (the only copy; the old `.md` copy was removed on 14 Nov).
   - Using AI (Gemini) well and badly.
   - Group slides on Canva.
@@ -46,13 +46,14 @@ Read this file first. It explains what exists, how the two HTML files work, what
 The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc.
 
 ### Running locally (since 11 Nov 2026)
-- **Slides:** double-click `slides/6B0slides.html`. Fonts are in `slides/fonts/`, so it works offline. Scores, wheel results and in-browser edits save to the browser's `localStorage` (prefix `hch-6b0-v2-`; the old `hch-6b0-` keys are ignored). Press `?` → **Sao lưu ra file** / **Khôi phục từ file** to move them to another computer.
+- **Slides, with a server (recommended):** double-click `start-slides.command` (Mac) or `start-slides.bat` (Windows). Both run `serve.py`, which serves `slides/` at http://localhost:8611 with caching off and opens the deck. Close the window to stop. Scores live per address, so always use this same launcher on the day. If a browser shows old slides from an earlier server on 8611, hard-refresh once (Cmd+Shift+R).
+- **Slides, without a server:** double-click `slides/6B0slides.html`. Fonts are in `slides/fonts/`, so it works offline. Scores, wheel results and in-browser edits save to the browser's `localStorage` (prefix `hch-6b0-v2-`; the old `hch-6b0-` keys are ignored). Press `?` → **Sao lưu ra file** / **Khôi phục từ file** to move them to another computer.
 - **Videos:** copy files into `slides/videos/`, then edit mode → **Gắn video**.
 - **Printables:** open `Tai-lieu-in-6B0.docx` in Word. Fonts used: Merriweather and Be Vietnam Pro (copies in `slides/fonts/`; install them on the printing computer, or Word substitutes).
 
 ---
 
-## 3. Session flow (66 slides, 9 map stops)
+## 3. Session flow (65 slides, 9 map stops)
 
 Durations are estimates. They add up to about 90 minutes.
 
@@ -110,24 +111,17 @@ Durations are estimates. They add up to about 90 minutes.
   4. Order the steps for a group wall newspaper about Tết → **A** (② tree outline of the sections → ④ who writes what, by when → ① each writes at home a bit each evening → ③ one person proofreads).
   5. Which statements are true → **C** (① 5 minutes of times tables every morning for 7 days beats 35 minutes in one go; ③ a 10-minute break playing đá cầu can unlock a geometry problem). ② TV on low while working still costs attention; ④ feeling familiar after rereading is not remembering.
 
-### Group-slide checklist (shown only after the idea round)
-Nên (7):
-1. Thống nhất dàn ý trước (hack 2)
-2. Mỗi bạn một phần, tự tìm hiểu và viết bằng lời của mình (bậc 3)
-3. Có bảng phân công: ai làm gì, hạn khi nào
-4. Làm rải ra nhiều buổi, không dồn phút cuối (hack 4)
-5. Ghi nguồn cho chữ và ảnh lấy từ nơi khác
-6. Mỗi slide một ý, chữ ít và to
-7. Có một bạn kiểm tra thông tin và chính tả trước khi nộp
+### Group-slide ideas (no fixed checklist since 16 Nov)
+The class builds the list. On `y-tuong-kq` the host clicks a team button (or "Ý của chú"), types the idea and files it under Nên (Enter) or Không nên. Each team note is +1 in round `nhom`; "Ghi điểm" records it. The cheat sheet box lists the first 7 Nên notes (blank lines if there are none).
 
-Không nên (3): dành phần lớn thời gian chọn màu, phông, hiệu ứng · chép nguyên văn từ mạng hoặc AI · một bạn làm hết, các bạn khác ngồi xem.
+Ideas the host can add if the class misses them: thống nhất dàn ý trước (hack 2) · mỗi bạn một phần, tự viết bằng lời của mình (bậc 3) · bảng phân công có tên và hạn · làm rải ra nhiều buổi (hack 3) · ghi nguồn chữ và ảnh · mỗi slide một ý, chữ ít và to · một bạn kiểm tra thông tin và chính tả. Không nên: mất nhiều thời gian chọn màu, phông, hiệu ứng · chép nguyên văn từ mạng hoặc AI · một bạn làm hết.
 
 ---
 
 ## 5. How the slides work (`slides/`)
 
 `slides/README.md` explains running and editing. In short:
-- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 66 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
+- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 65 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
 - Edit mode (`E`) keeps changes in `localStorage`; Ctrl+S writes the whole deck back to `6B0slides.html` in the same format (File System Access API in Chrome, download elsewhere). Unchanged slides come out byte for byte the same, so `git diff` shows only real edits. (`content.js` was removed on 13 Nov; it is in the first git commit.)
 - `app.js` is the engine. Widgets live in the `WIDGETS` object: `html teams timer reveal video thiviet wheel quiz tally roundres checkstep standings`.
 - `style.css` holds the brand tokens and all styles.
@@ -209,6 +203,40 @@ Check the PDF afterwards: it should be exactly 17 pages in Word (LibreOffice sho
 ---
 
 ## 10. Decisions log (most recent first)
+
+- **Card 1/3 rebalance, docx voice pass, launchers (16 Nov, night):**
+  - Card 1 Áp dụng now holds the whole Pomodoro: phone away; 15-minute timer, note stray thoughts on paper, build up to 25; then a 5-minute break without the phone (the book calls the break the reward).
+  - Card 3 Áp dụng: (1) "Làm môn khó nhất trước" (the book's "ăn những con ếch trước", ch13, 15) merged with the stuck rule, because the book's reason for doing the hard thing first is time to get stuck, rest and come back; (2) spacing, with "gấp vở lại và tự nhớ trước" (the book: each review is recall, not rereading); (3) sleep, then retry last night's hard problem.
+  - Smaller wording fixes on cards 1 and 4; page 1 now lists the 4 A1 posters. Page layout unchanged (each card one page).
+  - Cheat sheet hack 1 and 3 lines updated to match.
+  - Book check (full reader edition): hacks 1, 3, 4 match techniques the book repeats; hack 2's tree diagram is not a book technique (Bower 1969 still backs it). The book's closest stronger option is memory tricks (ch8); kept hack 2 for 17 Nov because switching would touch the card, poster, matching cards and two questions.
+  - `serve.py` + `start-slides.command` + `start-slides.bat` added.
+
+- **Structure follow-ups (16 Nov, late):**
+  - `lapdoi` teases the plan: the stops are ordered so the class climbs the ladder, from bậc 2 at the start to bậc 4 at the end.
+  - The vote is now about the presentation: "Đội nào trình bày tốt nhất?", judged on clear, easy to follow, and all 4 kids took part. The prep and rules slides use the same words.
+  - Each `giang` slide is now only the title, the timer and the poster's four box titles. The rules stay once on `luat-giang`.
+  - Dùng AI stays as it is (all 4 cases); the host will cut elsewhere if time runs short.
+- **Wording pass and map HUD (16 Nov, evening):**
+  - HUD: the "Về bản đồ" button is gone. Esc or a click outside the slide returns to the map (both already worked). A small "?" button opens the shortcut list. "▶ Vào chặng" shows only on the map.
+  - Slides now match the posters: the prep slide (`chuanbi`) says one kid per poster box, fill in from the card, read in order 1 → 4; the four `giang` slides say the team brings its poster and each kid reads a box; `chot2` maps listening to bậc 1, filling the poster to bậc 2, answering with cards face down to bậc 3, and says the AI and Slides stops are bậc 3–4.
+  - Scoring card "Đúng hơn nhanh" replaced by "Bằng điểm" (ties share the higher place; speed earns nothing). No round uses speed any more.
+  - Nghe hiểu Q1 and Q2 options rebalanced so the right answer is not the longest. Answers unchanged (B, C).
+  - Plainer Vietnamese on: Clash Royale, Bài học 1 (dropped the unchecked "phổ biến hơn nhiều"), the ladder line, luật xoay vòng, luật giảng, the AI wrap-up note, Canva tip 4, and the closing line (now a concrete "chọn một hack và dùng nó tuần này").
+
+- **Team-talk posters and a sticky-note idea board (16 Nov, later):**
+  - Teaching a hack is the "Làm theo" step: kids find the card's own words and numbers and say them aloud. Recall comes in the quiz; new ideas come in the AI and Slides rounds.
+  - `Poster-giang-A1-6B0.pptx`: 4 A1 landscape slides, one per hack, all native shapes so they can be edited. Each has 4 numbered steps that follow the card headings (Bạn có để ý không? · Vì sao? · Thử nghiệm · Áp dụng), one kid per step with a blank name line, fill-in blanks with the card's wording, and a visual to complete (octopus, tree, two lamps with three evenings, A/B/C rows, empty bar chart). Step 4 has only three numbered lines for the three Áp dụng actions. Answers are in each slide's speaker notes. Hand each team the poster for the card it drew.
+  - Slides: `y-tuong-kq` is now the sticky-note board (new `ideas` widget in app.js, notes stored in `board.ideas`, cleared with the scores). The fixed checklist slide `nhom` was removed (65 slides). The rules slide now asks for one nên or không nên idea. The cheat sheet's Canva box became "Slide nhóm · lớp mình nói nên" and is filled from the board by the `html` widget (`data-ideas="nen"`).
+
+- **Spacing moved to card 3; card 4 is weak spots + mixing (16 Nov):**
+  - New names: **Nghỉ đúng, ôn rải đều** (card 3) and **Luyện chỗ yếu, trộn bài** (card 4). Spacing sits with diffuse mode and sleep: each night of sleep between short sessions builds the new connections. Card 4 now teaches deliberate practice (most review time on the problem types you get wrong) and interleaving. The Nghe hiểu hack 4 question (listening vs spelling → A) already tested exactly this.
+  - Card 3: football training example moved over from card 4 (replaces the two-halves line); new "Rải đều là…" paragraph; Áp dụng bullet 3 combines spacing and sleep; Cepeda 2006 moved to its sources. Study is still Wagner 2004.
+  - Card 4: new hook (easy monsters never level you up), piano example for weak spots, new Vì sao and Áp dụng; Ericsson, Krampe & Tesch-Römer 1993 added to sources. Study is still Rohrer 2015; "rải ra nhiều tuần" and the "Trộn và rải ra" label stay, because in that study the mixed practice was also spread out.
+  - Both cards were trimmed so each fits one page with room to spare. Oakley chapter numbers were not rechecked.
+  - Matching cards: the song card ("Nghĩ mãi không ra tên bài hát…", hack 3) is replaced by "Tìm dạng bài mình hay sai, rồi luyện thêm dạng đó" (hack 4). Hack 3 is now "Bí bài toán tối qua, sáng nay thử lại thì giải ra" · "Ôn 20 phút mỗi tối trong ba tối"; hack 4 is "Trộn ba dạng toán trong một buổi ôn" · the new card.
+  - Slides: giang3/giang4 titles, the ghép thẻ wrap-up (now names three hacks), the Canva checklist "(hack 3)", the cheat sheet boxes, and the Dùng AI table's Hack column (it still pointed at the old "Tự đố, tự giảng" hack 2: quiz-me-each-evening → 3, find-my-weak-spots → 4, teach-the-AI → –).
+  - Not changed: the videos (they never name a hack), `ToPrint.html` and `InteractiveSlides.html` (old versions).
 
 - **AI case results move to part 2; explorers on the leaderboard (15 Nov, evening):**
   - Quiz slides `case1–4` have `"noReveal":true`: they record each team's card but show no result and have no reveal button.
