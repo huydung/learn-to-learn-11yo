@@ -227,6 +227,10 @@ table.tally small { font-size: 22px; color: var(--mute); }
 .tm .act { display: flex; gap: 10px; flex-wrap: wrap; margin-top: auto; }
 .tm .act button { font: 800 24px/1 var(--f-body); border: 0; border-radius: 12px; padding: 12px 14px; background: rgba(255,255,255,.95); color: var(--ink); cursor: pointer; }
 .c-Y .act button { background: var(--t-yellow-ink); color: #fff; }
+/* Score buttons show only while the mouse is over that team's card (they keep their space so nothing jumps). */
+.tm .act { opacity: 0; pointer-events: none; transition: opacity .15s; }
+.tm:hover .act, .tm .act:focus-within { opacity: 1; pointer-events: auto; }
+@media (hover: none) { .tm .act { opacity: 1; pointer-events: auto; } }
 .show-rank .tot, .show-rank .bar, .show-none .tot, .show-none .bar, .show-none .rk { visibility: hidden; }
 
 /* ---------- Leaderboard overlay (L) ---------- */
