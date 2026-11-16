@@ -10,3 +10,4 @@ node_modules/
 # Installed skills, restored from video-src/skills-lock.json
 video-src/.claude/skills/
 .hyperframes/
+Claude outputs/Poster-giang-A1-6B0-preview.pdf

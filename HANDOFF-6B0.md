@@ -199,6 +199,19 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
 
 ## 10. Decisions log (most recent first)
 
+- **Slide walk-through for grade 6 (16 Nov, late night):** wording and flow only; no change to stops, scoring, timers or answer letters.
+  - `bai1`: the note now asks each kid to think of a subject they do not like yet. The last stop (`bangdiem`, "Môn mình chưa thích") closes that loop.
+  - `lapdoi`: shorter sentences ("Hack là mẹo học, giúp đoạn “Tập” ngắn lại").
+  - `khien`: new step 3, practise the shield signal once before the game starts.
+  - `giang1`–`giang4`: a note for the listening teams (cards face down; the next stop has a question on this hack).
+  - `nghi`: the break names hack 3.
+  - `v2-cau2`: option D was a rhyme for each event, which the book supports (memory tricks, ch8), so a kid could argue for it. It is now "Tô bút nhớ lên cả 12 sự kiện trong sách giáo khoa." The answer is still C.
+  - `chot2`: the title question now gets an answer on the slide (the one who thinks and says it aloud learns most).
+  - `toaan`: title "Dùng AI: chuyện gì xảy ra sau đó?" (the divider before it has the same stop name).
+  - `toaan-chot`: "Mình nghĩ trước, AI hỏi sau." is back, as the first line of the note (open item 5).
+  - `y-tuong`: 6 rules became 5, with an example idea in a note.
+  - Not done, for Huy Dũng to decide: the session still runs about 108 minutes against 90.
+
 - **Key D: test data for rehearsals (16 Nov, late night):** on an open slide, D fills the widget with made-up results, different on every press. Quiz: a card for each team (right about 6 times in 10). Wheel: spins for the next slot; when all slots are full, deals a new order. AI case part 2: cards, a team to explain (kept if the wheel chose one), a verdict. Idea board: one more sticky note from a pool of 18. Vote count: 40 dots split over the 4 teams. Results tables: cards for every question, and the 0/1 bonus. D does nothing on the map or with the leaderboard open. Each press is written to the board log as "Dữ liệu thử (D)". Widgets register it with `ctx.onKey("D", …)`; helpers `dummyAnswers`, `different`, `DUMMY_IDEAS` sit above `answerOf` in app.js. **Before class: clear everything (leaderboard → Xóa điểm, đáp án và bốc thăm…) and do not press D.**
 
 - **Poster illustrations redrawn (16 Nov, late night):** all drawings are original native shapes, one group per illustration (ungroup to edit). Step 1 on every poster now uses a real-life example from the card, not the game hook (driver and one second on the phone; library topics; football week and "ngủ một đêm"; pianist and the hard passage), with a matching drawing. Poster 1: octopus with four arms holding four cards (the dashed card has the phone). Poster 2: a real tree to fill in: blank root box, three branch boxes, two leaves on each branch (the card's supermarket example goes in it). Poster 3: flashlight and ceiling lamp over idea dots, three evenings with a link that gets thicker; step 3 is a pictogram, 22 people per row, pupils colour 5 and 13. Poster 4 step 2: an old test with ticks and crosses for three kinds of problem (pupils circle the weak one), a blocked row of shapes, and an empty row to draw the mixed order. Charts on posters 1, 2 and 4 have a real scale; pupils colour each bar up to the right line. No picture comes from the book or the web. Source list with links: `Ref/Nguon-da-kiem-tra.md`.
