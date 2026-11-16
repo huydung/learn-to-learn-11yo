@@ -199,6 +199,8 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
 
 ## 10. Decisions log (most recent first)
 
+- **Big text everywhere it fits (16 Nov, late night):** instruction and question text uses `lead` (46px) instead of `body` (38px) on 11 slides. Layout nudges: `luat-giang` note moved to y590; `binhchon` text box 250 tall, results table at y470; `y-tuong` text box 600 tall; all five Chung kết answer-card widgets at y570 (h410). Three stay at `body` because `lead` does not fit: `thang` (the ladder fills the slide), `ck-cau5` (four long statements) and `bangdiem` (would run into the footer). Checked by measuring the text bottom of every box on all 59 slides.
+
 - **Reading and poster prep merged (16 Nov, late night):** `doc` (4 min) and `chuanbi` (5 min) are now one slide, `doc` "Đọc và chuẩn bị giảng", with one 9 min timer. The first line says the first 4 minutes are silent reading alone; the host calls the switch. The question and voting lines were dropped from it because `luat-giang` already says them. 59 slides.
 
 - **Huy Dũng's docx pass, other materials synced (16 Nov, late night):**
