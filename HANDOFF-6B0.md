@@ -16,8 +16,8 @@ Read this file first. It explains what exists, how the two HTML files work, what
   - The four hacks (from Oakley et al., *Learning How to Learn*):
     1. Tập trung từng việc
     2. Chia nhóm, vẽ sơ đồ
-    3. Nghỉ đúng, ôn rải đều
-    4. Luyện chỗ yếu, trộn bài
+    3. Nghỉ ngơi, rải đều
+    4. Luyện nhiều chỗ yếu
   - Card text lives in `Tai-lieu-in-6B0.docx` pages 2–5 (the only copy; the old `.md` copy was removed on 14 Nov).
   - Using AI (Gemini) well and badly.
   - Group slides on Canva.
@@ -198,6 +198,13 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
 ---
 
 ## 10. Decisions log (most recent first)
+
+- **Huy Dũng's docx pass, other materials synced (16 Nov, late night):**
+  - Card labels in the docx are now "HACK 1–4" (was "THẺ N · ĐỌC TRONG 4 PHÚT"). Hack 3 is now **Nghỉ ngơi, rải đều**, hack 4 **Luyện nhiều chỗ yếu**. Renamed on the slides (`giang3`, `giang4`, cheat sheet) and the posters.
+  - Poster 1: the driver line drops "nghiêm trọng" and says "lái xe"; the Altmann line says the extra task was unrelated.
+  - Poster 3: the football line says the team does not cram one long session before the match; "Khi gặp một vấn đề khó" replaces "Khi chưa nghĩ ra cách".
+  - Poster 4: the Rohrer line no longer says half the class was tested after 30 days, to match the docx wording. The source still says 63 pupils per delay.
+  - Cheat sheet hack 4: "Luyện thêm dạng bài hay sai" (was "nhiều nhất"), matching the card.
 
 - **Slide walk-through for grade 6 (16 Nov, late night):** wording and flow only; no change to stops, scoring, timers or answer letters.
   - `bai1`: the note now asks each kid to think of a subject they do not like yet. The last stop (`bangdiem`, "Môn mình chưa thích") closes that loop.
