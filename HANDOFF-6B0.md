@@ -60,12 +60,12 @@ Two columns of minutes: the plan, and a realistic estimate (16 eleven-year-olds,
 | Plan | Realistic | Phần | Slides |
 |---|---|---|---|
 | 8 | 10–12 | Chặng 1 · Khởi động: Clash Royale story, Bài học 1 (Tập → Giỏi → Thích), Bài học 2 (the ladder), lập đội with the climb teaser, luật tính điểm, tín hiệu khiên | 1–8 |
-| 9 | 11–13 | Chặng 2 · Đọc hiểu: hand out cards and posters, one slide with one 9 min timer: 4 min silent reading alone, then the team fills in the poster (host calls the switch) | 9–10 |
+| 9 | 11–13 | Chặng 2 · Đọc hiểu: hand out cards and A3 sheets, one slide with one 9 min timer: 4 min silent reading alone, then each kid fills in their own A3 sheet (host calls the switch) | 9–10 |
 | 13 | 16–18 | Chặng 3 · Giảng giỏi: rules, 4 teams × 3 min, about 1 min to change teams | 11–16 |
 | 4 | 4–5 (+5 break) | Chặng 4 · Bình chọn: dot vote and count, then the giải lao slide (5 min timer), which lands on the 11:00 school break | 17–19 |
 | 7 | 10–11 | Chặng 5 · Trả lời: 4 questions (1 min each) plus reveal and short explanation, results, "Ai học nhiều nhất" | 20–27 |
 | 10 | 17–19 | Chặng 6 · Dùng AI: rules, wheel, 4 cases × about 3.5 min (part 1 video 35–51 s, 45 s guess, part 2 video 26–47 s, one team explains, verdict), results, wrap-up | 28–44 |
-| 15 | 12–15 | Chặng 7 · Làm Slides: why, idea-board rules, idea round (each idea ≤10 s plus typing and judging), Canva tips, Canva example | 45–50 |
+| 15 | 12–15 | Chặng 7 · Làm slide: why, idea-board rules, idea round (each idea ≤10 s plus typing and judging), Canva tips, Canva example | 45–50 |
 | 10 | 13–15 | Chặng 8 · Chung kết: 5 questions × (90 s + reveal), results | 51–58 |
 | 5 | 7–9 | Chặng 9 · Về đích: standings, gifts (2 picks per kid, about 32 picks), cheat sheet | 59–60 |
 | **81** | **100–117** | | |
@@ -188,7 +188,7 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
    - the session teams stay together for bài 20/11;
    - she gives groups in-class time later;
    - board, ladder and floor-zone setup (Huy Dũng may involve the art teacher).
-4. Print everything (see printables page 1 for copies), cut the A–D cards, and print the 4 A1 posters.
+4. Print everything (see printables page 1 for copies), cut the A–D cards, and print the 16 A3 sheets (`Poster-giang-A3-6B0.pptx`, one sheet per kid).
 5. Optional:
    - an A4 print version of the cheat sheet (page 50 is a 16:9 slide);
    - put "Mình nghĩ trước, AI hỏi sau" back as the first "Nên" item on the cheat sheet (it was removed with the subtitle);
@@ -198,6 +198,9 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
 ---
 
 ## 10. Decisions log (most recent first)
+
+- **One A3 sheet per kid instead of one A1 poster per team (16 Nov, late night):** each kid fills in and holds up their own sheet, in parallel, which saves time and arguments. `Poster-giang-A3-6B0.pptx` has 16 A3 landscape sheets, built from the four A1 posters (`Poster-giang-A1-6B0.pptx` is removed; it is in git history). One panel per sheet, same size as on the A1, all shapes still editable. Sheets of one hack share a colour band top and bottom (hack 1 purple, 2 teal, 3 orange, 4 pink, kept apart from the team colours), the hack number and name, and a "Tờ n / 4" tag. Team circles dropped: the hack already tells the team. Speaker notes keep that sheet's answer line; the hack 3 step 1 answer is now "một" (the card says "không tập dồn một buổi"). Slide 10 now says one A3 sheet per kid; slide 27 says "điền tờ A3". The docx page 1 print list still says 4 A1 posters (Word was open, not changed).
+- **Run-through fixes (16 Nov, late night):** Dùng AI note back to "Cách xếp hạng" (a browser save had restored "Tính điểm"); case 1 option B typo "những" → "nhưng"; `chot2` adds "Lúc giảng cho cả lớp và trả lời câu hỏi của bạn: bậc 4"; ladder moved down so the intro no longer touches step 4; "slide nhóm" everywhere (stop 7 is "Làm slide"); cheat sheet AI line matches slide 44 ("tranh luận với AI").
 
 - **Canva example file (16 Nov, late night):** no live demo. Huy Dũng built the example in Canva from the template "Green Blue and Pink Illustrated Butterfly Group Project" (11 pages, "6b0 example slides"), with a real Canva table for the task list (Task · Owner · Due date · Status). Link: https://canva.link/3bjgbu2asex0qyi. New slide `canva-vd` (50) shows four screenshots, one per click: search templates, pick one, keep the template, the task table (`slides/images/canva-vd-1…4.webp`, browser bars cropped off). Each image and the "Mở trong Canva" link open the file; slide 49 also has the link. Canva's AI tools could not make a real table (they draw boxes with text on top), so the AI-made deck was dropped.
 
