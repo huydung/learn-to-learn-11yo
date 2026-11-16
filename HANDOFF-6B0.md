@@ -53,21 +53,21 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 
 ---
 
-## 3. Session flow (60 slides, 9 map stops)
+## 3. Session flow (59 slides, 9 map stops)
 
 Two columns of minutes: the plan, and a realistic estimate (16 eleven-year-olds, including moving, explaining rules, reveals and scoring). Class time is 90 minutes (10:15–11:00, school break 11:00–11:05, 11:05–11:50).
 
 | Plan | Realistic | Phần | Slides |
 |---|---|---|---|
 | 8 | 10–12 | Chặng 1 · Khởi động: Clash Royale story, Bài học 1 (Tập → Giỏi → Thích), Bài học 2 (the ladder), lập đội with the climb teaser, luật tính điểm, tín hiệu khiên | 1–8 |
-| 9 | 11–13 | Chặng 2 · Đọc hiểu: hand out cards and posters, read (4 min timer), fill in the poster (5 min timer) | 9–11 |
-| 13 | 16–18 | Chặng 3 · Giảng giỏi: rules, 4 teams × 3 min, about 1 min to change teams | 12–17 |
-| 4 | 4–5 (+5 break) | Chặng 4 · Bình chọn: dot vote and count, then the giải lao slide (5 min timer), which lands on the 11:00 school break | 18–20 |
-| 7 | 10–11 | Chặng 5 · Trả lời: 4 questions (1 min each) plus reveal and short explanation, results, "Ai học nhiều nhất" | 21–28 |
-| 10 | 17–19 | Chặng 6 · Dùng AI: rules, wheel, 4 cases × about 3.5 min (part 1 video 35–51 s, 45 s guess, part 2 video 26–47 s, one team explains, verdict), results, wrap-up | 29–45 |
-| 15 | 12–15 | Chặng 7 · Làm Slides: why, idea-board rules, idea round (each idea ≤10 s plus typing and judging), Canva tips | 46–50 |
-| 10 | 13–15 | Chặng 8 · Chung kết: 5 questions × (90 s + reveal), results | 51–58 |
-| 5 | 7–9 | Chặng 9 · Về đích: standings, gifts (2 picks per kid, about 32 picks), cheat sheet | 59–60 |
+| 9 | 11–13 | Chặng 2 · Đọc hiểu: hand out cards and posters, one slide with one 9 min timer: 4 min silent reading alone, then the team fills in the poster (host calls the switch) | 9–10 |
+| 13 | 16–18 | Chặng 3 · Giảng giỏi: rules, 4 teams × 3 min, about 1 min to change teams | 11–16 |
+| 4 | 4–5 (+5 break) | Chặng 4 · Bình chọn: dot vote and count, then the giải lao slide (5 min timer), which lands on the 11:00 school break | 17–19 |
+| 7 | 10–11 | Chặng 5 · Trả lời: 4 questions (1 min each) plus reveal and short explanation, results, "Ai học nhiều nhất" | 20–27 |
+| 10 | 17–19 | Chặng 6 · Dùng AI: rules, wheel, 4 cases × about 3.5 min (part 1 video 35–51 s, 45 s guess, part 2 video 26–47 s, one team explains, verdict), results, wrap-up | 28–44 |
+| 15 | 12–15 | Chặng 7 · Làm Slides: why, idea-board rules, idea round (each idea ≤10 s plus typing and judging), Canva tips | 45–49 |
+| 10 | 13–15 | Chặng 8 · Chung kết: 5 questions × (90 s + reveal), results | 50–57 |
+| 5 | 7–9 | Chặng 9 · Về đích: standings, gifts (2 picks per kid, about 32 picks), cheat sheet | 58–59 |
 | **81** | **100–117** | | |
 
 **Timing:**
@@ -117,7 +117,7 @@ Ideas the host can add if the class misses them: thống nhất dàn ý trước
 ## 5. How the slides work (`slides/`)
 
 `slides/README.md` explains running and editing. In short:
-- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 63 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
+- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 59 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
 - Edit mode (`E`) keeps changes in `localStorage`; Ctrl+S writes the whole deck back to `6B0slides.html` in the same format (File System Access API in Chrome, download elsewhere). Unchanged slides come out byte for byte the same, so `git diff` shows only real edits. (`content.js` was removed on 13 Nov; it is in the first git commit.)
 - `app.js` is the engine. Widgets live in the `WIDGETS` object: `html teams timer reveal video thiviet wheel quiz tally roundres checkstep standings`.
 - `style.css` holds the brand tokens and all styles.
@@ -198,6 +198,8 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
 ---
 
 ## 10. Decisions log (most recent first)
+
+- **Reading and poster prep merged (16 Nov, late night):** `doc` (4 min) and `chuanbi` (5 min) are now one slide, `doc` "Đọc và chuẩn bị giảng", with one 9 min timer. The first line says the first 4 minutes are silent reading alone; the host calls the switch. The question and voting lines were dropped from it because `luat-giang` already says them. 59 slides.
 
 - **Huy Dũng's docx pass, other materials synced (16 Nov, late night):**
   - Card labels in the docx are now "HACK 1–4" (was "THẺ N · ĐỌC TRONG 4 PHÚT"). Hack 3 is now **Nghỉ ngơi, rải đều**, hack 4 **Luyện nhiều chỗ yếu**. Renamed on the slides (`giang3`, `giang4`, cheat sheet) and the posters.
