@@ -47,7 +47,7 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 
 ### Running locally (since 11 Nov 2026)
 - **Slides, with a server (recommended):** double-click `start-slides.command` (Mac) or `start-slides.bat` (Windows). Both run `serve.py`, which serves `slides/` at http://localhost:8611 with caching off and opens the deck. Close the window to stop. Scores live per address, so always use this same launcher on the day. If a browser shows old slides from an earlier server on 8611, hard-refresh once (Cmd+Shift+R).
-- **Slides, without a server:** double-click `slides/6B0slides.html`. Fonts are in `slides/fonts/`, so it works offline. Scores, wheel results and in-browser edits save to the browser's `localStorage` (prefix `hch-6b0-v2-`; the old `hch-6b0-` keys are ignored). Press `?` → **Sao lưu ra file** / **Khôi phục từ file** to move them to another computer.
+- **Slides, without a server:** double-click `slides/6B0slides.html`. Fonts are in `slides/fonts/`, so it works offline. Scores, wheel results and in-browser edits save to the browser's `localStorage` (prefix `hch-6b0-v2-`; the old `hch-6b0-` keys are ignored). Slide edits made in the browser are written into `6B0slides.html` with Ctrl+S (or `?` → **Lưu trang vào 6B0slides.html**). Scores stay in the browser, so run the class in one browser.
 - **Videos:** copy files into `slides/videos/`, then edit mode → **Gắn video**.
 - **Printables:** open `Tai-lieu-in-6B0.docx` in Word. Fonts used: Merriweather and Be Vietnam Pro (copies in `slides/fonts/`; install them on the printing computer, or Word substitutes).
 

@@ -33,13 +33,13 @@ Data is lost only if:
 - you open the deck in a **different browser** or a **private/incognito window** (a red bar at the top warns you when the browser cannot save);
 - someone **clears the browser's data**.
 
-So make a backup file before class and after each round you care about (below).
+So keep the deck in one browser for the whole class.
 
 Until you press Ctrl+S, a slide edited in the browser replaces that slide from `6B0slides.html`. If you change the same slide in `6B0slides.html` by hand, press `E` → **Về bản gốc** on it to see the file version. Once `6B0slides.html` contains your edit, the browser copy is dropped on the next reload.
 
 ## The session map (M)
 The deck opens on a map of the session. Each stop is one part of the class; the four team explorers stand at the current stop, the leading team wears a crown, and the HUD at the top shows the scores.
-- Click a stop, or press `→`, to open its slides as a panel over the map. `Esc` or **Về bản đồ** goes back to the map.
+- Click a stop, or press `→`, to open its slides as a panel over the map. `Esc`, or a click outside the slide, goes back to the map. The `?` button in the HUD opens the key list.
 - After the last slide of a stop, `→` closes the panel and the teams walk to the next stop.
 - **Bảng điểm** in the HUD opens the full leaderboard.
 - `M` switches between the map and plain full-screen slides.
@@ -50,9 +50,6 @@ Each box can have `data-step="n"`: it appears at the n-th press of `→`. Boxes 
 In the browser: press `E`, click a box, and change **Hiện ở bước** or tick **Từng dòng**. The yellow number on each box is its step. Then Ctrl+S as usual.
 `←` hides the last step; at the first step it goes to the previous slide.
 
-## Moving scores to another computer
-Press `?` and click **Sao lưu ra file**. On the other computer, open the deck, press `?` and click **Khôi phục từ file**.
-
 ## Videos for Dùng AI
 1. Copy the video file into `videos/`.
 2. Open the case slide, press `E`, click the video box, then click **Gắn video** and pick the same file.
@@ -61,4 +58,4 @@ Press `?` and click **Sao lưu ra file**. On the other computer, open the deck, 
 Open the leaderboard (`L`) and click **Xóa điểm, đáp án và bốc thăm…** twice. It clears scores, team answers and wheel results. Your slide edits stay.
 
 ## Keys
-`→` / `Space` next idea, then next slide · `←` back · `M` map · `L` leaderboard · `S` small score strip · `T` timer · `R` reveal answer · `E` edit · `G` all slides · type a number and `Enter` to jump · `F` fullscreen · `?` help
+`→` / `Space` next idea, then next slide · `←` back · `M` map · `L` leaderboard · `S` show or hide the team scores in the HUD · `T` timer · `R` reveal answer · `E` edit · `G` all slides · type a number and `Enter` to jump · `F` fullscreen · `?` help

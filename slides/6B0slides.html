@@ -16,16 +16,7 @@
   <div id="bar" hidden=""></div>
   <div id="ov" hidden=""></div>
 
-  <div id="nav">
-    <button id="nPrev" aria-label="Trang trước">◀</button>
-    <span id="nNum">1/1</span>
-    <button id="nNext" aria-label="Trang sau">▶</button>
-    <button id="nBoard">Bảng điểm (L)</button>
-    <button id="nEdit">Sửa (E)</button>
-    <button id="nFull">Toàn màn hình (F)</button>
-    <button id="nGrid">Lưới (G)</button>
-    <button id="nHelp">?</button>
-  </div>
+  <div id="toast" role="status" hidden></div>
 
   <div id="help" hidden=""><div class="bx">
     <h3>Phím tắt</h3>
@@ -44,7 +35,7 @@
       </table>
       <table><caption>Trong lớp</caption>
         <tr><td><kbd>L</kbd></td><td>Mở/đóng bảng điểm.</td></tr>
-        <tr><td><kbd>S</kbd></td><td>Hiện điểm nhỏ dưới chân trang.</td></tr>
+        <tr><td><kbd>S</kbd></td><td>Hiện/ẩn điểm các đội trên thanh trên cùng.</td></tr>
         <tr><td><kbd>T</kbd></td><td>Chạy/dừng đồng hồ.<small>Nút ±30s chỉnh nhanh. Đổi số phút: E, chọn đồng hồ, gõ ô Phút.</small></td></tr>
         <tr><td><kbd>R</kbd></td><td>Mở đáp án, hoặc điểm checklist tiếp theo.</td></tr>
       </table>
@@ -54,10 +45,8 @@
         <tr><td><kbd>?</kbd></td><td>Mở/đóng bảng này.</td></tr>
       </table>
     </div>
-    <p class="hnote">Điểm, đáp án, bốc thăm, đồng hồ và trang đã sửa tự lưu trong trình duyệt này. Muốn mang sang máy khác: bấm <b>Sao lưu ra file</b>, rồi <b>Khôi phục từ file</b> trên máy kia.</p>
+    <p class="hnote">Điểm, đáp án, bốc thăm, đồng hồ và trang đã sửa tự lưu trong trình duyệt này. Trang đã sửa thì bấm <b>Lưu trang vào 6B0slides.html</b> (Ctrl S) để ghi hẳn vào file.</p>
     <button class="btn ghost" id="helpSave">Lưu trang vào 6B0slides.html</button>
-    <button class="btn ghost" id="helpBackup">Sao lưu ra file</button>
-    <button class="btn ghost" id="helpRestore">Khôi phục từ file</button>
     <button class="btn" id="helpClose">Đóng</button>
   </div></div>
 

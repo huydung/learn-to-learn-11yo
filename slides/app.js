@@ -94,7 +94,7 @@ const store = {
       if (store.failed) { store.failed = false; warn(""); }
     } catch {
       store.failed = true;
-      warn("Không lưu được vào trình duyệt. Thay đổi mới sẽ mất khi tải lại trang. Bấm ? → Sao lưu ra file ngay.");
+      warn("Không lưu được vào trình duyệt. Thay đổi mới sẽ mất khi tải lại trang. Bấm Ctrl S để ghi trang đã sửa vào 6B0slides.html.");
     }
   },
 };
@@ -147,11 +147,11 @@ const saveEdits = () => store.set("edits", edits);
 const saveSession = () => store.set("session", session);
 
 // Where you are in the deck. Restored when you open 6B0slides.html again without a #page in the address.
-const view = { current: 0, boardOpen: false, showStrip: false, mapMode: true, slideOpen: false, ...store.get("view", {}) };
-const saveView = () => store.set("view", { current, boardOpen, showStrip, mapMode, slideOpen });
+const view = { current: 0, boardOpen: false, showScores: false, mapMode: true, slideOpen: false, ...store.get("view", {}) };
+const saveView = () => store.set("view", { current, boardOpen, showScores, mapMode, slideOpen });
 
 let current = view.current;
-let boardOpen = view.boardOpen, showStrip = view.showStrip, spinning = false;
+let boardOpen = view.boardOpen, showScores = view.showScores, spinning = false;  // showScores pins the team scores in the map HUD
 let mapMode = view.mapMode, slideOpen = view.slideOpen;  // map mode: slides open as a panel over the session map
 let editing = false, draft = null, selected = null, editStart = null;  // draft = blocks of the slide being edited
 let keyActions = {};  // { T: fn, R: fn } registered by widgets on the current slide
@@ -283,22 +283,12 @@ function render(anim = null) {
   keyActions = {};
   const shown = editing ? Infinity : revealOf(list[current]);
   const el = buildSlide(current, (key, fn) => { keyActions[key] ??= fn; }, shown, anim);  // first widget on the slide wins
-  if (showStrip) el.append(scoreStrip());
   if (boardOpen) el.append(leaderboard());
   stage.replaceChildren(el);
-  $("#nNum").textContent = `${current + 1}/${list.length}`;
   try { history.replaceState(null, "", "#" + list[current].id); } catch {}
   saveView();
   renderEditBar();
   updateMap();
-}
-
-function scoreStrip() {
-  const t = totals();
-  const el = document.createElement("div");
-  el.className = "strip";
-  el.innerHTML = TEAMS.map((tm) => `<span class="c-${tm.key}">${tm.name}${board.display === "full" ? " · " + t[tm.key] : ""}</span>`).join("");
-  return el;
 }
 
 const teamChip = (t) => `<span class="chip mini c-${t.key}"><img class="tk" src="${MAP_ART.team(t.key)}" alt="">${t.name}</span>`;
@@ -371,6 +361,8 @@ const WIDGETS = {
         <button class="btn ghost" data-add="host">+ Ý của chú</button><button class="btn ghost" data-a="record">Ghi điểm</button></div>
       <form class="id-form" hidden><b></b><input maxlength="80" placeholder="Ghi ngắn ý vừa nói…" aria-label="Ý mới">
         <button class="btn" value="nen">✓ Nên</button><button class="btn" value="khong">✗ Không nên</button><button class="btn ghost" type="button" data-a="cancel">Hủy</button></form></div>`;
+    // Newest notes are at the bottom of each column: scroll there once the slide is on screen.
+    requestAnimationFrame(() => el.querySelectorAll(".id-notes").forEach((n) => (n.scrollTop = n.scrollHeight)));
     const form = el.querySelector(".id-form"), input = form.querySelector("input");
     const save = () => {
       const counts = byTeam((k) => notes.filter((n) => n.team === k).length);
@@ -1136,6 +1128,7 @@ function updateMap() {
   document.body.classList.toggle("mapmode", mapMode);
   document.body.classList.toggle("panel", mapMode && (slideOpen || boardOpen || editing));
   mapEl.hidden = hud.hidden = !mapMode;
+  hud.classList.toggle("pinned", showScores);
   hud.style.visibility = editing ? "hidden" : "";  // the edit bar sits where the HUD is
   if (!mapMode) return;
   if (!trail) { buildMap(); fitStage(); }
@@ -1249,15 +1242,15 @@ function prev() {
   if (current > 0) go(current - 1, true);
 }
 
-// Short message: in the edit bar while editing, otherwise in place of the page number.
+// Short message: in the edit bar while editing, otherwise in a toast at the bottom.
 function flash(message) {
-  const target = editing ? $("#msg") : $("#nNum");
-  if (!target) return;
-  target.textContent = message;
+  const toast = $("#toast"), msg = $("#msg");
+  if (editing && msg) msg.textContent = message;
+  else { toast.textContent = message; toast.hidden = false; }
   clearTimeout(flash.timer);
   flash.timer = setTimeout(() => {
-    if ($("#msg")) $("#msg").textContent = "";
-    $("#nNum").textContent = `${current + 1}/${slides().length}`;
+    if (msg) msg.textContent = "";
+    toast.hidden = true;
   }, 2500);
 }
 
@@ -1267,17 +1260,8 @@ function toggleFullscreen() {
 }
 
 const help = $("#help");
-$("#nPrev").onclick = prev;
-$("#nNext").onclick = next;
-$("#nBoard").onclick = () => { boardOpen = !boardOpen; render(); };
-$("#nEdit").onclick = () => (editing ? stopEdit() : startEdit());
-$("#nFull").onclick = toggleFullscreen;
-$("#nGrid").onclick = () => (grid.hidden ? openGrid() : closeGrid());
-$("#nHelp").onclick = () => { help.hidden = false; };
 $("#helpClose").onclick = () => { help.hidden = true; };
 $("#helpSave").onclick = saveFile;
-$("#helpBackup").onclick = backup;
-$("#helpRestore").onclick = restore;
 
 let typedNumber = "", typedTimer = null;  // type a page number, then Enter
 
@@ -1289,9 +1273,9 @@ document.addEventListener("keydown", (e) => {
 
   if (/^[0-9]$/.test(k)) {
     typedNumber = (typedNumber + k).slice(-3);
-    $("#nNum").textContent = "→ " + typedNumber;
+    flash("→ " + typedNumber);
     clearTimeout(typedTimer);
-    typedTimer = setTimeout(() => { typedNumber = ""; $("#nNum").textContent = `${current + 1}/${slides().length}`; }, 2500);
+    typedTimer = setTimeout(() => { typedNumber = ""; }, 2500);
     return;
   }
   if (k === "Enter" && typedNumber) { const n = typedNumber; typedNumber = ""; clearTimeout(typedTimer); return jump(n); }
@@ -1305,7 +1289,7 @@ document.addEventListener("keydown", (e) => {
     case "End": go(slides().length - 1); break;
     case "g": openGrid(); break;
     case "l": boardOpen = !boardOpen; render(); break;
-    case "s": showStrip = !showStrip; render(); break;
+    case "s": showScores = !showScores; render(); break;
     case "m": toggleMapMode(); break;
     case "e": startEdit(); break;
     case "f": toggleFullscreen(); break;
@@ -1356,40 +1340,6 @@ document.addEventListener("keydown", (e) => {
   if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "s") { e.preventDefault(); saveFile(); }
 });
 
-/* ================= Backup (move scores and edits to another computer) ================= */
-
-function backup() {
-  const data = { app: "hoc-cach-hoc-6b0", savedAt: new Date().toISOString(), board, wheels, edits, session };
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], { type: "application/json" }));
-  link.download = `hoc-cach-hoc-6b0-${data.savedAt.slice(0, 16).replace(/[:T]/g, "-")}.json`;
-  link.click();
-  URL.revokeObjectURL(link.href);
-}
-
-function restore() {
-  const input = document.createElement("input");
-  input.type = "file";
-  input.accept = ".json,application/json";
-  input.onchange = async () => {
-    try {
-      const data = JSON.parse(await input.files[0].text());
-      if (data.app !== "hoc-cach-hoc-6b0") throw new Error("not a backup");
-      board = { ...emptyBoard(), ...data.board };
-      wheels = data.wheels || {};
-      edits = data.edits || {};
-      session = { ...emptySession(), ...data.session };
-      saveBoard(); saveWheels(); saveEdits(); saveSession();
-      help.hidden = true;
-      render();
-      flash("Đã khôi phục");
-    } catch {
-      flash("File này không phải bản sao lưu của bài giảng");
-    }
-  };
-  input.click();
-}
-
 /* ================= Boot ================= */
 
 // Check that this browser really keeps data (it does not in a private window or when storage is blocked).
@@ -1420,13 +1370,9 @@ saveEdits();
 const fromHash = SLIDES.findIndex((s) => s.id === location.hash.slice(1));
 if (fromHash >= 0 && fromHash !== current) { current = fromHash; if (mapMode) slideOpen = true; }
 addEventListener("resize", () => { fitStage(); sizeGrid(); });
-// The corner buttons stay hidden until the mouse is in the bottom 90px of the screen.
-const nav = document.getElementById("nav");
-addEventListener("mousemove", (e) => {
-  nav.classList.toggle("show", e.clientY > innerHeight - 90);
-  hud.classList.toggle("scores", e.clientY < 90);  // team scores in the HUD show only near the top
-});
-document.documentElement.addEventListener("mouseleave", () => { nav.classList.remove("show"); hud.classList.remove("scores"); });
+// Team scores in the HUD peek out while the mouse is near the top (S pins them).
+addEventListener("mousemove", (e) => hud.classList.toggle("scores", e.clientY < 90));
+document.documentElement.addEventListener("mouseleave", () => hud.classList.remove("scores"));
 fitStage();
 render();
 document.fonts.ready.then(render);
