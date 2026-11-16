@@ -199,6 +199,8 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
 
 ## 10. Decisions log (most recent first)
 
+- **Giảng slides show the sheets (16 Nov, late night):** `giang1`–`giang4` show that hack's 4 A3 sheets as one 2×2 picture (`slides/images/giang-1…4.webp`, made from a PDF render of `Poster-giang-A3-6B0.pptx`) instead of the list of 4 questions. If the sheets change, re-render these pictures.
+
 - **One A3 sheet per kid instead of one A1 poster per team (16 Nov, late night):** each kid fills in and holds up their own sheet, in parallel, which saves time and arguments. `Poster-giang-A3-6B0.pptx` has 16 A3 landscape sheets, built from the four A1 posters (`Poster-giang-A1-6B0.pptx` is removed; it is in git history). One panel per sheet, same size as on the A1, all shapes still editable. Sheets of one hack share a colour band top and bottom (hack 1 purple, 2 teal, 3 orange, 4 pink, kept apart from the team colours), the hack number and name, and a "Tờ n / 4" tag. Team circles dropped: the hack already tells the team. Speaker notes keep that sheet's answer line; the hack 3 step 1 answer is now "một" (the card says "không tập dồn một buổi"). Slide 10 now says one A3 sheet per kid; slide 27 says "điền tờ A3". The docx page 1 print list still says 4 A1 posters (Word was open, not changed).
 - **Run-through fixes (16 Nov, late night):** Dùng AI note back to "Cách xếp hạng" (a browser save had restored "Tính điểm"); case 1 option B typo "những" → "nhưng"; `chot2` adds "Lúc giảng cho cả lớp và trả lời câu hỏi của bạn: bậc 4"; ladder moved down so the intro no longer touches step 4; "slide nhóm" everywhere (stop 7 is "Làm slide"); cheat sheet AI line matches slide 44 ("tranh luận với AI").
 

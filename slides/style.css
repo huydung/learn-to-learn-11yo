@@ -410,6 +410,7 @@ body.panel #map .mp { filter: brightness(.45) blur(3px); }
 /* ---------- Linked picture (opens a video in a new tab) ---------- */
 .vlink { position: relative; display: block; width: 100%; height: 100%; border-radius: 20px; overflow: hidden; border: 4px solid var(--dark); box-shadow: 0 10px 0 rgba(81, 0, 12, .25); }
 .vlink img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sheets { width: 100%; height: 100%; object-fit: contain; object-position: left top; display: block; }
 .vlink span { position: absolute; right: 16px; top: 16px; background: var(--red); color: #fff; font: 800 26px/1 var(--f-body); padding: 12px 18px; border-radius: 12px; }
 .vlink:hover span { background: var(--deep); }
 .lm:focus, .lm:focus-visible { outline: none; }  /* no focus box left on a stop after clicking it */
