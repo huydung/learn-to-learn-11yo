@@ -196,6 +196,37 @@ function recordRound(roundId, points, message) {
   render();
 }
 
+/* ---- Test data (key D). Each widget that takes class input registers a D action: it fills the widget with
+   plausible made-up results, different on every press. For rehearsals only; wipeClassData() clears it all. ---- */
+const rnd = (n) => Math.floor(Math.random() * n);
+const pickOne = (list) => list[rnd(list.length)];
+// Calls make() until its result differs from `before`, so two presses in a row never look the same.
+function different(before, make) {
+  let value = make();
+  for (let i = 0; i < 20 && JSON.stringify(value) === JSON.stringify(before); i++) value = make();
+  return value;
+}
+// A card for every team on one quiz slide: right about 6 times in 10, otherwise a random wrong option.
+function dummyAnswers(qid) {
+  const quiz = slides().find((s) => s.id === qid)?.blocks.find((b) => b.kind === "quiz");
+  if (!quiz) return;
+  const correct = LETTERS.indexOf(quiz.opts.answer);
+  const wrong = (quiz.opts.options || []).map((_, i) => i).filter((i) => i !== correct);
+  board.answers[qid] = different(board.answers[qid], () => byTeam(() => (Math.random() < 0.6 || !wrong.length ? correct : pickOne(wrong))));
+}
+const dummyDone = (what) => { logAction("Dữ liệu thử (D): " + what); flash("Dữ liệu thử · " + what); };
+const DUMMY_IDEAS = [
+  ["nen", "Thống nhất dàn ý trước khi làm (hack 2)"], ["nen", "Mỗi bạn tự viết phần của mình bằng lời của mình"],
+  ["nen", "Lập bảng phân công có tên và hạn"], ["nen", "Làm rải ra nhiều buổi, mỗi buổi một ít (hack 3)"],
+  ["nen", "Ghi nguồn chữ và ảnh"], ["nen", "Mỗi slide một ý, chữ ít và to"],
+  ["nen", "Một bạn kiểm tra thông tin và chính tả"], ["nen", "Tắt thông báo khi cả nhóm làm bài (hack 1)"],
+  ["nen", "Giảng thử cho nhau trước khi nộp (bậc 4)"], ["nen", "Nhờ AI hỏi vặn bài của nhóm"],
+  ["nen", "Phần nào yếu thì sửa phần đó trước (hack 4)"], ["nen", "Vẽ sơ đồ cây cho bài rồi mới chia việc"],
+  ["khong", "Mất nhiều thời gian chọn màu và hiệu ứng"], ["khong", "Chép nguyên văn từ mạng hoặc AI"],
+  ["khong", "Để một bạn làm hết"], ["khong", "Để đến tối cuối cùng mới làm"],
+  ["khong", "Vừa làm slide vừa xem video"], ["khong", "Nhờ AI viết hộ rồi đọc lại y nguyên"],
+];
+
 // Index of the right option on a quiz slide, or null.
 function answerOf(slideId) {
   const quiz = slides().find((s) => s.id === slideId)?.blocks.find((b) => b.kind === "quiz");
@@ -360,7 +391,7 @@ const WIDGETS = {
   },
 
   // Slide idea round: one sticky note per valid idea, in the team's colour. Each team note is +1 in round "nhom".
-  ideas(el, o) {
+  ideas(el, o, ctx) {
     const notes = board.ideas;
     const count = byTeam((k) => notes.filter((n) => n.team === k).length);
     const note = (n, i) => `<div class="id-note ${n.team === "host" ? "host" : "c-" + n.team}"><span>${esc(n.text)}</span>
@@ -409,6 +440,14 @@ const WIDGETS = {
       save();
     };
     input.onkeydown = (e) => { if (e.key === "Escape") form.hidden = true; };
+    ctx.onKey("D", () => {  // one more sticky note that is not on the board yet, from a random team
+      const unused = DUMMY_IDEAS.filter(([, text]) => !notes.some((n) => n.text === text));
+      if (!unused.length) return flash("Đã hết ý thử");
+      const [kind, text] = pickOne(unused);
+      notes.push({ team: pickOne(TEAMS).key, kind, text });
+      dummyDone("thêm một ý");
+      save();
+    });
   },
 
   teams(el) {
@@ -481,6 +520,15 @@ const WIDGETS = {
       saveWheels();
       render();
     };
+    ctx.onKey("D", () => {  // spin for the next slot; once every slot is filled, deal a new random order
+      if (editing || spinning) return;
+      if (!done) return $('[data-a="spin"]', el).click();
+      const shuffled = () => o.items.map((_, i) => i).sort(() => Math.random() - 0.5).slice(0, o.slots.length);
+      wheels[ctx.slideId] = different(picks, shuffled);
+      saveWheels();
+      dummyDone("bốc thăm lại");
+      render();
+    });
     $('[data-a="spin"]', el).onclick = () => {
       if (editing || spinning || done) return;
       const segment = (2 * Math.PI) / left.length;
@@ -521,6 +569,7 @@ const WIDGETS = {
 
     const toggle = () => { session.revealed[qid] = !session.revealed[qid]; saveSession(); render(); };
     if (!o.noReveal) ctx.onKey("R", toggle);  // noReveal: the answer is shown on the next slide instead
+    ctx.onKey("D", () => { dummyAnswers(qid); dummyDone("thẻ của 4 đội"); saveBoard(); render(); });
     el.onclick = (e) => {
       const button = e.target.closest("button");
       if (editing || !button) return;
@@ -557,6 +606,16 @@ const WIDGETS = {
     const reveal = (on) => { session.revealed[q] = on; saveSession(); draw(); };
     draw();
     ctx.onKey("R", () => reveal(!session.revealed[q]));
+    ctx.onKey("D", () => {  // cards for the four teams, a team to explain (kept if the wheel already chose one), and a verdict
+      dummyAnswers(q);
+      const picked = (wheels[o.wheel] ??= []), raw = (board.raw.toaan ??= {});
+      if (picked[o.slot] === undefined || picked[o.slot] === null) { picked[o.slot] = rnd(TEAMS.length); saveWheels(); }
+      const key = TEAMS[picked[o.slot]].key;
+      raw[key] = raw[key] === undefined ? rnd(2) : 1 - raw[key];
+      dummyDone("thẻ và phần giải thích");
+      saveBoard();
+      draw();
+    });
     el.onclick = (e) => {
       const b = e.target.closest("button");
       if (editing || !b) return;
@@ -576,7 +635,7 @@ const WIDGETS = {
   },
 
   // Results of a quiz round: which teams got which question right.
-  tally(el, o) {
+  tally(el, o, ctx) {
     const round = roundById(o.round);
     const isRight = (q, k) => board.answers[q]?.[k] !== undefined && board.answers[q][k] === answerOf(q);
     const correctCount = byTeam((k) => o.questions.filter((q) => isRight(q, k)).length);
@@ -597,6 +656,13 @@ const WIDGETS = {
       </table>
       <div class="actions"><button class="btn" data-a="record">Ghi điểm vào bảng</button>
       <span class="small">${round.kind === "points" ? `Mỗi câu đúng +1${o.bonus ? `, cộng ${esc(o.bonus.toLowerCase())} (0 hoặc 1)` : ""}.` : "Bằng số câu đúng thì cùng hạng cao hơn."} Đáp án các đội chọn ở từng trang câu hỏi.</span></div>`;
+    ctx.onKey("D", () => {  // cards for every question of the round, and the 0 or 1 bonus where the round has one
+      o.questions.forEach(dummyAnswers);
+      if (o.bonus) board.raw[o.round] = different(board.raw[o.round], () => byTeam(() => rnd(2)));
+      dummyDone("kết quả cả vòng");
+      saveBoard();
+      render();
+    });
     el.onclick = (e) => {
       const button = e.target.closest("button");
       if (editing || !button) return;
@@ -609,7 +675,7 @@ const WIDGETS = {
   },
 
   // Results typed by hand: a count per team (card race) or points per team (Tòa án).
-  roundres(el, o) {
+  roundres(el, o, ctx) {
     const round = roundById(o.round);
     const ranked = round.kind === "rank";
     const useBell = ranked && o.bell !== false;
@@ -641,6 +707,18 @@ const WIDGETS = {
       saveBoard();
       render();
     };
+    ctx.onKey("D", () => {  // counts per team; with a max (the 40 voting dots) they add up to exactly that total
+      const split = () => {
+        if (!o.max) return byTeam(() => rnd(7));
+        const share = byTeam(() => Math.floor(o.max / 10));
+        for (let left = o.max - TEAMS.length * Math.floor(o.max / 10); left > 0; left--) share[pickOne(TEAMS).key]++;
+        return share;
+      };
+      board.raw[o.round] = different(board.raw[o.round], split);
+      dummyDone("số đếm của 4 đội");
+      saveBoard();
+      render();
+    });
     el.onchange = (e) => {
       const order = (board.bell[o.round] ??= {});
       if (e.target.value) order[e.target.dataset.k] = Number(e.target.value);
@@ -1306,6 +1384,7 @@ document.addEventListener("keydown", (e) => {
     case "f": toggleFullscreen(); break;
     case "t": keyActions.T?.(); break;
     case "r": keyActions.R?.(); break;
+    case "d": if ((!mapMode || slideOpen) && !boardOpen) keyActions.D?.(); break;  // test data, only on a slide you can see
     case "?": help.hidden = false; break;
   }
 });
