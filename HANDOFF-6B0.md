@@ -203,7 +203,9 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
   - Card labels in the docx are now "HACK 1–4" (was "THẺ N · ĐỌC TRONG 4 PHÚT"). Hack 3 is now **Nghỉ ngơi, rải đều**, hack 4 **Luyện nhiều chỗ yếu**. Renamed on the slides (`giang3`, `giang4`, cheat sheet) and the posters.
   - Poster 1: the driver line drops "nghiêm trọng" and says "lái xe"; the Altmann line says the extra task was unrelated.
   - Poster 3: the football line says the team does not cram one long session before the match; "Khi gặp một vấn đề khó" replaces "Khi chưa nghĩ ra cách".
-  - Poster 4: the Rohrer line no longer says half the class was tested after 30 days, to match the docx wording. The source still says 63 pupils per delay.
+  - Poster 4: the Rohrer line now just says the test was unannounced (the chart shows the 30-day result).
+  - Docx card 1: the Altmann method now says each person's errors right after an interruption were compared with their own errors when working without one (within-subject, as in the paper). Fixed the "taajp trung" typo.
+  - Docx card 4: Rohrer now says half the pupils were tested after 1 day and half after 30 days (63 per delay), and the 80% vs 64% result is per problem type (mixed vs blocked), not per group.
   - Cheat sheet hack 4: "Luyện thêm dạng bài hay sai" (was "nhiều nhất"), matching the card.
 
 - **Slide walk-through for grade 6 (16 Nov, late night):** wording and flow only; no change to stops, scoring, timers or answer letters.
