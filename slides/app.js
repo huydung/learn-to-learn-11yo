@@ -289,6 +289,17 @@ function render(anim = null) {
   saveView();
   renderEditBar();
   updateMap();
+  autoplayOnArrival(list[current].id);
+}
+
+// Plays the slide's video when you arrive on it (next/previous, a jump, or opening its stop on the map),
+// not when the same slide is only redrawn. Browsers allow sound here because a key or click started it.
+let shownAt = null;
+function autoplayOnArrival(slideId) {
+  const visible = !mapMode || slideOpen;
+  const here = `${slideId}|${visible}`;
+  if (here !== shownAt && visible && !editing) stage.querySelector("video")?.play().catch(() => {});
+  shownAt = here;
 }
 
 const teamChip = (t) => `<span class="chip mini c-${t.key}"><img class="tk" src="${MAP_ART.team(t.key)}" alt="">${t.name}</span>`;
@@ -1079,7 +1090,7 @@ function buildMap() {
   };
 }
 
-// Places the four tokens in one row at a point on the trail, in leaderboard order: 1st on the left, 4th on the right.
+// Places the four tokens in one horizontal row at a point on the trail, in leaderboard order: last place on the left, the leader on the right.
 // STOPS[i].team says where the row stands: "below" the landmark (default), or to its "left" or "right".
 function placeTokens(len) {
   const pt = trail.getPointAtLength(len);
@@ -1087,7 +1098,7 @@ function placeTokens(len) {
   lamp.setAttribute("cx", pt.x);
   lamp.setAttribute("cy", pt.y);
   const place = places(byValue(totals()));
-  const order = TEAMS.map((tm) => tm.key).sort((a, b) => place[a] - place[b]);  // ties keep the TEAMS order
+  const order = TEAMS.map((tm) => tm.key).sort((a, b) => place[b] - place[a]);  // leader last (rightmost); ties keep the TEAMS order
   const where = STOPS[stopOf(current)].team || "below";
   order.forEach((k, i) => {
     const cx = where === "left" ? pt.x - 110 - (3 - i) * 50 : where === "right" ? pt.x + 110 + i * 50 : pt.x + (i - 1.5) * 50;
@@ -1289,7 +1300,7 @@ document.addEventListener("keydown", (e) => {
     case "End": go(slides().length - 1); break;
     case "g": openGrid(); break;
     case "l": boardOpen = !boardOpen; render(); break;
-    case "s": showScores = !showScores; render(); break;
+    case "s": showScores = !showScores; saveView(); updateMap(); break;  // HUD only, so a playing video keeps playing
     case "m": toggleMapMode(); break;
     case "e": startEdit(); break;
     case "f": toggleFullscreen(); break;

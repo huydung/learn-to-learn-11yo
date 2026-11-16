@@ -1,6 +1,6 @@
 # 6B0 "Học cách học": handoff for a new session
 
-Last updated: 16 Nov 2026 (Hanoi), spacing moved to card 3, card 4 is now weak spots + mixing; printables still 17 pages. Author of the session: Huy Dũng (always write the name with diacritics).
+Last updated: 16 Nov 2026 (Hanoi), card race removed (60 slides, 9 printable pages); stops renamed Đọc hiểu, Bình chọn, Trả lời. Author of the session: Huy Dũng (always write the name with diacritics).
 
 Read this file first. It explains what exists, how the two HTML files work, what has been decided, and what is still open.
 
@@ -40,7 +40,7 @@ Read this file first. It explains what exists, how the two HTML files work, what
 | # | What | Where | Source in this folder |
 |---|---|---|---|
 | A | **Student slides + leaderboard** (projected in class) | Local folder `slides/` (open `6B0slides.html`). Older online copy: https://claude.ai/artifact/DEWBsWs7xBedRFo4CiY3Rm | `slides/` · see `slides/README.md`. `InteractiveSlides.html` is the old single-file version. |
-| B | **A4 printables** (17 pages) | `Tai-lieu-in-6B0.docx` (edit and print in Word). Older online copy: https://claude.ai/artifact/AR2vJGv2TKAzz5LM2Wgv76 | `Tai-lieu-in-6B0.docx`. `ToPrint.html` is the old HTML version. |
+| B | **A4 printables** (9 pages) | `Tai-lieu-in-6B0.docx` (edit and print in Word). Older online copy: https://claude.ai/artifact/AR2vJGv2TKAzz5LM2Wgv76 | `Tai-lieu-in-6B0.docx`. `ToPrint.html` is the old HTML version. |
 | C | Plan deck for cô Tươi (Slides type, 28 pages) | claude.ai artifact https://claude.ai/artifact/KFFwru2snypPApxmFKyrEx | Not a file. Edit it in the claude.ai Slides editor, or export to PDF/PPTX from there. |
 
 The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc.
@@ -53,28 +53,26 @@ The claude.ai Project "6B0 Teaching" holds the same two sources and a status doc
 
 ---
 
-## 3. Session flow (65 slides, 9 map stops)
+## 3. Session flow (60 slides, 9 map stops)
 
-Durations are estimates. They add up to about 90 minutes.
+Two columns of minutes: the plan, and a realistic estimate (16 eleven-year-olds, including moving, explaining rules, reveals and scoring). Class time is 90 minutes (10:15–11:00, school break 11:00–11:05, 11:05–11:50).
 
-| Phút (khoảng) | Phần | Slides |
-|---|---|---|
-| 8 | Chặng 1 · Khởi động: Clash Royale story with a "HAI bài học" tease → Bài học 1 (Thích → Giỏi is common, Tập → Giỏi → Thích is far more common) → Bài học 2 (the ladder, one step per press) → lập đội (2 bài học + 4 hack; hack = mẹo to get through the "tập" part) → luật chung → tín hiệu khiên (giơ tay và lắc chuông) | 1–8 |
-| 9 | Chặng 2 · Chuẩn bị: teams pick a printed hack card at random (no wheel), read (4 min), prepare the talk (5 min) | 9–11 |
-| 16 | Chặng 3 · Giảng giỏi: teaching rules, then each team teaches hack 1→4 (3 min incl. Q&A), then the dot vote for Giảng hay. The stop ends here | 12–18 |
-| 7 | Chặng 4 · Nghe hiểu: all 4 teams answer all 4 hack questions (1 min each, A–D cards), results, "Ai học nhiều nhất" wrap-up | 19–26 |
-| 5 | Giải lao | 27 |
-| 6 | Chặng 5 · Đúng chỗ: đua ghép thẻ trên sàn (3-minute timer, teams may move cards until time runs out) and results | 28–31 |
-| 10 | Chặng 6 · Dùng AI: rules, wheel, then per case three slides: video part 1 → quiz (all teams A–D, shows the wheel-picked team that explains why) → video part 2 (chú explains aloud); results and wrap-up | 32–48 |
-| 15 | Chặng 7 · Làm Slides: why cô assigns it (tự tìm hiểu, làm việc cùng nhau) → idea round (rules slide, then a live count with a 10 s timer) → nên / không nên checklist → Canva demo | 49–54 |
-| 10 | Chặng 8 · Chung kết: 5 questions, double points | 55–62 |
-| 5 | Chặng 9 · Về đích: bảng xếp hạng, chọn quà, lời kết, cẩm nang, hỏi đáp | 63–66 |
+| Plan | Realistic | Phần | Slides |
+|---|---|---|---|
+| 8 | 10–12 | Chặng 1 · Khởi động: Clash Royale story, Bài học 1 (Tập → Giỏi → Thích), Bài học 2 (the ladder), lập đội with the climb teaser, luật tính điểm, tín hiệu khiên | 1–8 |
+| 9 | 11–13 | Chặng 2 · Đọc hiểu: hand out cards and posters, read (4 min timer), fill in the poster (5 min timer) | 9–11 |
+| 13 | 16–18 | Chặng 3 · Giảng giỏi: rules, 4 teams × 3 min, about 1 min to change teams | 12–17 |
+| 4 | 4–5 (+5 break) | Chặng 4 · Bình chọn: dot vote and count, then the giải lao slide (5 min timer), which lands on the 11:00 school break | 18–20 |
+| 7 | 10–11 | Chặng 5 · Trả lời: 4 questions (1 min each) plus reveal and short explanation, results, "Ai học nhiều nhất" | 21–28 |
+| 10 | 17–19 | Chặng 6 · Dùng AI: rules, wheel, 4 cases × about 3.5 min (part 1 video 35–51 s, 45 s guess, part 2 video 26–47 s, one team explains, verdict), results, wrap-up | 29–45 |
+| 15 | 12–15 | Chặng 7 · Làm Slides: why, idea-board rules, idea round (each idea ≤10 s plus typing and judging), Canva tips | 46–50 |
+| 10 | 13–15 | Chặng 8 · Chung kết: 5 questions × (90 s + reveal), results | 51–58 |
+| 5 | 7–9 | Chặng 9 · Về đích: standings, gifts (2 picks per kid, about 32 picks), cheat sheet | 59–60 |
+| **81** | **100–117** | | |
 
-**Open timing issue:**
-- The school break at 11:00 falls around minute 45, near the slides' own giải lao (after Nghe hiểu, around minute 40).
-- This has not been reconciled. Decide whether to move giải lao onto the school break or drop it.
-
----
+**Timing:**
+- Realistic total is about 108 minutes of class time against 90 available (the 5-minute break is the school's). Expect to cut 10–25 minutes on the day.
+- Map stops keep their buildings: stop 4 (the second stage) is now Bình chọn, and the arena (stop 5) now holds Trả lời.
 
 ## 4. Scoring (locked)
 
@@ -84,20 +82,18 @@ Durations are estimates. They add up to about 90 minutes.
 | Round | How | Points |
 |---|---|---|
 | Giảng hay | dot votes after all 4 talks: each kid 2 dots in their own team colour for 2 other teams (a dot under its own colour is void), cô Tươi and Huy Dũng 4 white dots each (40 dots: 8 per team colour + 8 white) | 4·3·2·2 |
-| Nghe hiểu | number of the 4 questions the team answers correctly (every team answers all 4) | 4·3·2·2 |
-| Đua ghép thẻ | correct cards (of 8) when the timer ends; no bell, ties share the higher place | 4·3·2·2 |
+| Trả lời | number of the 4 questions the team answers correctly (every team answers all 4) | 4·3·2·2 |
 | Dùng AI | every team predicts each case with an A–D card: +1 per correct prediction; the wheel-picked team explains why (hack or ladder step): +1 | up to 5 (raw) |
 | Slide nhóm | idea round: +1 per valid idea linked to something from the session, no duplicates. Turns go from the last-placed team to the leader; one speaker, within a count of 10; the round ends when no team has a new idea after 10 s | +1 each (max 20) |
 | Chung kết | number of the 5 questions correct, double points | 8·6·4·4 |
 | Khiên ✋ | quietest team when chú raises a hand | +1, max 3 |
-| Phạt | running or pushing in the card race | −1 |
 
-- **All questions are answered by the team** with one coloured A/B/C/D card (printables pages 14–17). **No Wayground.** The team discusses for 1 minute (90 s in Chung kết).
+- **All questions are answered by the team** with one coloured A/B/C/D card (printables pages 6–9). **No Wayground.** The team discusses for 1 minute (90 s in Chung kết).
 - **Leaderboard display modes:** full scores, ranks only, or hidden.
 - **Gifts:** "Every kid gets a gift; winning only means choosing first" is said **only at the end** (bangdiem slide), never up front. Gifts: 40 items, 2 per kid, two picking rounds in rank order.
 
 ### Questions (answers spread A–D)
-- **Nghe hiểu** (one per hack, in card order, asked after all 4 talks; every team answers every question): new scenarios, deliberately unlike the card examples. The hack name is not shown.
+- **Trả lời** (one per hack, in card order, asked after all 4 talks; every team answers every question): new scenarios, deliberately unlike the card examples. The hack name is not shown.
   1. Minh does maths while a friend tells a story → **B** (slower, more mistakes).
   2. 12 history events, test on Friday → **C** (split into 3 periods on a labelled timeline).
   3. Nam has been stuck on a maths problem for 30 min → **D** (stand up and walk a few minutes, or switch subject, then come back). Replaced the Lan piano question on 14 Nov so each question maps to one card.
@@ -121,7 +117,7 @@ Ideas the host can add if the class misses them: thống nhất dàn ý trước
 ## 5. How the slides work (`slides/`)
 
 `slides/README.md` explains running and editing. In short:
-- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 65 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
+- `6B0slides.html` (was `index.html` until 14 Nov) holds everything the class sees. `TEAMS`, `ROUNDS`, `POINTS_RANKED`, `POINTS_FINAL` and `SHIELD_MAX` are in a small `<script>`. The 63 slides are `<section>` elements in `<div id="slides">`; each box is a `<div data-box="x y w h">`, and widgets add `data-widget` and `data-opts` (JSON). Quiz answers are letters (`"answer":"B"`).
 - Edit mode (`E`) keeps changes in `localStorage`; Ctrl+S writes the whole deck back to `6B0slides.html` in the same format (File System Access API in Chrome, download elsewhere). Unchanged slides come out byte for byte the same, so `git diff` shows only real edits. (`content.js` was removed on 13 Nov; it is in the first git commit.)
 - `app.js` is the engine. Widgets live in the `WIDGETS` object: `html teams timer reveal video thiviet wheel quiz tally roundres checkstep standings`.
 - `style.css` holds the brand tokens and all styles.
@@ -140,9 +136,8 @@ Ideas the host can add if the class misses them: thống nhất dàn ý trước
 |---|---|
 | 1 | index (what to print, how many copies) |
 | 2–5 | hack cards, one per A4 page; "Khi giảng cho đội (2 phút, gồm cả hỏi đáp)" |
-| 6–9 | matching cards, 8 per team colour |
-| 10–13 | floor signs for the 4 hacks |
-| 14–17 | A/B/C/D answer cards, one page per team colour |
+| 6–9 | A/B/C/D answer cards, one page per team colour |
+| ~~old 6–13~~ | matching cards and floor signs for the card race: removed on 16 Nov |
 | ~~18–20~~ | team sheet, take-home slips, scoring poster: removed from the .docx on 14 Nov |
 
 **Regenerate the PDF with Playwright:**
@@ -152,7 +147,7 @@ const h=require('fs').readFileSync('tai-lieu-in-6b0.html','utf8');
 await p.setContent(`<!doctype html><html><head><meta charset=utf8></head><body>${h}</body></html>`,{waitUntil:'networkidle'});
 await p.pdf({path:'Tai-lieu-in-6B0.pdf',format:'A4',printBackground:true,preferCSSPageSize:true});await b.close()})();
 ```
-Check the PDF afterwards: it should be exactly 17 pages in Word (LibreOffice shows 18: card 4's source line spills onto its own page), with no blank ones.
+Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice shows 10, with an empty last page), with no blank ones.
 
 ---
 
@@ -193,7 +188,7 @@ Check the PDF afterwards: it should be exactly 17 pages in Word (LibreOffice sho
    - the session teams stay together for bài 20/11;
    - she gives groups in-class time later;
    - board, ladder and floor-zone setup (Huy Dũng may involve the art teacher).
-4. Print everything (see printables page 1 for copies), and cut the matching cards and A–D cards.
+4. Print everything (see printables page 1 for copies), cut the A–D cards, and print the 4 A1 posters.
 5. Optional:
    - an A4 print version of the cheat sheet (page 50 is a 16:9 slide);
    - put "Mình nghĩ trước, AI hỏi sau" back as the first "Nên" item on the cheat sheet (it was removed with the subtitle);
@@ -203,6 +198,11 @@ Check the PDF afterwards: it should be exactly 17 pages in Word (LibreOffice sho
 ---
 
 ## 10. Decisions log (most recent first)
+
+- **Card race removed; stops re-split and renamed (16 Nov, night):**
+  - Đúng chỗ (đua ghép thẻ) is gone: hectic, about 9 minutes in class, 8 printed pages to cut and tape, and recall is already practised in Trả lời and Chung kết. Slides `p3`, `ghepthe`, `kq-ghep`, `ghepthe-chot`, round `ghepthe` and the running penalty removed. Printables: matching cards and floor signs removed (17 → 9 pages); the "đội Đỏ" footer on the Red answer page now says "đội Red".
+  - The map keeps all 9 buildings. Stop 4 (the second stage) is a new stop **Bình chọn** (divider `p-binh`, the vote, then the giải lao slide, timed to land on the 11:00 school break). The arena (stop 5, bell and cards) now holds the quiz round.
+  - Renamed: Chuẩn bị → **Đọc hiểu**, Nghe hiểu → **Trả lời** (stop, divider, slide tags, round name).
 
 - **Card 1/3 rebalance, docx voice pass, launchers (16 Nov, night):**
   - Card 1 Áp dụng now holds the whole Pomodoro: phone away; 15-minute timer, note stray thoughts on paper, build up to 25; then a 5-minute break without the phone (the book calls the break the reward).
