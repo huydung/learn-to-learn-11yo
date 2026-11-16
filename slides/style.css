@@ -256,6 +256,8 @@ table.tally small { font-size: 22px; color: var(--mute); }
 #bar button.pri { background: var(--red); }
 #bar input { font: 600 14px/1 var(--f-body); width: 64px; border: 0; border-radius: 9px; padding: 8px; }
 #bar .msg { padding: 0 6px; color: #F3D27A; }
+#bar .grip { cursor: grab; padding: 6px 4px; font-size: 20px; color: #AAA; touch-action: none; user-select: none; }
+#bar .grip:active { cursor: grabbing; }
 .edit .blk { outline: 3px dashed rgba(30,99,198,.55); outline-offset: 4px; }
 .edit .blk.sel { outline: 4px solid var(--t-blue); }
 .edit [contenteditable="true"] { cursor: text; }

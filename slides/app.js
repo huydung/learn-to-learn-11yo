@@ -918,7 +918,7 @@ function renderEditBar() {
   if (!editing) return;
   const block = selected !== null ? draft[selected] : null;
   const styles = ["h1", "h2", "big", "lead", "body", "small", "note", "card"];
-  bar.innerHTML = `<span>Đang sửa trang ${current + 1} · tự lưu</span>
+  bar.innerHTML = `<span class="grip" title="Kéo để dời thanh này · bấm đúp để về chỗ cũ">⠿</span><span>Đang sửa trang ${current + 1} · tự lưu</span>
     <button data-a="cancel">Bỏ thay đổi</button>
     <button data-a="add">+ Ô chữ</button>
     ${block ? `<button data-a="delete">Xóa ô</button>` : ""}
@@ -931,6 +931,37 @@ function renderEditBar() {
     ${edits[currentSlide().id] ? `<button data-a="original">Về bản gốc</button>` : ""}
     <button data-a="savefile">Lưu vào 6B0slides.html (Ctrl+S)</button>
     <button class="pri" data-a="done">Xong</button><span class="msg" id="msg"></span>`;
+}
+
+// Drag the edit bar by its grip so it does not cover the box being edited. The spot is remembered;
+// double-click the grip to put it back at the top centre.
+{
+  const bar = $("#bar");
+  const place = (p) => {
+    if (!p) return Object.assign(bar.style, { left: "", top: "", transform: "" });
+    const x = Math.min(Math.max(0, p.x), innerWidth - Math.max(bar.offsetWidth, 60));
+    const y = Math.min(Math.max(0, p.y), innerHeight - Math.max(bar.offsetHeight, 40));
+    Object.assign(bar.style, { left: x + "px", top: y + "px", transform: "none" });
+  };
+  place(store.get("barpos", null));
+  bar.addEventListener("pointerdown", (e) => {
+    if (!e.target.closest(".grip")) return;
+    e.preventDefault();
+    const r = bar.getBoundingClientRect(), dx = e.clientX - r.left, dy = e.clientY - r.top;
+    const move = (ev) => place({ x: ev.clientX - dx, y: ev.clientY - dy });
+    const up = () => {
+      removeEventListener("pointermove", move);
+      removeEventListener("pointerup", up);
+      store.set("barpos", { x: bar.offsetLeft, y: bar.offsetTop });
+    };
+    addEventListener("pointermove", move);
+    addEventListener("pointerup", up);
+  });
+  bar.addEventListener("dblclick", (e) => {
+    if (!e.target.closest(".grip")) return;
+    place(null);
+    store.set("barpos", null);
+  });
 }
 
 $("#bar").addEventListener("click", (e) => {
