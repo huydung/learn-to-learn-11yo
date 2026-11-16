@@ -76,15 +76,15 @@ Two columns of minutes: the plan, and a realistic estimate (16 eleven-year-olds,
 
 ## 4. Scoring (locked)
 
-- **Ranked rounds give 4 · 3 · 2 · 2:** 3rd and 4th get the same. Ties share the higher place.
+- **Every round is ranked and gives 4 · 3 · 2 · 2** (Chung kết 8 · 6 · 4 · 4). 3rd and 4th get the same. Ties share the higher place. A round's own count (dots, correct cards, ideas) only decides the place; it is never added to the total. Only Khiên is a flat bonus.
 - **Correct beats fast.** Speed only breaks ties.
 
 | Round | How | Points |
 |---|---|---|
 | Giảng hay | dot votes after all 4 talks: each kid 2 dots in their own team colour for 2 other teams (a dot under its own colour is void), cô Tươi and Huy Dũng 4 white dots each (40 dots: 8 per team colour + 8 white) | 4·3·2·2 |
 | Trả lời | number of the 4 questions the team answers correctly (every team answers all 4) | 4·3·2·2 |
-| Dùng AI | every team predicts each case with an A–D card: +1 per correct prediction; the wheel-picked team explains why (hack or ladder step): +1 | up to 5 (raw) |
-| Slide nhóm | idea round: +1 per valid idea linked to something from the session, no duplicates. Turns go from the last-placed team to the leader; one speaker, within a count of 10; the round ends when no team has a new idea after 10 s | +1 each (max 20) |
+| Dùng AI | every team predicts each case with an A–D card: +1 per correct prediction; the wheel-picked team explains why (hack or ladder step): +1. Ranked by that total (0–5) | 4·3·2·2 |
+| Slide nhóm | idea round: +1 per valid idea linked to something from the session, no duplicates. Turns go from the last-placed team to the leader; one speaker, within a count of 10; the round ends when no team has a new idea after 10 s. Ranked by the number of valid ideas | 4·3·2·2 |
 | Chung kết | number of the 5 questions correct, double points | 8·6·4·4 |
 | Khiên ✋ | quietest team when chú raises a hand | +1, max 3 |
 
@@ -198,6 +198,8 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
 ---
 
 ## 10. Decisions log (most recent first)
+
+- **Every round is ranked (16 Nov, late night):** Dùng AI and Slide nhóm used to add raw points (up to 5 and up to 20). Now their counts only decide the place, like the other rounds, and the place gives 4 · 3 · 2 · 2. The "points" round kind is gone from the code. The Dùng AI tally shows a Tổng column (cards + explanation); the leaderboard only offers "Hạng N · Xđ". Slides: the Dùng AI scoring note is now "Cách xếp hạng"; on `y-tuong` the "+1 điểm" is gone and the last line says the team with the most sticky notes ranks first. Khiên stays a +1 bonus (max 3).
 
 - **Big text everywhere it fits (16 Nov, late night):** instruction and question text uses `lead` (46px) instead of `body` (38px) on 11 slides. Layout nudges: `luat-giang` note moved to y590; `binhchon` text box 250 tall, results table at y470; `y-tuong` text box 600 tall; all five Chung kết answer-card widgets at y570 (h410). Three stay at `body` because `lead` does not fit: `thang` (the ladder fills the slide), `ck-cau5` (four long statements) and `bangdiem` (would run into the footer). Checked by measuring the text bottom of every box on all 59 slides.
 

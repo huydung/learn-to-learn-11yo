@@ -64,12 +64,12 @@
   const POINTS_FINAL = [8, 6, 4, 4];
   const SHIELD_MAX = 3;
 
-  // "rank" rounds turn a place into points. "points" rounds give each team its own score, up to max.
+  // Every round turns a place into points. A round's own count (cards, dots, ideas) only decides the place.
   const ROUNDS = [
     { id: "giang", name: "Giảng hay", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số chấm bình chọn" },
     { id: "chuyengia", name: "Trả lời", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số câu đúng (4 câu)" },
-    { id: "toaan", name: "Dùng AI", kind: "points", max: 5, rule: "Đoán đúng +1 mỗi tình huống · đội bốc thăm giải thích đúng +1" },
-    { id: "nhom", name: "Slide nhóm", kind: "points", max: 20, rule: "Mỗi ý hợp lệ, không trùng: +1" },
+    { id: "toaan", name: "Dùng AI", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số tình huống đoán đúng, cộng 1 nếu giải thích đúng" },
+    { id: "nhom", name: "Slide nhóm", kind: "rank", points: POINTS_RANKED, rule: "Xếp theo số ý hợp lệ, không trùng" },
     { id: "chungket", name: "Chung kết ×2", kind: "rank", points: POINTS_FINAL, rule: "Xếp theo số câu đúng của đội (5 câu)" },
   ];
 
@@ -283,7 +283,7 @@
 <section data-id="toaan" data-nav="Dùng AI" data-tag="Dùng AI">
   <div class="h2" data-box="120 78 1500 120">Dùng AI: chuyện gì xảy ra sau đó?</div>
   <div class="lead" data-box="120 220 1110 740" data-step="1" data-each><ol><li>4 đội bốc thăm để chọn tình huống chính cho đội mình. Có 4 tình huống tất cả.</li><li>Xem phần 1: một bạn dùng Gemini để trợ giúp mình làm bài tập.</li><li><b>Cả bốn đội</b> bàn trong 45 giây, rồi cùng lúc giơ thẻ A, B, C hoặc D: chuyện gì xảy ra sau đó?</li><li>Đội nhận được tình huống đó sẽ nói thêm&nbsp;<b>vì sao </b>mình đoán như vậy, cần giải thích rõ ràng gắn với hack hoặc bậc thang học tập.</li><li>Cả lớp cùng xem phần 2 của video để biết đáp án.</li></ol></div>
-  <div class="note" data-box="1280 220 520 310" data-step="5"><b>Tính điểm</b><br>Mỗi tình huống, đội đoán đúng: <b>+1</b><br>Đội được bốc thăm giải thích đúng vì sao: <b>+1</b><br><br><br></div>
+  <div class="note" data-box="1280 220 520 420" data-step="5"><b>Cách xếp hạng</b><br>Mỗi tình huống đoán đúng: <b>+1</b><br>Đội bốc thăm giải thích đúng: <b>+1</b><br>Đội có tổng cao nhất xếp hạng 1.</div>
 </section>
 
 <section data-id="boc-toaan" data-nav="Bốc thăm tình huống" data-tag="Dùng AI">
@@ -388,7 +388,7 @@
 
 <section data-id="y-tuong" data-nav="Luật góp ý" data-tag="Slide nhóm">
   <div class="h2" data-box="120 78 1500 120">Làm slide nhóm thế nào cho tốt hơn?</div>
-  <div class="lead" data-box="120 220 1680 600" data-step="1" data-each><ol><li>Mỗi lượt, đội nêu <b>một ý</b>: khi làm slide nhóm, <b>nên</b> làm gì, hoặc <b>không nên</b> làm gì.</li><li>Ý phải gắn với <b>một điều đã học hôm nay</b>: một hack, một bậc thang, hay Tập → Giỏi → Thích.</li><li>Ý đúng và chưa đội nào nói: dán một tờ giấy nhớ màu đội lên bảng, <b>+1 điểm</b>.</li><li>Đội đang xếp cuối nói trước. Mỗi lượt chỉ <b>một bạn</b> nói, và nói xong trước khi cả lớp đếm đến 10.</li><li>Khi không đội nào còn ý mới, vòng kết thúc.</li></ol></div>
+  <div class="lead" data-box="120 220 1680 600" data-step="1" data-each><ol><li>Mỗi lượt, đội nêu <b>một ý</b>: khi làm slide nhóm, <b>nên</b> làm gì, hoặc <b>không nên</b> làm gì.</li><li>Ý phải gắn với <b>một điều đã học hôm nay</b>: một hack, một bậc thang, hay Tập → Giỏi → Thích.</li><li>Ý đúng và chưa đội nào nói: dán một tờ giấy nhớ màu đội lên bảng.</li><li>Đội đang xếp cuối nói trước. Mỗi lượt chỉ <b>một bạn</b> nói, và nói xong trước khi cả lớp đếm đến 10.</li><li>Khi không đội nào còn ý mới, vòng kết thúc. Đội có <b>nhiều giấy nhớ nhất</b> xếp hạng 1.</li></ol></div>
   <div class="note" data-box="120 830 1680 130" data-step="6">Ví dụ: “Nên chia việc và ghi hạn cho từng bạn, để làm rải ra nhiều buổi. Đó là hack 3.”</div>
 </section>
 

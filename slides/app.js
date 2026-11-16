@@ -428,7 +428,7 @@ const WIDGETS = {
       } else if (b.dataset.a === "cancel") form.hidden = true;
       else if (b.dataset.a === "record") {
         const round = roundById("nhom");
-        recordRound("nhom", byTeam((k) => Math.min(round.max, count[k])), round.name + " ghi điểm");
+        recordRound("nhom", rankPoints(count, round.points), round.name + " ghi điểm");
       }
     };
     form.onsubmit = (e) => {
@@ -641,21 +641,21 @@ const WIDGETS = {
     const correctCount = byTeam((k) => o.questions.filter((q) => isRight(q, k)).length);
     const bonus = board.raw[o.round] || {};
     const total = byTeam((k) => correctCount[k] + (o.bonus ? Number(bonus[k] || 0) : 0));
-    const points = round.kind === "points" ? byTeam((k) => Math.min(round.max, total[k])) : rankPoints(correctCount, round.points);
+    const points = rankPoints(total, round.points);
     const recorded = board.scores[o.round] || {};
     el.innerHTML = `<table class="t tally">
-      <tr><th>Đội</th>${o.questions.map((_, i) => `<th>${esc(o.labels?.[i] ?? "Câu " + (i + 1))}</th>`).join("")}<th>Số câu đúng</th>${o.bonus ? `<th>${esc(o.bonus)}</th>` : ""}<th>Điểm vòng</th></tr>
+      <tr><th>Đội</th>${o.questions.map((_, i) => `<th>${esc(o.labels?.[i] ?? "Câu " + (i + 1))}</th>`).join("")}<th>Số câu đúng</th>${o.bonus ? `<th>${esc(o.bonus)}</th><th>Tổng</th>` : ""}<th>Điểm vòng</th></tr>
       ${TEAMS.map((t) => `<tr><td>${teamChip(t)}</td>
         ${o.questions.map((q) => {
           const pick = board.answers[q]?.[t.key];
           return `<td>${pick === undefined ? "–" : (isRight(q, t.key) ? "✓" : "✗") + ` <small>${LETTERS[pick]}</small>`}</td>`;
         }).join("")}
         <td><b>${correctCount[t.key]}</b></td>
-        ${o.bonus ? `<td><span class="stepper"><button data-a="minus" data-k="${t.key}" aria-label="Bớt">−</button><b>${Number(bonus[t.key] || 0)}</b><button data-a="plus" data-k="${t.key}" aria-label="Thêm">+</button></span></td>` : ""}
+        ${o.bonus ? `<td><span class="stepper"><button data-a="minus" data-k="${t.key}" aria-label="Bớt">−</button><b>${Number(bonus[t.key] || 0)}</b><button data-a="plus" data-k="${t.key}" aria-label="Thêm">+</button></span></td><td><b>${total[t.key]}</b></td>` : ""}
         <td><b>${points[t.key]}</b>${recorded[t.key] !== undefined ? ` <small>(đã ghi ${recorded[t.key]})</small>` : ""}</td></tr>`).join("")}
       </table>
       <div class="actions"><button class="btn" data-a="record">Ghi điểm vào bảng</button>
-      <span class="small">${round.kind === "points" ? `Mỗi câu đúng +1${o.bonus ? `, cộng ${esc(o.bonus.toLowerCase())} (0 hoặc 1)` : ""}.` : "Bằng số câu đúng thì cùng hạng cao hơn."} Đáp án các đội chọn ở từng trang câu hỏi.</span></div>`;
+      <span class="small">Xếp hạng theo ${o.bonus ? `số câu đúng cộng ${esc(o.bonus.toLowerCase())} (0 hoặc 1)` : "số câu đúng"}; bằng nhau thì cùng hạng cao hơn. Điểm ${round.points.join(" · ")}. Đáp án các đội chọn ở từng trang câu hỏi.</span></div>`;
     ctx.onKey("D", () => {  // cards for every question of the round, and the 0 or 1 bonus where the round has one
       o.questions.forEach(dummyAnswers);
       if (o.bonus) board.raw[o.round] = different(board.raw[o.round], () => byTeam(() => rnd(2)));
@@ -674,17 +674,16 @@ const WIDGETS = {
     };
   },
 
-  // Results typed by hand: a count per team (card race) or points per team (Tòa án).
+  // Results typed by hand: a count per team (the voting dots), turned into places and rank points.
   roundres(el, o, ctx) {
     const round = roundById(o.round);
-    const ranked = round.kind === "rank";
-    const useBell = ranked && o.bell !== false;
+    const useBell = o.bell !== false;
     const raw = board.raw[o.round] || {};
     const bell = board.bell[o.round] || {};
     const value = (k) => Number(raw[k] || 0);
     const beats = (a, b) => value(a) > value(b) || (useBell && value(a) === value(b) && bell[a] && bell[b] && bell[a] < bell[b]);
     const place = places(beats);
-    const points = byTeam((k) => (ranked ? round.points[place[k]] : Math.min(round.max, value(k))));
+    const points = byTeam((k) => round.points[place[k]]);
     const recorded = board.scores[o.round] || {};
     el.innerHTML = `<table class="t tally">
       <tr><th>Đội</th><th>${esc(o.label)}</th>${useBell ? "<th>Rung chuông</th>" : ""}<th>Hạng</th><th>Điểm vòng</th></tr>
@@ -695,7 +694,7 @@ const WIDGETS = {
         <td><b>${points[t.key]}</b>${recorded[t.key] !== undefined ? ` <small>(đã ghi ${recorded[t.key]})</small>` : ""}</td></tr>`).join("")}
       </table>
       <div class="actions"><button class="btn" data-a="record">Ghi điểm vào bảng</button>
-      <span class="small">${ranked ? `${useBell ? "Xếp theo số thẻ đúng; bằng nhau thì đội rung chuông trước xếp trên." : "Bằng nhau thì cùng hạng cao hơn."} Điểm ${round.points.join(" · ")}.` : `Mỗi đội được đúng số điểm của mình, tối đa ${round.max}.`}</span></div>`;
+      <span class="small">${useBell ? "Xếp theo số thẻ đúng; bằng nhau thì đội rung chuông trước xếp trên." : "Bằng nhau thì cùng hạng cao hơn."} Điểm ${round.points.join(" · ")}.</span></div>`;
 
     el.onclick = (e) => {
       const button = e.target.closest("button");
@@ -788,9 +787,8 @@ function leaderboard() {
   const el = document.createElement("div");
   el.id = "board";
   // Rank rounds store points, so "Hạng 3" and "Hạng 4" share a value; the select shows the first match.
-  const options = (round) => `<option value="">—</option>` + (round.kind === "rank"
-    ? round.points.map((p, i) => `<option value="${p}">Hạng ${i + 1} · ${p}đ</option>`).join("")
-    : Array.from({ length: round.max + 1 }, (_, i) => `<option value="${i}">${i} điểm</option>`).join(""));
+  const options = (round) => `<option value="">—</option>`
+    + round.points.map((p, i) => `<option value="${p}">Hạng ${i + 1} · ${p}đ</option>`).join("");
   const segButton = (value, label) => `<button data-display="${value}" class="${board.display === value ? "on" : ""}">${label}</button>`;
 
   el.innerHTML = `<div class="bd-top"><h2>Bảng điểm</h2>
