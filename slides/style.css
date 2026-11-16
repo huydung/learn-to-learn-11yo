@@ -371,7 +371,7 @@ body.panel #map::before { filter: blur(16px) brightness(.45); }
 .lm .lb b { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--deep); color: #fff; font: 900 20px/1 var(--f-head); }
 .lm.here .lb { background: var(--red); color: #fff; }
 .lm.here .lb b { background: #fff; color: var(--red); }
-.lm.here img { animation: bob 1.8s ease-in-out infinite; }
+.lm.here .lb { animation: bob 1.8s ease-in-out infinite; }  /* the building stays put; its name label bounces */
 /* Stops ahead are grey; a stop turns to full colour once the teams reach it. */
 .lm:not(.done):not(.here) img { filter: grayscale(1) brightness(1.05) drop-shadow(0 10px 8px rgba(0, 0, 0, .3)); }
 .lm:not(.done):not(.here) .lb { opacity: .8; }
@@ -380,8 +380,92 @@ body.panel #map::before { filter: blur(16px) brightness(.45); }
 .toks { position: absolute; inset: 0; pointer-events: none; }
 .tok { position: absolute; left: 0; top: 0; width: 72px; height: 100px; }
 .tok img { position: relative; z-index: 1; width: 72px; height: 100px; object-fit: contain; filter: drop-shadow(0 5px 3px rgba(0, 0, 0, .35)); }
+.tok img { animation: idle 1.6s ease-in-out infinite; }  /* waiting teams bob a little, each on its own beat */
+.tok:nth-child(2) img { animation-delay: -.4s; }
+.tok:nth-child(3) img { animation-delay: -.8s; }
+.tok:nth-child(4) img { animation-delay: -1.2s; }
 .walking .tok img { animation: hop .32s ease-in-out infinite alternate; }
 @keyframes hop { to { transform: translateY(-12px); } }
+@keyframes idle { 50% { transform: translateY(-6px) rotate(-3deg); } }
+
+/* Animals and effects (FAUNA in app.js). The layer sits under the fog, so they appear as the map clears.
+   The outer span moves along its path; the inner <i> flaps or faces the right way. */
+.fauna { position: absolute; inset: 0; pointer-events: none; }
+.fa { position: absolute; opacity: 0; transition: opacity 1.2s; }  /* shown (.on) only in cleared areas */
+.fa.on { opacity: 1; transition: opacity 1.5s 1s; }  /* wait for the fog to start lifting, then fade in */
+.an { position: absolute; left: 0; top: 0; margin: -.5em 0 0 -.5em; line-height: 1; animation-iteration-count: infinite; animation-timing-function: ease-in-out; will-change: transform; }
+.an i { display: block; font-style: normal; transform: scaleX(var(--f)); filter: drop-shadow(0 4px 3px rgba(0, 0, 0, .3)); }
+.f-flutter { animation-name: f-flutter; }
+.f-flutter i { animation: f-flap .22s ease-in-out infinite; }
+.f-fly { animation-name: f-fly; animation-timing-function: linear; }
+.f-fly i, .f-circle i { animation: f-flap .5s ease-in-out infinite; }
+.f-circle { animation-name: f-circle; animation-timing-function: linear; }
+.f-hop { animation-name: f-hop; animation-timing-function: linear; }
+.f-hop i, .f-walk i, .f-swim i { transform: none; }
+.f-walk, .f-swim { animation-name: f-walk; animation-timing-function: linear; }
+.f-jump { animation-name: f-jump; }
+.f-peek { animation-name: f-peek; }
+.f-buzz { animation-name: f-buzz; }
+.f-fall { animation-name: f-fall; animation-timing-function: linear; }
+.f-twinkle { animation-name: f-twinkle; }
+.f-ripple { width: 1em; height: .4em; border: 3px solid rgba(255, 255, 255, .85); border-radius: 50%; animation-name: f-ripple; animation-timing-function: ease-out; }
+@keyframes f-flap { 50% { transform: scaleX(calc(var(--f) * .55)); } }
+@keyframes f-flutter {
+  25% { transform: translate(calc(var(--dx) * .5), calc(var(--dy) * -1)) rotate(8deg); }
+  50% { transform: translate(var(--dx), 0) rotate(-6deg); }
+  75% { transform: translate(calc(var(--dx) * .5), var(--dy)) rotate(6deg); }
+}
+@keyframes f-fly {
+  0% { transform: translate(0, 0); opacity: 0; }
+  8%, 92% { opacity: 1; }
+  50% { transform: translate(calc(var(--dx) * .5), var(--dy)); }
+  100% { transform: translate(var(--dx), 0); opacity: 0; }
+}
+@keyframes f-circle { from { transform: rotate(0) translateX(var(--r)) rotate(0); } to { transform: rotate(360deg) translateX(var(--r)) rotate(-360deg); } }
+/* Hop over to dx and back, turning round at each end. --f says which way the emoji faces at the start. */
+@keyframes f-hop {
+  0% { transform: translate(0, 0) scaleX(var(--f)); }
+  10% { transform: translate(calc(var(--dx) * .25), -28px) scaleX(var(--f)); }
+  20% { transform: translate(calc(var(--dx) * .5), 0) scaleX(var(--f)); }
+  30% { transform: translate(calc(var(--dx) * .75), -28px) scaleX(var(--f)); }
+  40%, 49% { transform: translate(var(--dx), 0) scaleX(var(--f)); }
+  50% { transform: translate(var(--dx), 0) scaleX(calc(var(--f) * -1)); }
+  60% { transform: translate(calc(var(--dx) * .75), -28px) scaleX(calc(var(--f) * -1)); }
+  70% { transform: translate(calc(var(--dx) * .5), 0) scaleX(calc(var(--f) * -1)); }
+  80% { transform: translate(calc(var(--dx) * .25), -28px) scaleX(calc(var(--f) * -1)); }
+  90%, 99% { transform: translate(0, 0) scaleX(calc(var(--f) * -1)); }
+  100% { transform: translate(0, 0) scaleX(var(--f)); }
+}
+@keyframes f-walk {
+  0% { transform: translate(0, 0) scaleX(var(--f)); }
+  25% { transform: translate(calc(var(--dx) * .5), -3px) scaleX(var(--f)); }
+  48% { transform: translate(var(--dx), 0) scaleX(var(--f)); }
+  52% { transform: translate(var(--dx), 0) scaleX(calc(var(--f) * -1)); }
+  75% { transform: translate(calc(var(--dx) * .5), -3px) scaleX(calc(var(--f) * -1)); }
+  96% { transform: translate(0, 0) scaleX(calc(var(--f) * -1)); }
+  100% { transform: translate(0, 0) scaleX(var(--f)); }
+}
+/* Out of the water, an arc, and back in; hidden the rest of the time. */
+@keyframes f-jump {
+  0%, 58% { transform: translate(0, 18px) rotate(-55deg); opacity: 0; }
+  62% { transform: translate(0, 0) rotate(-45deg); opacity: 1; }
+  76% { transform: translate(calc(var(--dx) * .5), -55px) rotate(0); }
+  90% { transform: translate(var(--dx), 0) rotate(45deg); opacity: 1; }
+  94%, 100% { transform: translate(var(--dx), 18px) rotate(55deg); opacity: 0; }
+}
+@keyframes f-peek { 0%, 60%, 80%, 100% { transform: translateY(0); } 70% { transform: translateY(-14px); } 86% { transform: translateY(-7px); } }
+@keyframes f-buzz {
+  20% { transform: translate(18px, -10px); } 40% { transform: translate(-6px, -22px); }
+  60% { transform: translate(-20px, -4px); } 80% { transform: translate(8px, 8px); }
+}
+@keyframes f-fall {
+  0% { transform: translate(0, 0) rotate(0); opacity: 0; }
+  10%, 80% { opacity: 1; }
+  50% { transform: translate(26px, 60px) rotate(140deg); }
+  100% { transform: translate(-12px, 130px) rotate(280deg); opacity: 0; }
+}
+@keyframes f-twinkle { 0%, 100% { transform: scale(.3); opacity: 0; } 50% { transform: scale(1); opacity: 1; } }
+@keyframes f-ripple { 0% { transform: scale(.2); opacity: .9; } 100% { transform: scale(1.6); opacity: 0; } }
 
 body.mapmode:not(.panel) #stage { display: none; }
 body.mapmode #stage { z-index: 2; border-radius: 28px; box-shadow: 0 30px 90px rgba(0, 0, 0, .65); animation: panelIn .35s cubic-bezier(.2, .8, .2, 1); }

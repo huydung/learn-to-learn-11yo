@@ -1154,12 +1154,73 @@ let trail = null, stopLen = [], tokenAt = null, travel = null;
 // and the teams as they walk. FOG_LIFT moves each patch up from the stop's point onto its picture.
 const FOG = { ahead: 150, here: 280, done: 470, team: 190 }, FOG_LIFT = 80;  // tokenAt = trail length where the teams stand
 
+// Animals and little effects on the map. They sit under the fog, so they show up as the stops near them clear.
+// [emoji, x, y, motion, size in map px, seconds, options]. Sizes keep real proportions: people (team tokens) ~100 px, trees ~180.
+// Spots near the map edge stay foggy for good, so keep animals within the stops' cleared patches. Motions are the f-* keyframes in style.css.
+// Options: dx/dy = how far it travels, r = circle radius, f = -1 to face the other way, d = start offset in seconds.
+const FAUNA = [
+  ["🐇", 190, 930, "hop", 36, 7, { dx: 110, f: -1 }],           // 1 Khởi động
+  ["🦋", 420, 900, "flutter", 24, 6, { dx: 70, dy: 30 }],
+  ["🐟", 560, 900, "jump", 28, 5, { dx: 40, f: -1 }],
+  ["✨", 560, 800, "twinkle", 22, 3, { d: 1 }],
+  ["🦋", 150, 640, "flutter", 24, 7, { dx: -60, dy: 25, d: 2 }],   // 2 Đọc hiểu
+  ["🐟", 528, 700, "jump", 28, 6, { dx: -40, d: 3 }],
+  ["🐿️", 400, 640, "peek", 30, 5, { d: 1 }],
+  ["🐦", 548, 352, "peek", 26, 4, { f: -1, d: 2 }],
+  ["🐦", 640, 160, "fly", 26, 12, { dx: 420, dy: -40, f: -1 }],     // 3 Giảng giỏi
+  ["✨", 600, 140, "twinkle", 22, 2.6, {}],
+  ["✨", 610, 110, "twinkle", 22, 3.2, { d: 1.4 }],
+  ["🦌", 960, 210, "walk", 72, 16, { dx: 70 }],
+  ["🍁", 1075, 255, "fall", 20, 6, {}],                          // 4 Bình chọn
+  ["🍁", 1130, 245, "fall", 20, 7, { d: 3 }],
+  ["🐝", 1110, 195, "buzz", 16, 3, {}],
+  ["🦋", 690, 650, "flutter", 24, 6.5, { dx: 60, dy: -30, d: 1 }], // 5 Trả lời
+  ["🍁", 785, 775, "fall", 20, 6.5, { d: 2 }],
+  ["🍁", 830, 790, "fall", 20, 7.5, { d: 5 }],
+  ["🐇", 990, 690, "hop", 36, 8, { dx: -120, d: 3 }],
+  ["🐝", 1450, 585, "buzz", 16, 2.6, {}],                         // 6 Dùng AI
+  ["🐝", 1480, 600, "buzz", 16, 3.4, { d: 1 }],
+  ["🐦", 1140, 430, "fly", 26, 11, { dx: 320, dy: -30, f: -1, d: 4 }],
+  ["🦆", 1040, 792, "swim", 40, 12, { dx: 80, f: -1 }],          // 7 Làm slide
+  ["", 1135, 812, "ripple", 60, 3, {}],
+  ["", 1060, 822, "ripple", 50, 3.6, { d: 1.5 }],
+  ["🐸", 1005, 812, "peek", 26, 6, { d: 2 }],
+  ["🦀", 1690, 985, "walk", 28, 9, { dx: 90 }],
+  ["🐢", 1610, 965, "walk", 32, 20, { dx: -60 }],
+  ["🕊️", 1620, 900, "fly", 32, 13, { dx: 260, dy: -50, f: -1, d: 6 }],
+  ["🦋", 1765, 360, "flutter", 24, 6, { dx: -60, dy: 30 }],      // 8 Chung kết
+  ["🦅", 1580, 140, "circle", 50, 14, { r: 60 }],                 // 9 Về đích
+  ["🐿️", 1765, 215, "peek", 30, 6, { d: 3 }],
+  ["🐦", 1260, 70, "fly", 26, 14, { dx: 360, dy: -20, f: -1, d: 7 }],
+];
+const FAUNA_SCALE = 1;  // one knob for all animal sizes (sizes are set against the 100 px team tokens)
+const faunaHtml = () => FAUNA.map(([e, x, y, m, size, s, o]) => {
+  const vars = `--dx:${o.dx || 0}px;--dy:${o.dy || 0}px;--r:${o.r || 0}px;--f:${o.f || 1}`;
+  return `<b class="fa" style="left:${x}px;top:${y}px"><span class="an f-${m}" style="font-size:${Math.round(size * FAUNA_SCALE)}px;animation-duration:${s}s;animation-delay:-${o.d || 0}s;${vars}"><i>${e}</i></span></b>`;
+}).join("");
+
+// The fog is see-through, so an animal only shows where the fog is nearly gone.
+// Each patch is fully clear up to 45% of its radius, then fades to nothing at its edge (the fogHole gradient);
+// overlapping patches multiply. FAUNA_CLEAR = the most fog an animal's spot may still have.
+const FAUNA_CLEAR = 0.35;
+function fogAt(x, y, radii) {
+  return STOPS.reduce((fog, st, k) => {
+    const r = radii[k], d = Math.hypot(x - st.x, y - (st.y - FOG_LIFT));
+    const clear = !r || d >= r ? 0 : d <= r * 0.45 ? 1 : (r - d) / (r * 0.55);
+    return fog * (1 - clear);
+  }, 1);
+}
+function showFauna(radii) {
+  $$(".fa", mapEl).forEach((el, i) => el.classList.toggle("on", fogAt(FAUNA[i][1], FAUNA[i][2], radii) <= FAUNA_CLEAR));
+}
+
 function buildMap() {
   mapEl.innerHTML = `<div class="mp">
     <img class="mbg" src="${MAP_ART.background}" alt="">
     <svg class="trail" viewBox="0 0 1920 1080" aria-hidden="true">
       <path class="tr-edge" d="${trailPath()}"/><path class="tr-base" d="${trailPath()}"/><path class="tr-done" d="${trailPath()}"/>
     </svg>
+    <div class="fauna" aria-hidden="true">${faunaHtml()}</div>
     <svg class="fog" viewBox="0 0 1920 1080" aria-hidden="true"><defs>
       <radialGradient id="fogHole"><stop offset=".45" stop-color="#000"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
       <mask id="fogMask" maskUnits="userSpaceOnUse" x="0" y="0" width="1920" height="1080"><rect width="1920" height="1080" fill="#fff"/>
@@ -1255,7 +1316,9 @@ function updateMap() {
     lm.classList.toggle("done", i < s);
     lm.classList.toggle("here", i === s);
   });
-  $$(".fh", mapEl).forEach((c, i) => (c.style.r = `${i < s ? FOG.done : i === s ? FOG.here : FOG.ahead}px`));
+  const radii = STOPS.map((_, i) => (i < s ? FOG.done : i === s ? FOG.here : FOG.ahead));
+  $$(".fh", mapEl).forEach((c, i) => (c.style.r = `${radii[i]}px`));
+  showFauna(radii.map((r, i) => (i <= s ? r : 0)));  // stops not reached yet keep their animals hidden
   walkTo(stopLen[s]);
   const open = slideOpen || boardOpen;
   $(".hi", hud).innerHTML = `<div class="hs"><span class="hsn">Chặng ${s + 1}/${STOPS.length}</span><b>${esc(STOPS[s].name)}</b></div>
