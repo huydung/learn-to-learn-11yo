@@ -901,8 +901,7 @@ function leaderboard() {
 function wipeClassData() {
   board = emptyBoard();
   wheels = {};
-  session = emptySession();
-  logAction("Xóa toàn bộ điểm, đáp án và bốc thăm");
+  session = emptySession();  // the action history starts empty too (emptyBoard has no log lines)
   saveBoard(); saveWheels(); saveSession();
   render();
 }
