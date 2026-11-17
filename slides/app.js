@@ -290,7 +290,9 @@ function buildSlide(index, onKey, shown = Infinity, anim = null) {
   el.innerHTML = `<div class="frame"></div>`
     // The map HUD says where we are in the session, so the footer is only the page number.
     + (slide.noFooter ? "" : `<div class="foot">${index + 1} / ${list.length}</div>`)
-    + `<img class="logo" src="images/hdi.webp" alt="HDI">`;
+    + `<img class="logo" src="images/hdi.webp" alt="HDI">`
+    // This browser holds a version of the slide that is not in 6B0slides.html yet.
+    + (edits[slide.id] ? `<div class="unsaved">⚠ Trang này đã sửa trong trình duyệt, khác với file. Bấm E rồi Lưu (Ctrl S), hoặc Về bản gốc.</div>` : "");
 
   blocks.forEach((block, i) => {
     const blk = document.createElement("div");
@@ -1112,11 +1114,13 @@ const grid = $("#ov");
 function openGrid() {
   if (editing) return flash("Bấm Xong để thoát chế độ sửa trước");
   const list = slides();
+  const unsaved = list.filter((s) => edits[s.id]).length;
   grid.innerHTML = `<div class="ovh"><b>${list.length} trang</b>
+      ${unsaved ? `<span class="ov-unsaved">⚠ ${unsaved} trang đã sửa trong trình duyệt, chưa lưu vào file</span>` : ""}
       <label>Đến trang <input type="number" min="1" max="${list.length}" inputmode="numeric" aria-label="Số trang"></label>
       <button data-a="go">Đi</button><button data-a="close">Đóng (G / Esc)</button></div>
-    <div class="ovg">${list.map((s, i) => `<div class="th${i === current ? " cur" : ""}" role="button" tabindex="0" aria-label="Trang ${i + 1}" data-i="${i}">
-      <div class="box"></div><span class="cap"><b>${i + 1}</b> · ${esc(s.nav || "")}${edits[s.id] ? " · <i>đã sửa</i>" : ""}</span></div>`).join("")}</div>`;
+    <div class="ovg">${list.map((s, i) => `<div class="th${i === current ? " cur" : ""}${edits[s.id] ? " edited" : ""}" role="button" tabindex="0" aria-label="Trang ${i + 1}${edits[s.id] ? ", chưa lưu vào file" : ""}" data-i="${i}">
+      <div class="box"></div><span class="cap"><b>${i + 1}</b> · ${esc(s.nav || "")}${edits[s.id] ? ` <em class="warn">⚠ chưa lưu</em>` : ""}</span></div>`).join("")}</div>`;
   $$(".th .box", grid).forEach((box, i) => box.append(buildSlide(i, () => {})));
   grid.hidden = false;
   sizeGrid();
@@ -1577,6 +1581,10 @@ async function saveFile() {
       const out = await fileHandle.createWritable();
       await out.write(html);
       await out.close();
+      // The file now holds the browser's versions, so they become the file's own and the warnings go away.
+      for (const s of SLIDES) if (edits[s.id]) { s.blocks = clone(edits[s.id].blocks); delete edits[s.id]; }
+      saveEdits();
+      render();
       return flash("Đã lưu vào " + fileHandle.name);
     } catch (e) {
       fileHandle = null;

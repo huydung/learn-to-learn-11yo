@@ -199,6 +199,7 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
 
 ## 10. Decisions log (most recent first)
 
+- **Warning on slides edited only in the browser (17 Nov):** a slide whose browser copy (`hch-6b0-v2-edits`) differs from 6B0slides.html shows a yellow bar at the bottom: "⚠ Trang này đã sửa trong trình duyệt, khác với file. Bấm E rồi Lưu (Ctrl S), hoặc Về bản gốc." In the grid view (G) such slides get an orange border, a "⚠ Chưa lưu vào file" badge and a count in the header. A successful Ctrl S (file picker) makes the saved versions the file's own and clears the warnings at once; the download fallback keeps them until the downloaded file replaces the old one and the page is reloaded.
 - **Arrow keys stay inside a section (17 Nov):** in map mode, → / ← (and PageDown / PageUp) step through the open section only; past its first or last slide they close the panel and show the map at the same stop. On the map, → / ← walk the teams to the next or previous stop, and Space / Enter open the stop. Classic mode (M off) still runs through the whole deck. The shortcut sheet says the same.
 - **Timer alarm, 50 animals, clear map at the end (17 Nov):**
   - When a running timer reaches 0:00 the screen pulses red for 3 seconds and a soft C-E-G-C chime plays twice (`timeUp()` in app.js, Web Audio, no sound file). Sound needs one click or key press on the page first (any T or click counts). A timer that ended while the page was closed does not ring on reload.

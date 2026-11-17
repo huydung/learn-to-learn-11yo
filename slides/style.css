@@ -303,6 +303,13 @@ table.tally small { font-size: 22px; color: var(--mute); }
 #ov .th .sl { width: 1920px; height: 1080px; right: auto; bottom: auto; transform-origin: 0 0; pointer-events: none; }
 #ov .th .cap { display: block; margin-top: 6px; }
 #ov .th .cap b { color: #fff; }
+/* Slides whose browser version is not in the file yet: on the slide, and loud in the grid view. */
+.unsaved { position: absolute; left: 50%; bottom: 26px; z-index: 6; transform: translateX(-50%); white-space: nowrap; background: #FFD54A; color: #51000C; font: 800 26px/1 var(--f-body); padding: 12px 22px; border-radius: 999px; box-shadow: 0 6px 0 rgba(81, 0, 12, .35); }
+#ov .th.edited .box { box-shadow: 0 0 0 5px #FF8F00; }
+#ov .th.edited .box::after { content: "⚠ Chưa lưu vào file"; position: absolute; left: 8px; top: 8px; z-index: 9; background: #FFD54A; color: #51000C; font: 800 15px/1 var(--f-body); padding: 7px 10px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0, 0, 0, .4); }
+#ov .th.edited .unsaved { display: none; }  /* the badge above says it at a size you can read */
+#ov .th .cap .warn { font-style: normal; font-weight: 800; color: #FFD54A; }
+#ov .ov-unsaved { background: #FFD54A; color: #51000C; font: 800 15px/1 var(--f-body); padding: 8px 12px; border-radius: 8px; }
 
 /* ---------- Cheat sheet (slide "Cẩm nang mang về"): four boxes, print friendly ---------- */
 .cheat { height: 100%; display: flex; flex-direction: column; justify-content: space-between; font: 400 24px/1.35 var(--f-body); color: var(--ink); }
