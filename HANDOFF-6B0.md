@@ -199,6 +199,11 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
 
 ## 10. Decisions log (most recent first)
 
+- **Timer alarm, 50 animals, clear map at the end (17 Nov):**
+  - When a running timer reaches 0:00 the screen pulses red for 3 seconds and a soft C-E-G-C chime plays twice (`timeUp()` in app.js, Web Audio, no sound file). Sound needs one click or key press on the page first (any T or click counts). A timer that ended while the page was closed does not ring on reload.
+  - `FAUNA` now has 50 entries (fox, hedgehog, snail, owl, frog, more fish, butterflies, bees, rabbits, squirrels, doves, leaves). Every animal's whole motion box stays clear of each landmark, its name label and that stop's team-token row; checked with a script against measured boxes. They still appear stop by stop (2 at stop 1 … 50 at stop 9).
+  - At the last stop (Về đích) the fog fades out completely (`.fog.gone`) and every animal shows.
+  - The shortcut sheet (?) no longer has the grey sub-lines.
 - **Living map (17 Nov):** 33 animals and small effects (`FAUNA` in app.js: rabbits, butterflies, fish, squirrels, birds, deer, falling red leaves, bees, duck, frog, pond ripples, crab, turtle, gull, eagle, sparkles on the river). Each one only shows where the fog is nearly gone (`fogAt`, `FAUNA_CLEAR`), and only for stops already reached, so they appear stop by stop: 2 at stop 1, all 33 at stop 9. Sizes keep real proportions next to the 100 px team tokens and ~180 px trees (deer 72, duck 40, rabbit 36, bird 26, butterfly 24, bee 16). Landmarks no longer bob: the current stop's name label bounces and the team tokens bob while they wait.
 - **New Bình chọn landmark (17 Nov):** `map/stop-binh.webp`, a voting board covered in red, blue, green and yellow dots with a ballot box. Made with OpenAI `gpt-image-2.6-sunburst` (images/edits, transparent background, stop3 and stop5 as style references). The old `stop-nghe.webp` was a mirrored copy of the Giảng giỏi stage and is removed.
 

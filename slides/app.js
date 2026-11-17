@@ -370,10 +370,46 @@ function drawTimer(box, t) {
   box.classList.toggle("done", left <= 0);
 }
 
+// Time's up: the screen flashes for 3 seconds and a soft chime plays (made with Web Audio, no sound file).
+let audio = null;
+const unlockAudio = () => {  // browsers only allow sound after a click or key press, so open it on the first one
+  audio ??= new AudioContext();
+  if (audio.state === "suspended") audio.resume();
+};
+addEventListener("pointerdown", unlockAudio);
+addEventListener("keydown", unlockAudio);
+function chime() {
+  if (!audio) return;
+  const notes = [523.25, 659.25, 783.99, 1046.5];  // C E G C, played up twice
+  [0, 1.1].forEach((start) => notes.forEach((freq, i) => {
+    const t0 = audio.currentTime + start + i * 0.16;
+    const osc = audio.createOscillator(), gain = audio.createGain();
+    osc.type = "sine";
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0, t0);
+    gain.gain.linearRampToValueAtTime(0.28, t0 + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, t0 + 0.9);
+    osc.connect(gain).connect(audio.destination);
+    osc.start(t0);
+    osc.stop(t0 + 1);
+  }));
+}
+function timeUp() {
+  const flash = document.createElement("div");
+  flash.className = "timeup";
+  document.body.append(flash);
+  setTimeout(() => flash.remove(), 3000);
+  chime();
+}
+
 setInterval(() => {
   for (const [key, t] of Object.entries(session.timers)) {
     if (!t.endsAt) continue;
-    if (secondsLeft(t) === 0) { t.left = 0; t.endsAt = null; saveSession(); }
+    if (secondsLeft(t) === 0) {
+      const late = Date.now() - t.endsAt > 3000;  // ended while the page was closed: no alarm on reload
+      t.left = 0; t.endsAt = null; saveSession();
+      if (!late) timeUp();
+    }
     const box = stage.querySelector(`.timer[data-key="${CSS.escape(key)}"]`);
     if (box) drawTimer(box, t);
   }
@@ -1159,39 +1195,65 @@ const FOG = { ahead: 150, here: 280, done: 470, team: 190 }, FOG_LIFT = 80;  // 
 // Spots near the map edge stay foggy for good, so keep animals within the stops' cleared patches. Motions are the f-* keyframes in style.css.
 // Options: dx/dy = how far it travels, r = circle radius, f = -1 to face the other way, d = start offset in seconds.
 const FAUNA = [
-  ["🐇", 190, 930, "hop", 36, 7, { dx: 110, f: -1 }],           // 1 Khởi động
+  // 1 Khởi động
+  ["🐇", 100, 780, "hop", 36, 7, { dx: 40, f: -1 }],
   ["🦋", 420, 900, "flutter", 24, 6, { dx: 70, dy: 30 }],
   ["🐟", 560, 900, "jump", 28, 5, { dx: 40, f: -1 }],
   ["✨", 560, 800, "twinkle", 22, 3, { d: 1 }],
-  ["🦋", 150, 640, "flutter", 24, 7, { dx: -60, dy: 25, d: 2 }],   // 2 Đọc hiểu
+  ["🐌", 440, 1010, "walk", 20, 30, { dx: 30 }],
+  ["🦔", 650, 870, "walk", 26, 14, { dx: 40, d: 4 }],
+  ["🦊", 450, 760, "walk", 44, 15, { dx: 70, d: 6 }],
+  // 2 Đọc hiểu
+  ["🦋", 150, 640, "flutter", 24, 7, { dx: -60, dy: 25, d: 2 }],
   ["🐟", 528, 700, "jump", 28, 6, { dx: -40, d: 3 }],
-  ["🐿️", 400, 640, "peek", 30, 5, { d: 1 }],
+  ["🐿️", 430, 650, "peek", 30, 5, { d: 1 }],
   ["🦜", 548, 348, "peek", 30, 4, { f: -1, d: 2 }],
-  ["🕊️", 640, 160, "fly", 26, 12, { dx: 420, dy: -40, f: -1 }],     // 3 Giảng giỏi
+  ["🐸", 470, 470, "peek", 24, 5, { d: 3 }],
+  ["🦉", 240, 150, "peek", 28, 7, { d: 2 }],
+  ["🍃", 440, 520, "fall", 20, 6, {}],
+  ["🍃", 470, 540, "fall", 20, 7, { d: 3 }],
+  // 3 Giảng giỏi
+  ["🕊️", 420, 200, "fly", 26, 12, { dx: 250, dy: -15, f: -1 }],
   ["✨", 600, 140, "twinkle", 22, 2.6, {}],
   ["✨", 610, 110, "twinkle", 22, 3.2, { d: 1.4 }],
-  ["🦌", 960, 210, "walk", 72, 16, { dx: 70 }],
-  ["🍁", 1075, 255, "fall", 20, 6, {}],                          // 4 Bình chọn
-  ["🍁", 1130, 245, "fall", 20, 7, { d: 3 }],
-  ["🐝", 1110, 195, "buzz", 16, 3, {}],
-  ["🦋", 690, 650, "flutter", 24, 6.5, { dx: 60, dy: -30, d: 1 }], // 5 Trả lời
-  ["🍁", 785, 775, "fall", 20, 6.5, { d: 2 }],
-  ["🍁", 830, 790, "fall", 20, 7.5, { d: 5 }],
-  ["🐇", 990, 690, "hop", 36, 8, { dx: -120, d: 3 }],
-  ["🐝", 1450, 585, "buzz", 16, 2.6, {}],                         // 6 Dùng AI
-  ["🐝", 1480, 600, "buzz", 16, 3.4, { d: 1 }],
-  ["🕊️", 1140, 430, "fly", 26, 11, { dx: 320, dy: -30, f: -1, d: 4 }],
-  ["🦆", 1040, 792, "swim", 40, 12, { dx: 80, f: -1 }],          // 7 Làm slide
+  ["🐟", 575, 230, "jump", 26, 6, { dx: -30, d: 2 }],
+  ["🦌", 650, 290, "walk", 72, 16, { dx: -40 }],
+  ["🦋", 620, 430, "flutter", 24, 6, { dx: 50, dy: 25, d: 1 }],
+  // 4 Bình chọn
+  ["🐝", 1280, 200, "buzz", 16, 3, {}],
+  ["🐿️", 1290, 300, "peek", 30, 6, { d: 2 }],
+  ["🦋", 960, 420, "flutter", 24, 5, { dx: 20, dy: 20 }],
+  // 5 Trả lời
+  ["🦋", 690, 650, "flutter", 24, 6.5, { dx: 60, dy: -30, d: 1 }],
+  ["🍁", 720, 790, "fall", 20, 6.5, { d: 2 }],
+  ["🍁", 695, 820, "fall", 20, 7.5, { d: 5 }],
+  ["🐇", 1060, 640, "hop", 36, 8, { dx: 50, f: -1, d: 3 }],
+  ["🐿️", 1070, 505, "peek", 30, 5, { d: 4 }],
+  // 6 Dùng AI
+  ["🐝", 1400, 590, "buzz", 16, 2.6, {}],
+  ["🐝", 1420, 570, "buzz", 16, 3.4, { d: 1 }],
+  ["🕊️", 1012, 880, "fly", 26, 11, { dx: 370, dy: -30, f: -1, d: 4 }],
+  // 7 Làm slide
+  ["🦆", 1040, 792, "swim", 40, 12, { dx: 80, f: -1 }],
   ["", 1135, 812, "ripple", 60, 3, {}],
   ["", 1060, 822, "ripple", 50, 3.6, { d: 1.5 }],
-  ["🐸", 1005, 812, "peek", 26, 6, { d: 2 }],
-  ["🦀", 1690, 985, "walk", 28, 9, { dx: 90 }],
-  ["🐢", 1610, 965, "walk", 32, 20, { dx: -60 }],
-  ["🕊️", 1620, 900, "fly", 32, 13, { dx: 260, dy: -50, f: -1, d: 6 }],
-  ["🦋", 1765, 360, "flutter", 24, 6, { dx: -60, dy: 30 }],      // 8 Chung kết
-  ["🦅", 1580, 140, "circle", 50, 14, { r: 60 }],                 // 9 Về đích
-  ["🐿️", 1765, 215, "peek", 30, 6, { d: 3 }],
+  ["🐸", 1180, 815, "peek", 26, 6, { d: 2 }],
+  ["🐇", 1300, 800, "hop", 36, 9, { dx: -80, d: 2 }],
+  ["🦀", 1760, 950, "walk", 28, 9, { dx: 60 }],
+  ["🐢", 1700, 1000, "walk", 32, 20, { dx: 40 }],
+  ["🕊️", 1700, 870, "fly", 32, 13, { dx: 150, dy: -40, f: -1, d: 6 }],
+  // 8 Chung kết
+  ["🦋", 1800, 420, "flutter", 24, 6, { dx: -40, dy: 25 }],
+  ["🐝", 1820, 640, "buzz", 16, 3, { d: 1 }],
+  ["🦌", 1810, 760, "walk", 64, 18, { dx: -50, d: 5 }],
+  // 9 Về đích
+  ["🦅", 1660, 115, "circle", 50, 14, { r: 35 }],
+  ["🐿️", 1800, 230, "peek", 30, 6, { d: 3 }],
   ["🕊️", 1260, 70, "fly", 26, 14, { dx: 360, dy: -20, f: -1, d: 7 }],
+  ["🐇", 1600, 160, "hop", 34, 8, { dx: 60, f: -1, d: 1 }],
+  ["🦋", 1290, 120, "flutter", 24, 6, { dx: 30, dy: 20, d: 2 }],
+  ["✨", 1150, 790, "twinkle", 22, 3, { d: 2 }],
+  ["🐝", 1850, 300, "buzz", 16, 2.8, { d: 2 }],
 ];
 const FAUNA_SCALE = 1;  // one knob for all animal sizes (sizes are set against the 100 px team tokens)
 const faunaHtml = () => FAUNA.map(([e, x, y, m, size, s, o]) => {
@@ -1318,7 +1380,11 @@ function updateMap() {
   });
   const radii = STOPS.map((_, i) => (i < s ? FOG.done : i === s ? FOG.here : FOG.ahead));
   $$(".fh", mapEl).forEach((c, i) => (c.style.r = `${radii[i]}px`));
-  showFauna(radii.map((r, i) => (i <= s ? r : 0)));  // stops not reached yet keep their animals hidden
+  // At the last stop the whole map clears and every animal comes out.
+  const finished = s === STOPS.length - 1;
+  $(".fog", mapEl).classList.toggle("gone", finished);
+  if (finished) $$(".fa", mapEl).forEach((el) => el.classList.add("on"));
+  else showFauna(radii.map((r, i) => (i <= s ? r : 0)));  // stops not reached yet keep their animals hidden
   walkTo(stopLen[s]);
   const open = slideOpen || boardOpen;
   $(".hi", hud).innerHTML = `<div class="hs"><span class="hsn">Chặng ${s + 1}/${STOPS.length}</span><b>${esc(STOPS[s].name)}</b></div>

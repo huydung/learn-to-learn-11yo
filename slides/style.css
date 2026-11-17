@@ -365,6 +365,8 @@ body.panel #map::before { filter: blur(16px) brightness(.45); }
 .trail path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
 .fog { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .fog .fh { transition: r 2.5s ease-out; }  /* a reached stop clears its fog slowly */
+.fog { transition: opacity 3s ease-out; }
+.fog.gone { opacity: 0; }  /* last stop: all fog lifts */
 .tr-edge { stroke: rgba(81, 0, 12, .35); stroke-width: 36; }
 .tr-base { stroke: #F6E7BC; stroke-width: 26; }
 .tr-done { stroke: var(--red); stroke-width: 10; }
@@ -546,3 +548,7 @@ body.panel #map .mp { filter: brightness(.45) blur(3px); }
 .id-form.host .btn { background: var(--deep); }
 .id-form .btn.ghost { background: #fff; color: var(--deep); }
 #hud .hb button.hq { width: 42px; padding: 0; justify-content: center; font-size: 22px; }
+
+/* Time's up: the whole screen pulses red and cream for 3 seconds (timeUp() in app.js). */
+.timeup { position: fixed; inset: 0; z-index: 200; pointer-events: none; animation: timeup .5s ease-in-out 6; }
+@keyframes timeup { 0%, 100% { background: rgba(189, 1, 41, 0); } 50% { background: rgba(189, 1, 41, .45); box-shadow: inset 0 0 0 24px #F8F7D0; } }
