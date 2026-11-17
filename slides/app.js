@@ -165,9 +165,18 @@ function logAction(msg) {
 
 /* ================= Scoring ================= */
 
-// Place of each team, 0 = first. A team's place is how many teams beat it, so ties share the higher place.
+// Place of each team, 0 = first. Tied teams share a place, and the next team is only one place lower
+// ("dense" ranking): scores 4, 4, 4, 3 give places 1, 1, 1, 2, not 1, 1, 1, 4. Used for every ranking:
+// round points, the voting results, the leaderboard, the HUD, the token order and the gift order.
 function places(beats) {
-  return byTeam((k) => TEAMS.filter((o) => o.key !== k && beats(o.key, k)).length);
+  const keys = TEAMS.map((t) => t.key);
+  const above = Object.fromEntries(keys.map((k) => [k, keys.filter((o) => o !== k && beats(o, k))]));
+  const place = {};
+  // A team's place is one more than the lowest place among the teams that beat it.
+  for (const k of [...keys].sort((a, b) => above[a].length - above[b].length)) {
+    place[k] = above[k].length ? 1 + Math.max(...above[k].map((o) => place[o])) : 0;
+  }
+  return place;
 }
 const byValue = (values) => (a, b) => values[a] > values[b];
 const rankPoints = (values, points) => {

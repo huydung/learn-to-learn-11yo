@@ -64,9 +64,9 @@ Two columns of minutes: the plan, and a realistic estimate (16 eleven-year-olds,
 | 13 | 16–18 | Chặng 3 · Giảng giỏi: rules, 4 teams × 3 min, about 1 min to change teams | 11–16 |
 | 4 | 4–5 (+5 break) | Chặng 4 · Bình chọn: dot vote and count, then the giải lao slide (5 min timer), which lands on the 11:00 school break | 17–19 |
 | 7 | 10–11 | Chặng 5 · Trả lời: 4 questions (1 min each) plus reveal and short explanation, results, "Ai học nhiều nhất" | 20–27 |
-| 10 | 17–19 | Chặng 6 · Dùng AI: rules, wheel, 4 cases × about 3.5 min (part 1 video 35–51 s, 45 s guess, part 2 video 26–47 s, one team explains, verdict), results, wrap-up | 28–44 |
+| 10 | 17–19 | Chặng 6 · Dùng AI: rules, wheel, 4 cases × about 3.5 min (part 1 video 35–51 s, 60 s guess, part 2 video 26–47 s, one team explains, verdict), results, wrap-up | 28–44 |
 | 15 | 12–15 | Chặng 7 · Làm slide: why, idea-board rules, idea round (each idea ≤10 s plus typing and judging), Canva tips, Canva example | 45–50 |
-| 10 | 13–15 | Chặng 8 · Chung kết: 5 questions × (90 s + reveal), results | 51–58 |
+| 10 | 13–15 | Chặng 8 · Chung kết: 5 questions × (75 s + reveal), results | 51–58 |
 | 5 | 7–9 | Chặng 9 · Về đích: standings, gifts (2 picks per kid, about 32 picks), cheat sheet | 59–60 |
 | **81** | **100–117** | | |
 
@@ -76,7 +76,7 @@ Two columns of minutes: the plan, and a realistic estimate (16 eleven-year-olds,
 
 ## 4. Scoring (locked)
 
-- **Every round is ranked and gives 4 · 3 · 2 · 2** (Chung kết 8 · 6 · 4 · 4). 3rd and 4th get the same. Ties share the higher place. A round's own count (dots, correct cards, ideas) only decides the place; it is never added to the total. Only Khiên is a flat bonus.
+- **Every round is ranked and gives 4 · 3 · 2 · 2** (Chung kết 8 · 6 · 4 · 4). 3rd and 4th get the same. Ties share a place and the next team is only one place lower ("dense" ranking, `places()` in app.js): round scores 4, 4, 4, 3 give ranks 1, 1, 1, 2 and points 4, 4, 4, 3. The same rule ranks the leaderboard, the HUD, the token order and the gift order. A round's own count (dots, correct cards, ideas) only decides the place; it is never added to the total. Only Khiên is a flat bonus.
 - **Correct beats fast.** Speed only breaks ties.
 
 | Round | How | Points |
@@ -88,7 +88,7 @@ Two columns of minutes: the plan, and a realistic estimate (16 eleven-year-olds,
 | Chung kết | number of the 5 questions correct, double points | 8·6·4·4 |
 | Khiên ✋ | quietest team when chú raises a hand | +1, max 3 |
 
-- **All questions are answered by the team** with one coloured A/B/C/D card (printables pages 6–9). **No Wayground.** The team discusses for 1 minute (90 s in Chung kết).
+- **All questions are answered by the team** with one coloured A/B/C/D card (printables pages 6–9). **No Wayground.** The team discusses for 45 s in Trả lời, 60 s in Dùng AI and 75 s in Chung kết.
 - **Leaderboard display modes:** full scores, ranks only, or hidden.
 - **Gifts:** "Every kid gets a gift; winning only means choosing first" is said **only at the end** (bangdiem slide), never up front. Gifts: 40 items, 2 per kid, two picking rounds in rank order.
 
