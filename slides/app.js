@@ -25,7 +25,8 @@ const LETTERS = "ABCD";
 const fileTemplate = (() => {
   const doc = document.documentElement.cloneNode(true);
   $("#slides", doc).innerHTML = "\n@@SLIDES@@\n";
-  return "<!doctype html>\n" + doc.outerHTML + "\n";
+  // The live site adds ?v=<commit> to these two links; keep the file clean when saving from there.
+  return ("<!doctype html>\n" + doc.outerHTML + "\n").replace(/(style\.css|app\.js)\?v=[^"]*/g, "$1");
 })();
 
 const text = (html, x, y, w, h, style = "body") => ({ type: "text", style, html, x, y, w, h });
