@@ -199,6 +199,7 @@ Check the PDF afterwards: it should be exactly 9 pages in Word (LibreOffice show
 
 ## 10. Decisions log (most recent first)
 
+- **Arrow keys stay inside a section (17 Nov):** in map mode, → / ← (and PageDown / PageUp) step through the open section only; past its first or last slide they close the panel and show the map at the same stop. On the map, → / ← walk the teams to the next or previous stop, and Space / Enter open the stop. Classic mode (M off) still runs through the whole deck. The shortcut sheet says the same.
 - **Timer alarm, 50 animals, clear map at the end (17 Nov):**
   - When a running timer reaches 0:00 the screen pulses red for 3 seconds and a soft C-E-G-C chime plays twice (`timeUp()` in app.js, Web Audio, no sound file). Sound needs one click or key press on the page first (any T or click counts). A timer that ended while the page was closed does not ring on reload.
   - `FAUNA` now has 50 entries (fox, hedgehog, snail, owl, frog, more fish, butterflies, bees, rabbits, squirrels, doves, leaves). Every animal's whole motion box stays clear of each landmark, its name label and that stop's team-token row; checked with a script against measured boxes. They still appear stop by stop (2 at stop 1 … 50 at stop 9).

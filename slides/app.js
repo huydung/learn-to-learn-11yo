@@ -1421,16 +1421,8 @@ function closePanel() {
   render();
 }
 
-// Called by next(): leaving a stop in map mode closes the panel and walks the teams on.
-function mapLeave(index) {
-  if (!mapMode || !slideOpen || stopOf(index) === stopOf(current)) return false;
-  current = index;
-  session.reveal[slides()[index].id] = 0;
-  saveSession();
-  slideOpen = false;
-  render();
-  return true;
-}
+// In map mode the arrows never leave the open section: stepping past its first or last slide goes back to the map.
+const leavesSection = (index) => mapMode && slideOpen && (index < 0 || index >= slides().length || stopOf(index) !== stopOf(current));
 
 function toggleMapMode() {
   if (editing) return flash("Bấm Xong để thoát chế độ sửa trước");
@@ -1446,14 +1438,19 @@ function mapKey(e) {
   const k = e.key;
   if (k === "Escape" && (slideOpen || boardOpen)) { closePanel(); return true; }
   if (slideOpen || boardOpen) return false;
-  if (["ArrowRight", "PageDown", " ", "Enter"].includes(k)) { e.preventDefault(); openStop(stopOf(current)); return true; }
-  if (k === "ArrowLeft" || k === "PageUp") {
-    e.preventDefault();
-    const s = stopOf(current);
-    if (s > 0) { current = stopStart(s - 1); render(); }
-    return true;
+  // On the map: Space or Enter opens the stop the teams are at; → and ← walk them to the next or previous stop.
+  if (k === " " || k === "Enter") { e.preventDefault(); openStop(stopOf(current)); return true; }
+  const step = k === "ArrowRight" || k === "PageDown" ? 1 : k === "ArrowLeft" || k === "PageUp" ? -1 : 0;
+  if (!step) return false;
+  e.preventDefault();
+  const s = stopOf(current) + step;
+  if (s >= 0 && s < STOPS.length) {
+    current = stopStart(s);
+    session.reveal[slides()[current].id] = 0;
+    saveSession();
+    render();
   }
-  return false;
+  return true;
 }
 
 /* ================= Navigation, keys, messages ================= */
@@ -1480,8 +1477,8 @@ function next() {
     saveSession();
     return render(shown + 1);
   }
+  if (leavesSection(current + 1)) return closePanel();  // end of the section: back to the map, same stop
   if (current >= slides().length - 1) return;
-  if (mapLeave(current + 1)) return;  // map mode: finishing a stop walks back to the map
   go(current + 1);
 }
 
@@ -1495,6 +1492,7 @@ function prev() {
     saveSession();
     return render();
   }
+  if (leavesSection(current - 1)) return closePanel();  // start of the section: back to the map, same stop
   if (current > 0) go(current - 1, true);
 }
 
